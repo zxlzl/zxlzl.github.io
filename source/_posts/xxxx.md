@@ -6,4 +6,4 @@ tags:
 
 看时间待会就是觉得ssssss
 
-![](./article-title/test.png)
+![](https://github.com/zxlzl/one-day-one-problem/raw/master/Blog/imgs/02/little_prince.jpg)
