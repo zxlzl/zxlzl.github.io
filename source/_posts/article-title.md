@@ -5,4 +5,4 @@ tags:
 ---
 看时间待会就是觉得ssssss
 
-![](./img/test.png)
+![](./article-title/test.png)
