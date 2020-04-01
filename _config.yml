@@ -3,11 +3,11 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: 随便写写
 subtitle: ''
 description: ''
 keywords:
-author: John Doe
+author: zxl
 language: en
 timezone: ''
 
@@ -101,5 +101,3 @@ deploy:
   type: git
   repository: https://github.com/zxlzl/zxlzl.github.io
   branch: master
-  name: zxlzl
-  email: 384542246@qq.com
