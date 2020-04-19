@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>闭包 | 随便写写~</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="闭包&amp;emsp;&amp;emsp;和大多数现代编程语言一样，JavaScript也采用词法作用域，也就是说，函数的执行依赖于变量作用域，这个作用域是在函数定义时决定的，而不是函数调用时决定的。为了实现这这种词法作用域，JavaScript函数对象的内部状态不仅包含函数的逻辑代码，还必须引用当前的作用域链。函数对象可以通过作用域链相互关联起来，函数体内部的变量都可以保存在函数作用域内，这种特性被称为&amp;qu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="闭包">
+<meta property="og:url" content="http://yoursite.com/2019/04/01/%E9%97%AD%E5%8C%85/index.html">
+<meta property="og:site_name" content="随便写写~">
+<meta property="og:description" content="闭包&amp;emsp;&amp;emsp;和大多数现代编程语言一样，JavaScript也采用词法作用域，也就是说，函数的执行依赖于变量作用域，这个作用域是在函数定义时决定的，而不是函数调用时决定的。为了实现这这种词法作用域，JavaScript函数对象的内部状态不仅包含函数的逻辑代码，还必须引用当前的作用域链。函数对象可以通过作用域链相互关联起来，函数体内部的变量都可以保存在函数作用域内，这种特性被称为&amp;qu">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-04-01T14:21:08.000Z">
+<meta property="article:modified_time" content="2019-04-09T14:03:12.000Z">
+<meta property="article:author" content="zxl">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="随便写写~" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">随便写写~</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-闭包" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/01/%E9%97%AD%E5%8C%85/" class="article-date">
+  <time datetime="2019-04-01T14:21:08.000Z" itemprop="datePublished">2019-04-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      闭包
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2><p>&emsp;&emsp;和大多数现代编程语言一样，JavaScript也采用词法作用域，也就是说，函数的执行依赖于变量作用域，这个作用域是在函数定义时决定的，而不是函数调用时决定的。为了实现这这种词法作用域，JavaScript函数对象的内部状态不仅包含函数的逻辑代码，还必须引用当前的<code>作用域链</code>。函数对象可以通过作用域链相互关联起来，函数体内部的变量都可以保存在函数作用域内，这种特性被称为<code>&quot;闭包&quot;</code>。</p>
+<blockquote>
+<p>&emsp;&emsp;作用域链：每一段JavaScript代码(全局代码或函数)都有一个与之关联的作用域链(scope chain)。这个作用域链是一个对象列表或者链表，这组对象定义了这段代码”作用域中”的变量。当JavaScript需要查找变量x的值的时候(这个过程称做”变量解析”)，它会从链中的第一个对象开始查找，如果这个对象有一个名为x的属性，则会直接使用这个属性的值，如果第一个对象中不存在名为x的属性，JavaScript会继续查找链上的下一个对象。如果第二个对象依然没有名为x的属性，则会继续查找下一个对象，以此类对。如果作用域链上没有任何一个对象含有属性x，那么久人为这段代码的作用域链上不存在x，并最终抛出一个引用错误异常。<br>&emsp;&emsp;在JavaScript最顶层代码中(也就是不包含在任何函数定义内的代码)，作用域链由一个全局对象组成。在不包含嵌套的函数体内，作用域链上有两个对象，第一个是定义函数参数和局部变量的对象，第二个是全局对象。在一个嵌套的函数体内，作用域链上至少有三个对象。当定义一个函数时，它实际上保存一个作用域链。当调用这个函数时，它穿件一个新的对象来存储它的局部变量，并将这个对象添加至保存的那个作用域链上，同时创建一个新的更长的表示函数调用作用域的”链”。对于嵌套函数来讲，每次调用外部函数时，内部函数又会重新定义一遍。因为每次调用外部函数的时候，作用域链都是不同的。内部函数在每次定义的时候都有微妙的差别——在每次调用外部函数时，内部函数的代码都是相同的，而且关联这段代码的作用域链也不相同。</p>
+</blockquote>
+<p>&emsp;&emsp;所有的JavaScript函数都是闭包；他们都是对象，他们都关联到作用域链。定义大多数函数时的作用域链在调用函数时依然有效，但这并不影响闭包。当调用函数时闭包所指向的作用域链和定义函数时的作用域链不是同一个作用域链时，就会有一些微妙的变化。当一个函数潜逃了另外一个函数，外部函数将嵌套的函数对象作为返回值返回的时候往往会发生这种事情。有很多强大的编程技术都利用到了这类嵌套的函数闭包，以至于这种编程模式在JavaScript中非常常见。<br>&emsp;&emsp;理解闭包首先要了解嵌套函数的此法作用域规则:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">"global scope"</span>;  <span class="comment">// 全局变量</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkscope</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> scope = <span class="string">"local scope"</span>;  <span class="comment">// 局部变量</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> scope;   <span class="comment">// 在作用域中返回这个值</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> f();</span><br><span class="line">&#125;</span><br><span class="line">checkscope()  <span class="comment">// =&gt; "local scope"</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;<code>checkscope()</code>函数声明了一个局部变量，并定义一个函数<code>f()</code>，函数<code>f()</code>返回了这个变量的值，最后将函数<code>f()</code>的执行结果返回。对上面的代码做一点改动：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scope = <span class="string">"global scope"</span>;  <span class="comment">// 全局变量</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkscope</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> scope = <span class="string">"local scope"</span>;  <span class="comment">// 局部变量</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> scope;   <span class="comment">// 在作用域中返回这个值</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> f;</span><br><span class="line">&#125;</span><br><span class="line">checkscope()()</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;这段代码中，函数内的一对圆括号移动到了<code>checkscope()</code>之后。<code>checkscope()</code>现在仅仅返回函数内嵌套的一个函数对象，而不是直接返回结果。在定义函数的作用域外面，调用这个嵌套的函数（包含最后一行代码的最后一对括号），最后仍会返回<code>&quot;local scope&quot;</code>。<br>&emsp;&emsp;词法作用域的基本规则：JavaScript函数的执行用到了作用域链，这个作用域链是函数定义的时候创建的。嵌套的函数<code>f()</code>定义在这个作用域链里，其中的变量scope一定是局部变量，不管在何时何地执行函数<code>f()</code>，这种绑定在执行<code>f()</code>时依然有效，因此最后一行代码返回<code>&quot;local scope&quot;</code>，而不是<code>&quot;global scope&quot;</code>。简言之，闭包这个特性很强大：它们可以捕捉到局部变量（和参数），并一直保存下来，看起来像这些变量绑定到了再其中定义它们的外部函数。<br>例如，定义一个<code>uniqueInteger</code>函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始化函数对象的计数器属性</span></span><br><span class="line"><span class="comment">// 由于函数声明被提前，因此这里可以在函数声明前给它的成员赋值</span></span><br><span class="line">uniqueInteger.counter = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 每次调用这个函数都会返回一个不同的整数</span></span><br><span class="line"><span class="comment">// 它使用一个属性来记住下一次将要返回的值</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">uniqueInteger</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> uniqueInteger.counter++; <span class="comment">// 先返回计数器的值，然后计数器自增1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;这个函数使用自身的一个属性来保存每次返回的值，以便每次调用都能跟从上次的返回值。但这种做法有一个问题，就是恶意代码可能将计数器重置或者把一个非整数赋值给它，导致<code>uniqueInteger()</code>函数不一定能产生”唯一”的“整数”。而闭包可以捕捉到单个函数调用的局部变量，并将这些局部变量用作私有状态。利用闭包重写<code>uniqueInteger()</code>函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> uniqueInteger = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="comment">// 定义函数并立即调用</span></span><br><span class="line">  <span class="keyword">var</span> counter = <span class="number">0</span>;  <span class="comment">// 函数的私有状态</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> counter++; &#125;</span><br><span class="line">&#125;());</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;第一行代码看起来像将函数赋值给一个变量<code>uniqueInteger</code>，实际上，这段代码定义了一个立即调用函数（函数的开始带有左圆括号），因此是这个函数的返回值赋值给变量<code>uniqueInteger</code>。这个函数体返回另外一个函数，这是一个嵌套的函数，我们将它赋值给变量<code>uniqueInteger</code>，嵌套的函数是可以访问作用域内的变量的，而且可以访问外部函数中定义的<code>counter</code>变量。当外部函数返回值后，其他任何代码都无法访问<code>counter</code>变量，只有内部的函数才能访问到它。<br>&emsp;&emsp;像<code>counter</code>一样的私有变量不是只能用在一个单独的闭包内，在同一个外部函数内定义的多个嵌套函数也可以访问它，这多个嵌套函数都共享一个作用域链：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">counter</span>(<span class="params"></span>) </span>&#123; </span><br><span class="line">  <span class="keyword">var</span> n = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    count: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> n++; &#125;,</span><br><span class="line">    reset: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; n = <span class="number">0</span>; &#125;</span><br><span class="line">  &#125;;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> c = counter(), d = counter(); <span class="comment">// 创建两个计数器</span></span><br><span class="line">c.count(); <span class="comment">// =&gt; 0</span></span><br><span class="line">d.count(); <span class="comment">// =&gt; 0:他们互不干扰</span></span><br><span class="line">c.reset(); <span class="comment">// reset()和count()方法共享状态</span></span><br><span class="line">c.count(); <span class="comment">// =&gt; 0:因为重置了c</span></span><br><span class="line">d.count(); <span class="comment">// =&gt; 1:没有重置d</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;<code>counter()</code>函数返回了一个“计数器”对象，这个对象包含两个方法：<code>count()</code>返回下一个整数，<code>reset()</code>将计数器重置为内部状态。这两个方法都可以访问私有变量n。再者，每次调用counter()都会创建一个新的作用域链和一个新的私有变量。因此，如果调用<code>counter()</code>量词，则会得到两个计数器对象，而且彼此包含不同的私有变量，调用其中一个计数器对象的<code>count()</code>或<code>reset()</code>不会影响到另外一个对象。<br>&emsp;&emsp;其实可以将这个闭包合并为属性存取器方法<code>getter</code>和<code>setter</code>。如下，利用闭包实现<code>counter()</code>的私有状态：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">counter</span>(<span class="params">n</span>) </span>&#123; <span class="comment">// 函数参数n是一个私有变量</span></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="comment">// 属性getter方法返回并给私有计数器var递增1</span></span><br><span class="line">    <span class="keyword">get</span> count() &#123; <span class="keyword">return</span> n++; &#125;,</span><br><span class="line">    <span class="comment">// 属性setter不允许n递减</span></span><br><span class="line">    <span class="keyword">set</span> count(m) &#123;</span><br><span class="line">      <span class="keyword">if</span> (m&gt;=n) n = m;</span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">throw</span> <span class="built_in">Error</span>(<span class="string">"count can only be set to a larger value"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> c = counter(<span class="number">1000</span>);</span><br><span class="line">c.count   <span class="comment">// =&gt; 1000</span></span><br><span class="line">c.count   <span class="comment">// =&gt; 1000</span></span><br><span class="line">c.count = <span class="number">2000</span></span><br><span class="line">c.count   <span class="comment">// =&gt; 2000</span></span><br><span class="line">c.count = <span class="number">2000</span>  <span class="comment">// =&gt; Error!</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;这个<code>counter()</code>函数并为声明局部变量，而只是使用参数n来保存私有状态，属性存取器方法可以访问n。这样调用<code>counter()</code>的函数就可以指定私有变量的初始值了。<br>&emsp;&emsp;定义一个<code>addPrivatePropetry()</code>函数，这个函数定义一个私有变量，以及两个嵌套的函数用来获取和设置这个私有变量的值，它将这些嵌套函数添加为所指定对象的方法，利用闭包实现的私有属性存取器方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这个函数给对象o增加了属性存取器方法</span></span><br><span class="line"><span class="comment">// 方法名称为get&lt;name&gt;和set&lt;name&gt;。如果提供了一个判定函数</span></span><br><span class="line"><span class="comment">// setter方法就会用它来检测参数的合法性，然后在存储它</span></span><br><span class="line"><span class="comment">// 如果判定函数返回false，setter方法抛出一个异常</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 这个函数不的getter和setter函数</span></span><br><span class="line"><span class="comment">// 所操作的属性值并没有存储在对象o中</span></span><br><span class="line"><span class="comment">// 相反，这个值仅仅是保存在函数中的局部变量中</span></span><br><span class="line"><span class="comment">// getter和setter方法同样是局部函数，因此可以访问这个局部变量</span></span><br><span class="line"><span class="comment">// 也就是说，对于两个存取器的方法来说这个变量是私有的</span></span><br><span class="line"><span class="comment">// 没有办法绕过存存取器来设置或修改这个值</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addPrivatePropetry</span>(<span class="params">o, name, predicate</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> value; <span class="comment">// 这是一个属性值</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// getter方法简单地将其返回</span></span><br><span class="line">  o[<span class="string">"get"</span> + name] = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> value; &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// setter方法首先检查值是否合法，若不合法就抛出异常</span></span><br><span class="line">  <span class="comment">// 否则就将其存储</span></span><br><span class="line">  o[<span class="string">"set"</span> + name] = <span class="function"><span class="keyword">function</span>(<span class="params">v</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (predicate &amp;&amp; !predicate(v)) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="built_in">Error</span>(<span class="string">"set"</span> + name + <span class="string">": invalid value"</span> + v);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      value = v;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// addPrivatePropetry()方法</span></span><br><span class="line"><span class="keyword">var</span> o = &#123;&#125;; <span class="comment">// 设置一个空对象</span></span><br><span class="line"><span class="comment">// 增加属性存取器方法getName()和setName()</span></span><br><span class="line"><span class="comment">// 确保只允许字符串值</span></span><br><span class="line">addPrivatePropetry(o, <span class="string">"Name"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123; <span class="keyword">return</span> <span class="keyword">typeof</span> x == <span class="string">"string"</span>; &#125;);</span><br><span class="line"></span><br><span class="line">o.setName(<span class="string">"Frank"</span>); <span class="comment">// 设置属性值</span></span><br><span class="line"><span class="built_in">console</span>.log(o.getName()); <span class="comment">// 得到属性值</span></span><br><span class="line">o.setName(o); <span class="comment">// 设置一个错误类型的值</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;在同一个作用域中定义两个闭包，这两个闭包共享同样的私有变量或变量。这是很重要的一种方式，但要小心那些不希望共享的变量旺旺不经意间共享给了其他的闭包，比如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这个函数返回一个总是返回v的函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">constfunc</span>(<span class="params">v</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> v &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个数组用来存储常数函数</span></span><br><span class="line"><span class="keyword">var</span> funcs = [];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">  funcs[i] = constfunc(i);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在第五个位置的元素所表示的函数值返回5</span></span><br><span class="line">funcs[<span class="number">5</span>]() <span class="comment">// =&gt; 5</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;这段代码利用循环创建了很多歌闭包，当写类似这种代码的时候往往会犯一个错误：那就是师徒将循环代码移入定义这个闭包的函数之内，比如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 返回一个函数组成的数组，它们的返回值是0~9</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">constfunc</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> funcs = [];</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">    funcs[i] = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> i; &#125;; </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> funcs;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> funcs = constfunc();</span><br><span class="line">funcs[<span class="number">5</span>]() <span class="comment">// ??</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;上面这段代码创建了10个闭包，并将它们存储到一个数组中。这些闭包都是在同一个函数调用中定义的，因此它们可以共享变量i。当<code>constfunc()</code>返回时，变量i的值是10，所有的闭包都共享这一个值，因此，数组中的函数的返回值都是同一个值，这不是想要的结果。关联到闭包的作用域链都是“活动的”。嵌套的函数不会将作用域链内的私有成员复制一份，也不会对所绑定的变量生成静态快照。<br>&emsp;&emsp;<code>this</code>是JavaScript的关键字，而不是变量。每个函数调用都包含一个<code>this</code>值， 如果闭包在外部函数里是无法访问<code>this</code>的，除非外部函数将<code>this</code>转为一个变量：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> self = <span class="keyword">this</span>; <span class="comment">// 将this保存至一个变量中，以便嵌套的函数能够访问它</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;绑定<code>arguments</code>的问题与之类似。<code>arguments</code>并不是一个关键字，但是在调用每个函数时都会自动声明它，由于闭包具有自己所绑定的<code>arguments</code>，因此闭包内无法直接访问外部函数的参数数组，除非外部函数将参数数组保存到另外一个变量中：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> outerArguments = <span class="built_in">arguments</span>; <span class="comment">// 保存起来以便嵌套的函数能使用它</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/01/%E9%97%AD%E5%8C%85/" data-id="ck8gofbcr000whk9h5ifka84c" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/07/31/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          内存模型
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/30/ECMAScript5%E4%B8%AD%E7%9A%84%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">JavaScript数组方法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ajax/">ajax</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/fetch/">fetch</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/gulp/">gulp</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/node/">node</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webpack/">webpack</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">计算机基础</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/04/01/%E3%80%8AJust-JavaScript%E3%80%8B02-JavaScript%E5%AE%87%E5%AE%99/">《Just JavaScript》02.JavaScript宇宙</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/31/%E3%80%8AJust-JavaScript%E3%80%8B01-%E6%80%9D%E7%BB%B4%E6%A8%A1%E5%9E%8B/">《Just JavaScript》01.思维模型</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/31/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/">内存模型</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/01/%E9%97%AD%E5%8C%85/">闭包</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/30/ECMAScript5%E4%B8%AD%E7%9A%84%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/">JavaScript数组方法</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 zxl<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
