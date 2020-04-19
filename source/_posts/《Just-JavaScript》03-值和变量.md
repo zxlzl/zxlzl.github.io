@@ -18,7 +18,7 @@ console.log(reaction);
 
 现在我想让你花点时间，一步一步地为这段代码的每一行写下你确切的思考过程。注意你现有的思维模型中的任何欠缺或不确定性，并把它们也写下来。如果你对此有任何疑问，尽可能清楚地将它表达出来。
 
-![](./imgs/03/spoilers.jpg)
+![](/blog_imgs/just_javascript/03/spoilers.jpg)
 
 在你写完之前你的思考前不要往下滚动。
 
@@ -122,7 +122,7 @@ fifty.shades = 'gray'; // No!
 
 我觉得这异常地令人安慰：
 
-![](./imgs/03/unnamed.png)
+![](/blog_imgs/just_javascript/03/unnamed.png)
 
 ## 一个矛盾？
 
@@ -136,7 +136,7 @@ console.log(pet); // ?
 
 像以前一样，用几句话写下你的思考过程。别急着往前走。一步一步地关注你对每一行的想法。字符串的不变性在这里起作用吗？它起什么作用？
 
-![](./imgs/03/spoilers.jpg)
+![](/blog_imgs/just_javascript/03/spoilers.jpg)
 
 `...` 
 
@@ -220,7 +220,7 @@ console.log(pet); // "The Kraken"
 let pet = 'Narwhal';
 ```
 
-![](./imgs/03/unnamed.gif)
+![](/blog_imgs/just_javascript/03/unnamed.gif)
 
 之后可以对变量执行两项操作：
 
@@ -232,7 +232,7 @@ let pet = 'Narwhal';
 pet = 'The Kraken';
 ```
 
-![](./imgs/03/unnamed1.gif)
+![](/blog_imgs/just_javascript/03/unnamed1.gif)
 
 我在这里所做的只是告知JavaScript将左侧的“wire”（我的pet变量）指向右侧的值（“The Kraken”）。它将一直指向那个值，除非我之后重新分配它。
 
@@ -309,7 +309,7 @@ x = 0;
 
 **第一行的作用不大：**
 
-![](./imgs/03/unnamed2.gif)
+![](/blog_imgs/just_javascript/03/unnamed2.gif)
 
 * 声明一个x变量  
   + 为x变量生成导线
@@ -318,7 +318,7 @@ x = 0;
 
 **第二行很短，但它做了很多事情：**
 
-![](./imgs/03/unnamed3.gif)
+![](/blog_imgs/just_javascript/03/unnamed3.gif)
 
 * 声明一个y变量
   + 为y变量生成导线
@@ -332,7 +332,7 @@ x = 0;
 
   **最后，我们进入第三行：**
 
-![](./imgs/03/unnamed4.gif)
+![](/blog_imgs/just_javascript/03/unnamed4.gif)
 
 * 将0的值赋给x
   + 将x的导线指向值0
