@@ -1,5 +1,5 @@
 ---
-title: 《Just JavaScript》04. 计算数值
+title: 《Just JavaScript》05. 计算数值2
 date: 2020-05-18 17:36:08  
 categories: JavaScript
 tags:

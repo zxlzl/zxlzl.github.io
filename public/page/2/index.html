@@ -64,6 +64,415 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Gulp" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/06/Gulp/" class="article-date">
+  <time datetime="2018-09-06T12:39:08.000Z" itemprop="datePublished">2018-09-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/gulp/">gulp</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/06/Gulp/">gulp</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="gulp-转码项目中的ES6-ES5并压缩js"><a href="#gulp-转码项目中的ES6-ES5并压缩js" class="headerlink" title="gulp-转码项目中的ES6-ES5并压缩js"></a>gulp-转码项目中的ES6-ES5并压缩js</h4><p>在这之前，请确保你的 <code>node</code> 和 <code>npm</code> 已经安装无误，可以用<code>node -v</code> 和 <code>npm -v</code>查看 <code>node</code> 和 <code>npm</code> 的版本。</p>
+<p>好了，接下来，gulp-babel，转码压缩，七步到位，走你！</p>
+<h5 id="1-全局安装-gulp"><a href="#1-全局安装-gulp" class="headerlink" title="1. 全局安装 gulp"></a>1. 全局安装 gulp</h5><p>终端执行 <code>cnpm install gulp -g</code>。(这里默认大家已经安装了<a href="http://npm.taobao.org/" target="_blank" rel="noopener">淘宝镜像</a>，没有安装也可以使用 <code>npm</code>)。</p>
+<p>安装完毕后可以使用 <code>gulp -v</code>检测版本。</p>
+<h5 id="2-在项目中安装-babel"><a href="#2-在项目中安装-babel" class="headerlink" title="2. 在项目中安装 babel"></a>2. 在项目中安装 babel</h5><p>在项目根目录执行 <code>cnpm install babel-cli</code>，等待安装好项目所依赖的<code>babel</code>。</p>
+<p>安装完毕后可以使用 <code>.\node_modules\.bin\babel --version</code> 检测版本。这时候你可以在你的项目中看到一个node_modules文件夹。</p>
+<h5 id="3-在项目中安装-gulp"><a href="#3-在项目中安装-gulp" class="headerlink" title="3. 在项目中安装 gulp"></a>3. 在项目中安装 gulp</h5><p>在项目根目录执行 <code>cnpm install gulp</code>，安装项目中的 <code>gulp</code>。</p>
+<h5 id="4-在项目中安装-gulp-babel"><a href="#4-在项目中安装-gulp-babel" class="headerlink" title="4. 在项目中安装 gulp-babel"></a>4. 在项目中安装 gulp-babel</h5><p>在项目根目录执行 <code>cnpm install --save-dev gulp-babel babel-preset-env</code>。</p>
+<p>安装完毕后，你可以看到你的项目出现了 <code>package.json</code>(如果你没有预先 <code>npm init</code> 或者安装依赖的话一般是不会出现这个文件的)，你可以检测文件里会出现了以下依赖：</p>
+<pre><code>{
+  &quot;devDependencies&quot;: {
+    &quot;babel-preset-env&quot;: &quot;^1.6.1&quot;,
+    &quot;gulp-babel&quot;: &quot;^7.0.0&quot;
+  }
+}</code></pre><h5 id="5-在项目中安装-gulp-uglify"><a href="#5-在项目中安装-gulp-uglify" class="headerlink" title="5. 在项目中安装 gulp-uglify"></a>5. 在项目中安装 gulp-uglify</h5><p>在项目根目录执行 <code>cnpm install gulp-uglify --save-dev</code>, 于是 <code>package.json</code> 变成了这样：</p>
+<pre><code>{
+  &quot;devDependencies&quot;: {
+    &quot;babel-preset-env&quot;: &quot;^1.6.1&quot;,
+    &quot;gulp-babel&quot;: &quot;^7.0.0&quot;,
+    &quot;gulp-uglify&quot;: &quot;^3.0.0&quot;
+  }
+}</code></pre><h5 id="6-根目录创建-gulpfile-js"><a href="#6-根目录创建-gulpfile-js" class="headerlink" title="6.根目录创建 gulpfile.js"></a>6.根目录创建 gulpfile.js</h5><p>在项目根目录创建 <code>gulpfile.js</code>，里面的代码是这样的：</p>
+<pre><code>const gulp = require(&apos;gulp&apos;); // 引入gulp
+const babel = require(&apos;gulp-babel&apos;); // 引入gulp-babel
+const uglify = require(&apos;gulp-uglify&apos;); // 引入gulp-uglify
+
+// ES6代码转码为ES5
+gulp.task(&apos;toes5&apos;, () =&gt;
+    gulp.src(&apos;src/*.js&apos;) // 需要转码的es6文件，这里代表src文件夹下的所有js文件
+        /*
+        最新的presets: [&apos;env&apos;]，是通用版，可以转码es2015、react、es2017, 
+        这里只用于转码es2015，你可以下载相关转码依赖
+        */
+        .pipe(babel({
+            presets: [&apos;env&apos;]
+        }))
+        .pipe(gulp.dest(&apos;dist&apos;)) // 转码后的文件输出位置
+);
+
+// JS代码压缩
+gulp.task(&apos;jsmin&apos;, () =&gt;
+    gulp.src(&apos;dist/*.js&apos;) // 需要压缩的js文件
+        .pipe(uglify())
+        .pipe(gulp.dest(&apos;min&apos;)) // 压缩的js文件输出位置
+);
+
+// 使用监听，但是需要预先使用命令 gulp auto，文件如果修改了，就一步到位
+gulp.task(&apos;auto&apos;, () =&gt; {
+gulp.watch(&apos;src/*.js&apos;, [&apos;toes5&apos;]) // 需要转码的js文件位置 + 口令
+gulp.watch(&apos;dist/*.js&apos;, [&apos;jsmin&apos;]) // 需要压缩的js文件位置 + 口令</code></pre><p>});</p>
+<h5 id="7-流水线的骚操作"><a href="#7-流水线的骚操作" class="headerlink" title="7. 流水线的骚操作"></a>7. 流水线的骚操作</h5><p>在项目根目录终端运行 <code>gulp toes5</code>，就将 <code>es6</code> 文件转为 <code>es5</code> 文件了。运行 <code>gulp jsmin</code>，就将 <code>js</code> 文件稳稳当当地压缩了。</p>
+<p>如果我们需要一步到位，而且不用随时去执行这繁琐的命令，我们还可以使用监听。在项目根目录终端使用 <code>gulp auto</code>，然后每次修改开发文件( <code>src</code> 下的 <code>js</code> )，就会自动同步转码和压缩。【==监听还可以监听更多的 gulp task，这点非常重要==】</p>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><h5 id="8-gulp-htmlmin-压缩html"><a href="#8-gulp-htmlmin-压缩html" class="headerlink" title="8. gulp-htmlmin 压缩html"></a>8. gulp-htmlmin 压缩html</h5><p><code>cnpm install gulp-htmlmin --save-dev</code></p>
+<pre><code>const htmlmin = require(&apos;gulp-htmlmin&apos;);
+
+// 压缩html和html页面内的css/js
+gulp.task(&apos;htmlmin&apos;, function () {
+    var options = {
+        removeComments: true,//清除HTML注释
+        collapseWhitespace: true,//压缩HTML
+        collapseBooleanAttributes: true,//省略布尔属性的值 &lt;input checked=&quot;true&quot;/&gt; ==&gt; &lt;input /&gt;
+        removeEmptyAttributes: true,//删除所有空格作属性值 &lt;input id=&quot;&quot; /&gt; ==&gt; &lt;input /&gt;
+        removeScriptTypeAttributes: true,//删除&lt;script&gt;的type=&quot;text/javascript&quot;
+        removeStyleLinkTypeAttributes: true,//删除&lt;style&gt;和&lt;link&gt;的type=&quot;text/css&quot;
+        minifyJS: true,//压缩页面JS
+        minifyCSS: true//压缩页面CSS
+    };
+    gulp.src(&apos;src/*.html&apos;)
+        .pipe(htmlmin(options))
+        .pipe(gulp.dest(&apos;min&apos;));
+});</code></pre><h5 id="9-gulp-clean-css-压缩css"><a href="#9-gulp-clean-css-压缩css" class="headerlink" title="9. gulp-clean-css 压缩css"></a>9. gulp-clean-css 压缩css</h5><p><code>cnpm install gulp-clean-css --save-dev</code></p>
+<pre><code>const cleanCSS = require(&apos;gulp-clean-css&apos;);
+
+// 压缩css文件, 如果有外部引用，为了保持项目结构，需要使用插件 gulp-sourcemaps
+gulp.task(&apos;cssmin&apos;, () =&gt; {
+    gulp.src(&apos;src/*.css&apos;)
+        .pipe(cleanCSS({compatibility: &apos;ie8&apos;})) // 兼容IE8及以下浏览器
+        .pipe(gulp.dest(&apos;min&apos;));
+});</code></pre><h5 id="10-gulp-concat-合并-js-文件"><a href="#10-gulp-concat-合并-js-文件" class="headerlink" title="10. gulp-concat 合并 js 文件"></a>10. gulp-concat 合并 js 文件</h5><p><code>cnpm install gulp-concat --save-dev</code></p>
+<pre><code>const concat = require(&apos;gulp-concat&apos;);
+
+// 合并 js 文件, 但不会转码和压缩
+gulp.task(&apos;jsconcat&apos;, function () {
+    gulp.src(&apos;src/*.js&apos;)
+        .pipe(concat(&apos;index.js&apos;))//合并后的文件名
+        .pipe(gulp.dest(&apos;dist&apos;));
+});</code></pre><h5 id="11-gulp-less-将less文件编译成css"><a href="#11-gulp-less-将less文件编译成css" class="headerlink" title="11. gulp-less 将less文件编译成css"></a>11. gulp-less 将less文件编译成css</h5><p><code>cnpm install gulp-less --save-dev</code></p>
+<pre><code>const less = require(&apos;gulp-less&apos;);
+
+// 编译less文件，如果有外部引用，为了保持项目结构，需要使用插件 gulp-sourcemaps
+gulp.task(&apos;lesstocss&apos;, function () {
+    //编译src目录下的所有less文件
+    //除了reset.less和test.less（**匹配src/less的0个或多个子文件夹）
+    gulp.src([&apos;src/*.less&apos;, &apos;!src/less/**/{reset,test}.less&apos;]) 
+        .pipe(less())
+        // 编译后压缩css文件输出到min
+        .pipe(cleanCSS({compatibility: &apos;ie8&apos;})) // 兼容IE8及以下浏览器
+        .pipe(gulp.dest(&apos;min&apos;));
+});</code></pre><h5 id="12-gulp-autoprefixer-给-css-项处理浏览器前缀"><a href="#12-gulp-autoprefixer-给-css-项处理浏览器前缀" class="headerlink" title="12. gulp-autoprefixer 给 css 项处理浏览器前缀"></a>12. gulp-autoprefixer 给 css 项处理浏览器前缀</h5><p><code>cnpm install --save-dev gulp-autoprefixer</code></p>
+<pre><code>const autoprefixer = require(&apos;gulp-autoprefixer&apos;);
+
+// 自动补齐css前缀
+gulp.task(&apos;autoprefixer&apos;, () =&gt; {
+    gulp.src(&apos;src/index.css&apos;)
+        .pipe(autoprefixer({
+            browsers: [&apos;last 2 versions&apos;], // 主流浏览器的最新两个版本
+            cascade: true, // 是否美化属性值 默认：true
+            remove:true // 是否去掉不必要的前缀 默认：true 
+        }))
+        .pipe(gulp.dest(&apos;dist&apos;))
+});
+
+
+
+// 需要适配的页面
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    @@include(&apos;include/header.html&apos;)
+
+    &lt;p&gt; 这是 layout 的内容 &lt;/p&gt;
+
+    @@include(&apos;include/footer.html&apos;)
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><h5 id="13-gulp-file-include-头尾共用、文件合并"><a href="#13-gulp-file-include-头尾共用、文件合并" class="headerlink" title="13. gulp-file-include 头尾共用、文件合并"></a>13. gulp-file-include 头尾共用、文件合并</h5><p><code>cnpm install gulp-file-include --save-dev</code></p>
+<pre><code>const fileinclude  = require(&apos;gulp-file-include&apos;);
+
+// 头尾共用
+gulp.task(&apos;fileinclude&apos;, () =&gt; {
+    // 适配page中所有文件夹下的所有html，排除page下的include文件夹中html
+        gulp.src([&apos;src/*.html&apos;,&apos;!src/include/**.html&apos;])
+        .pipe(fileinclude({
+          prefix: &apos;@@&apos;,
+          basepath: &apos;@file&apos;
+        }))
+    .pipe(gulp.dest(&apos;dist&apos;))
+});</code></pre><h5 id="14-gulp-livereload-监听文件变化局部刷新"><a href="#14-gulp-livereload-监听文件变化局部刷新" class="headerlink" title="14. gulp-livereload 监听文件变化局部刷新"></a>14. gulp-livereload 监听文件变化局部刷新</h5><h5 id="15-gulp-imagemin-压缩图片"><a href="#15-gulp-imagemin-压缩图片" class="headerlink" title="15. gulp-imagemin 压缩图片"></a>15. gulp-imagemin 压缩图片</h5><h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><pre><code>const gulp = require(&apos;gulp&apos;);
+const babel = require(&apos;gulp-babel&apos;);
+const uglify = require(&apos;gulp-uglify&apos;);
+const htmlmin = require(&apos;gulp-htmlmin&apos;);
+const cleanCSS = require(&apos;gulp-clean-css&apos;);
+const concat = require(&apos;gulp-concat&apos;);
+const less = require(&apos;gulp-less&apos;);
+const autoprefixer = require(&apos;gulp-autoprefixer&apos;);
+const fileinclude  = require(&apos;gulp-file-include&apos;);
+
+// 头尾共用
+gulp.task(&apos;fileinclude&apos;, () =&gt; {
+    // 适配page中所有文件夹下的所有html，排除page下的include文件夹中html
+        gulp.src([&apos;src/*.html&apos;,&apos;!src/include/**.html&apos;])
+        .pipe(fileinclude({
+          prefix: &apos;@@&apos;,
+          basepath: &apos;@file&apos;
+        }))
+    .pipe(gulp.dest(&apos;dist&apos;))
+});
+
+// 压缩html和html页面内的css/js
+gulp.task(&apos;htmlmin&apos;, function () {
+    var options = {
+        removeComments: true,//清除HTML注释
+        collapseWhitespace: true,//压缩HTML
+        collapseBooleanAttributes: true,//省略布尔属性的值 &lt;input checked=&quot;true&quot;/&gt; ==&gt; &lt;input /&gt;
+        removeEmptyAttributes: true,//删除所有空格作属性值 &lt;input id=&quot;&quot; /&gt; ==&gt; &lt;input /&gt;
+        removeScriptTypeAttributes: true,//删除&lt;script&gt;的type=&quot;text/javascript&quot;
+        removeStyleLinkTypeAttributes: true,//删除&lt;style&gt;和&lt;link&gt;的type=&quot;text/css&quot;
+        minifyJS: true,//压缩页面JS
+        minifyCSS: true//压缩页面CSS
+    };
+    gulp.src(&apos;dist/*.html&apos;)
+        .pipe(htmlmin(options))
+        .pipe(gulp.dest(&apos;min&apos;));
+});
+
+// 编译less文件，如果有外部引用，为了保持项目结构，需要使用插件 gulp-sourcemaps
+gulp.task(&apos;lesstocss&apos;, function () {
+    //编译src目录下的所有less文件
+    //除了reset.less和test.less（**匹配src的0个或多个子文件夹）
+    gulp.src([&apos;src/*.less&apos;, &apos;!src/**/{reset,test}.less&apos;]) 
+        .pipe(less())
+        // 编译后自动补齐css前缀
+        .pipe(autoprefixer({
+            browsers: [&apos;last 2 versions&apos;], // 主流浏览器的最新两个版本
+            cascade: true, // 是否美化属性值 默认：true
+            remove:true // 是否去掉不必要的前缀 默认：true 
+        }))
+        // 然后压缩css文件输出到min
+        .pipe(cleanCSS({compatibility: &apos;ie8&apos;})) // 兼容IE8及以下浏览器
+        .pipe(gulp.dest(&apos;min&apos;));
+});
+
+// ES6代码转码为ES5
+gulp.task(&apos;toes5&apos;, () =&gt;
+    gulp.src(&apos;src/*.js&apos;) // 需要转码的es6文件，这里代表src文件夹下的所有js文件
+        /*
+        最新的presets: [&apos;env&apos;]，是通用版，可以转码es2015、react、es2017, 
+        这里只用于转码es2015，你可以下载相关转码依赖
+        */
+        .pipe(babel({
+            presets: [&apos;env&apos;]
+        }))
+        .pipe(gulp.dest(&apos;dist&apos;)) // 转码后的文件输出位置
+);
+
+// 合并 js 文件, 但不会转码和压缩
+gulp.task(&apos;jsconcat&apos;, () =&gt; {
+    gulp.src(&apos;src/*.js&apos;)
+        .pipe(concat(&apos;index.js&apos;)) // 合并后的文件名
+        .pipe(gulp.dest(&apos;dist&apos;))
+});
+
+// JS代码压缩
+gulp.task(&apos;jsmin&apos;, () =&gt;
+    gulp.src(&apos;dist/*.js&apos;) // 需要压缩的js文件
+        .pipe(uglify())
+        .pipe(gulp.dest(&apos;min&apos;)) // 压缩的js文件输出位置
+);
+
+
+
+// // 使用监听，但是需要预先使用命令 gulp auto，文件如果修改了，就一步到位
+// gulp.task(&apos;auto&apos;, () =&gt; {
+//     gulp.watch(&apos;src/*.js&apos;, [&apos;toes5&apos;]) // 需要转码的js文件位置 + 口令
+//     gulp.watch(&apos;dist/*.js&apos;, [&apos;jsmin&apos;]) // 需要压缩的js文件位置 + 口令
+//     // gulp.watch...
+// });</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/09/06/Gulp/" data-id="ck8gp7rxp0002kb9hcd7j56f5" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-webpack3(三)" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/12/webpack3(%E4%B8%89)/" class="article-date">
+  <time datetime="2018-07-12T02:45:08.000Z" itemprop="datePublished">2018-07-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/webpack/">webpack</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/12/webpack3(%E4%B8%89)/">webpack(三)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>目录</p>
+<blockquote>
+<p>5.3 JS打包</p>
+<blockquote>
+<p>5.3.1 JS压缩/hash命名</p>
+<p>5.3.2 babel转码ES6/ES7/JSX</p>
+</blockquote>
+<p>5.4 图片打包与路径坑</p>
+<blockquote>
+<p>5.4.1 图片在CSS中</p>
+<p>5.4.2 图片路径问题(包括分离后的CSS路径问题)</p>
+<p>5.4.3 关于HTML中的图片</p>
+</blockquote>
+</blockquote>
+<ol start="6">
+<li>打包后的调试</li>
+</ol>
+</blockquote>
+<h3 id="5-3-JS打包"><a href="#5-3-JS打包" class="headerlink" title="5.3 JS打包"></a>5.3 JS打包</h3><h4 id="5-3-1-JS压缩-hash命名"><a href="#5-3-1-JS压缩-hash命名" class="headerlink" title="5.3.1 JS压缩/hash命名"></a>5.3.1 JS压缩/hash命名</h4><p><code>uglifyjs-webpack-plugin</code>压缩插件是<code>webpack</code>版本里默认已经集成，不需再次安装。在<code>webpack.config.js</code>中引入即可：</p>
+<pre><code>const uglify = require(&apos;uglifyjs-webpack-plugin&apos;);</code></pre><p>引入后，在<code>plugins</code>配置一下就可以了：</p>
+<pre><code>plugins:[
+    // 压缩js
+    new uglify()
+],</code></pre><p>然后使用<code>npm run start</code>打包即可。</p>
+<p><strong>js文件的hash命名</strong></p>
+<p>如果需要给js文件一个<code>hash</code>命名，可以在<code>output</code>中的<code>filename</code>进行配置:</p>
+<pre><code>filename: &apos;[hash].js&apos;
+// filename: &apos;[chunkhash].js&apos;</code></pre><p><a href="http://blog.csdn.net/Scarlett_Dream/article/details/78856240" target="_blank" rel="noopener">关于hash和chunkhash的区别</a></p>
+<p><strong>清除重复不同hash名的js</strong></p>
+<p>使用<code>clean-webpack-plugin</code>，不过也可以通过直接删除<code>dist</code>文件夹，然后再次打包的方式来更新，此处请查阅官方文档。</p>
+<h4 id="5-3-2-babel转码ES6-ES7-JSX"><a href="#5-3-2-babel转码ES6-ES7-JSX" class="headerlink" title="5.3.2 babel转码ES6/ES7/JSX"></a>5.3.2 babel转码ES6/ES7/JSX</h4><p><code>Babel</code>是一个编译<code>JavaScript</code>的平台，它可以帮你使用<code>ES6/ES7/JSX</code>等js扩展语言。我们需要下载<code>babel-core</code>、<code>babel-loader</code>，扩展<code>es6/7/8</code>，下载<code>babel-preset-env</code>，扩展<code>JSX</code>(使用<code>react</code>的话)下载<code>babel-preset-react</code>。</p>
+<pre><code>cnpm install --save-dev babel-core babel-loader babel-preset-react babel-preset-env</code></pre><p>下载后在项目根目录新建<code>.babelrc</code>文件，并把配置写到文件里。</p>
+<pre><code>{
+    &quot;presets&quot;:[&quot;react&quot;,&quot;env&quot;]
+}</code></pre><p>在<code>webpack.config.js</code>中<code>module</code>进行配置：</p>
+<pre><code>{
+    test:/\.(jsx|js)$/,
+    use:{
+        loader:&apos;babel-loader&apos;,
+    },
+    exclude:/node_modules/
+}</code></pre><p><strong>继续前面的例子</strong></p>
+<p>配置完毕，我们可以在<code>entry.js</code>添加代码：</p>
+<pre><code>let xushao = &quot;shuai&quot;;</code></pre><p>然后打包试试看，是不是成功了，哈哈。</p>
+<h3 id="5-4-图片打包与路径坑"><a href="#5-4-图片打包与路径坑" class="headerlink" title="5.4 图片打包与路径坑"></a>5.4 图片打包与路径坑</h3><h4 id="5-4-1-图片在CSS中"><a href="#5-4-1-图片在CSS中" class="headerlink" title="5.4.1 图片在CSS中"></a>5.4.1 图片在CSS中</h4><p><strong>例如：</strong><br>在<code>src</code>下创建<code>images</code>文件夹，放入图片<code>1.png</code>,编辑<code>HTML文件</code>和<code>css文件</code>：</p>
+<pre><code>html中添加：
+&lt;div id=&quot;tupian&quot;&gt;&lt;/div&gt;
+
+css中添加：
+#tupian{
+   background-image: url(../images/1.png);
+   width:466px;
+   height:453px;
+}</code></pre><p>我们需要安装<code>file-loader</code>和<code>url-loader</code>两个<code>loader</code>(其实<code>url-loader</code>内置了<code>file-loader</code>，但是为了保险起见和解决一些路径问题，所以建议同时单独安装<code>file-loader</code>):</p>
+<pre><code>cnpm install --save-dev file-loader url-loader</code></pre><p><code>file-loader</code>: 解决引用路径的问题,可以解析项目中的url引入（图片和ccss文件等）。</p>
+<p><code>url-loader</code>: 将引入的图片编码。为了避免图片较大导致编码消耗性能，可以通过<code>limit</code>参数限制，小于<code>limit</code>的文件被转化为<code>DataURL</code>。</p>
+<p><strong>在<code>module</code>中配置url-loader：</strong></p>
+<pre><code>{
+    // test:/\.(png|jpg|gif)/是匹配图片文件后缀名称
+    test:/\.(png|jpg|gif)/ ,
+    // use：是指定使用的loader和loader的配置参数
+    use:[{
+            loader:&apos;url-loader&apos;,
+            options:{
+                // 是把小于8192的文件转换成成Base64的格式
+                limit: 8192,
+                // 打包输出到images文件夹下
+                outputPath:&apos;images/&apos;
+            }
+        }]
+}</code></pre><p>配置完毕后可以开始打包试试了。</p>
+<h4 id="5-4-2-图片路径问题-包括分离后的CSS路径问题"><a href="#5-4-2-图片路径问题-包括分离后的CSS路径问题" class="headerlink" title="5.4.2 图片路径问题(包括分离后的CSS路径问题)"></a>5.4.2 图片路径问题(包括分离后的CSS路径问题)</h4><p>如果你的<code>css</code>分离后或者你的图片引入发现路径有问题，可以使用<code>publicPath</code>解决，它主要在<code>webpack</code>配置文件的<code>output</code>选项中处理静态文件路径。</p>
+<p>我们可以声明一个对象：</p>
+<pre><code>var website ={
+    // 这里的IP和端口，是你本机的ip或者是你devServer配置的IP和端口。
+    publicPath:&quot;http://113.250.159.94:1010&quot;
+}</code></pre><p>然后在output选项中引用这个对象的publicPath属性：</p>
+<pre><code>//出口文件的配置项
+output:{
+    //输出的路径，用了Node语法
+    path:path.resolve(__dirname,&apos;dist&apos;),
+    //输出的文件名称
+    filename:&apos;[name].js&apos;,
+    publicPath:website.publicPath
+},</code></pre><p>配置后进行打包，相对路径改为了绝对路径，速度稍微也变快了些。</p>
+<h4 id="5-4-3-关于HTML中的图片"><a href="#5-4-3-关于HTML中的图片" class="headerlink" title="5.4.3 关于HTML中的图片"></a>5.4.3 关于HTML中的图片</h4><p>标签<code>&lt;img&gt;</code>引入的图片怎么办呢？你可以使用一个不是很火但是很实用的<code>loader</code>——<code>html-withimg-loader</code>:</p>
+<pre><code>cnpm install html-withimg-loader --save-dev</code></pre><p>再配置一下<code>module</code>:</p>
+<pre><code>{
+    test: /\.(htm|html)$/i,
+    use:[ &apos;html-withimg-loader&apos;] 
+}</code></pre><p>然后就可以开始打包了。</p>
+<h2 id="6-打包后的调试"><a href="#6-打包后的调试" class="headerlink" title="6. 打包后的调试"></a>6. 打包后的调试</h2><p>我们可以通过配置<code>devtool</code>进行开发调试，但要记得上线前修改这些调试。</p>
+<pre><code>devtool: &apos;eval-source-map&apos;,</code></pre><p>常用四种选项：</p>
+<p><code>source-map</code>:在一个单独文件中产生一个完整且功能完全的文件。打包速度比较慢。</p>
+<p><code>cheap-module-source-map</code>:在一个单独的文件中产生一个不带列映射的map，不带列映射提高了打包速度，但是也使得浏览器开发者工具只能对应到具体的行，不能对应到具体的列（符号）,会对调试造成不便。</p>
+<p> <code>eval-source-map</code>:使用<code>eval</code>打包源文件模块，在同一个文件中生产干净的完整版的<code>sourcemap</code>，但是对打包后输出的JS文件的执行具有性能和安全的隐患。在开发阶段这是一个非常好的选项，在生产阶段则一定要不开启这个选项。</p>
+<p> <code>cheap-module-eval-source-map</code>:这是在打包文件时最快的生产<code>source map</code>的方法，生产的 <code>Source map</code> 会和打包后的<code>JavaScript</code>文件同行显示，没有影射列，和<code>eval-source-map</code>选项具有相似的缺点。</p>
+<p>【建议：大型项目可以使用source-map；中小型项目使用eval-source-map就完全可以应对。这些调试只适用于开发阶段，上线前记得修改这些调试设置】</p>
+<p><img src="https://thumbnail0.baidupcs.com/thumbnail/9c0f8419c448613afe5e9ce4e03c42dd?fid=1737706044-250528-418203039170764&time=1517058000&rt=sh&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-Qkr71fUc1rIISl3r2mSINMehzCM%3D&expires=8h&chkv=0&chkbd=0&chkpc=&dp-logid=624108863495940664&dp-callid=0&size=c710_u400&quality=100&vuk=-&ft=video" alt="分割线"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/07/12/webpack3(%E4%B8%89)/" data-id="ck8gp7rxy000dkb9he6vg91nh" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-webpack3(二)" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/04/01/webpack3(%E4%BA%8C)/" class="article-date">
@@ -969,7 +1378,7 @@ watchOptions: {
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
     </div>
   </div>
 
@@ -982,7 +1391,11 @@ watchOptions: {
       <ul>
         
           <li>
-            <a href="/2020/04/19/%E3%80%8AJust-JavaScript%E3%80%8B03-%E5%80%BC%E5%92%8C%E5%8F%98%E9%87%8F/">《Just JavaScript》03. 值和变量</a>
+            <a href="/2020/05/18/%E3%80%8AJust-JavaScript%E3%80%8B05.-%E8%AE%A1%E7%AE%97%E6%95%B0%E5%80%BC2/">《Just JavaScript》05. 计算数值2</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/15/%E3%80%8AJust-JavaScript%E3%80%8B04-%E8%AE%A1%E7%AE%97%E6%95%B0%E5%80%BC/">《Just JavaScript》04. 计算数值</a>
           </li>
         
           <li>
@@ -994,11 +1407,7 @@ watchOptions: {
           </li>
         
           <li>
-            <a href="/2019/07/31/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/">内存模型</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/01/%E9%97%AD%E5%8C%85/">闭包</a>
+            <a href="/2020/03/31/%E3%80%8AJust-JavaScript%E3%80%8B03-%E5%80%BC%E5%92%8C%E5%8F%98%E9%87%8F/">《Just JavaScript》03. 值和变量</a>
           </li>
         
       </ul>

@@ -5,14 +5,14 @@
   
 
   
-  <title>《Just JavaScript》03. 值和变量 | 随便写写</title>
+  <title>《Just JavaScript》04. 计算数值 | 随便写写</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="我们将以一个小的代码片段开始这个模块。 123let reaction &#x3D; &#39;yikes&#39;;reaction[0] &#x3D; &#39;l&#39;;console.log(reaction);  你希望它做什么？我们还没有讲到这个，所以如果你不确定的话没关系。试着用你目前的JavaScript知识来回答这个问题。 现在我想让你花点时间，一步一步地为这段代码的每一行写下你确切的思考过程。注意你现有的思维模型中的任何欠缺">
+  <meta name="description" content="在本模块中，我们将更深入地了解JavaScript世界和其中的值。但在我们开始之前，我们需要先正视这个问题，JavaScript世界是真的吗？ JavaScript模式我住在JavaScript宇宙中的小行星上。 当我问JavaScript世界一个问题时，它用一个值来回答我。这所有的值当然不是我一个人提出来的。变量，导线，值——它们都居住在我的世界。我周围的JavaScript世界对我来说是绝对真">
 <meta property="og:type" content="article">
-<meta property="og:title" content="《Just JavaScript》03. 值和变量">
-<meta property="og:url" content="http://yoursite.com/2020/04/19/%E3%80%8AJust-JavaScript%E3%80%8B03-%E5%80%BC%E5%92%8C%E5%8F%98%E9%87%8F/index.html">
+<meta property="og:title" content="《Just JavaScript》04. 计算数值">
+<meta property="og:url" content="http://yoursite.com/2020/04/15/%E3%80%8AJust-JavaScript%E3%80%8B04-%E8%AE%A1%E7%AE%97%E6%95%B0%E5%80%BC/index.html">
 <meta property="og:site_name" content="随便写写">
-<meta property="og:description" content="我们将以一个小的代码片段开始这个模块。 123let reaction &#x3D; &#39;yikes&#39;;reaction[0] &#x3D; &#39;l&#39;;console.log(reaction);  你希望它做什么？我们还没有讲到这个，所以如果你不确定的话没关系。试着用你目前的JavaScript知识来回答这个问题。 现在我想让你花点时间，一步一步地为这段代码的每一行写下你确切的思考过程。注意你现有的思维模型中的任何欠缺">
+<meta property="og:description" content="在本模块中，我们将更深入地了解JavaScript世界和其中的值。但在我们开始之前，我们需要先正视这个问题，JavaScript世界是真的吗？ JavaScript模式我住在JavaScript宇宙中的小行星上。 当我问JavaScript世界一个问题时，它用一个值来回答我。这所有的值当然不是我一个人提出来的。变量，导线，值——它们都居住在我的世界。我周围的JavaScript世界对我来说是绝对真">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/blog_imgs/just_javascript/03/spoilers.jpg">
 <meta property="og:image" content="http://yoursite.com/blog_imgs/just_javascript/03/unnamed.png">
@@ -22,8 +22,8 @@
 <meta property="og:image" content="http://yoursite.com/blog_imgs/just_javascript/03/unnamed2.gif">
 <meta property="og:image" content="http://yoursite.com/blog_imgs/just_javascript/03/unnamed3.gif">
 <meta property="og:image" content="http://yoursite.com/blog_imgs/just_javascript/03/unnamed4.gif">
-<meta property="article:published_time" content="2020-04-19T10:36:08.000Z">
-<meta property="article:modified_time" content="2020-04-19T10:49:33.322Z">
+<meta property="article:published_time" content="2020-04-15T10:36:08.000Z">
+<meta property="article:modified_time" content="2020-05-19T03:31:50.158Z">
 <meta property="article:author" content="zxl">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/blog_imgs/just_javascript/03/spoilers.jpg">
@@ -75,10 +75,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-《Just-JavaScript》03-值和变量" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-《Just-JavaScript》04-计算数值" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/04/19/%E3%80%8AJust-JavaScript%E3%80%8B03-%E5%80%BC%E5%92%8C%E5%8F%98%E9%87%8F/" class="article-date">
-  <time datetime="2020-04-19T10:36:08.000Z" itemprop="datePublished">2020-04-19</time>
+    <a href="/2020/04/15/%E3%80%8AJust-JavaScript%E3%80%8B04-%E8%AE%A1%E7%AE%97%E6%95%B0%E5%80%BC/" class="article-date">
+  <time datetime="2020-04-15T10:36:08.000Z" itemprop="datePublished">2020-04-15</time>
 </a>
     
   <div class="article-category">
@@ -93,7 +93,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      《Just JavaScript》03. 值和变量
+      《Just JavaScript》04. 计算数值
     </h1>
   
 
@@ -101,7 +101,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>我们将以一个小的代码片段开始这个模块。</p>
+        <p>在本模块中，我们将更深入地了解JavaScript世界和其中的值。但在我们开始之前，我们需要先正视这个问题，JavaScript世界是真的吗？</p>
+<h2 id="JavaScript模式"><a href="#JavaScript模式" class="headerlink" title="JavaScript模式"></a>JavaScript模式</h2><p>我住在JavaScript宇宙中的小行星上。</p>
+<p>当我问JavaScript世界一个问题时，它用一个值来回答我。这所有的值当然不是我一个人提出来的。变量，导线，值——它们都居住在我的世界。我周围的JavaScript世界对我来说是绝对真实的，就像你生活的世界对你来说是真实的一样。</p>
+<p>但有时，在下一行代码之前会有片刻的沉默。在下一个函数调用前的空闲时间，</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> reaction = <span class="string">'yikes'</span>;</span><br><span class="line">reaction[<span class="number">0</span>] = <span class="string">'l'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(reaction);</span><br></pre></td></tr></table></figure>
 
 <p>你希望它做什么？我们还没有讲到这个，所以如果你不确定的话没关系。<strong>试着用你目前的JavaScript知识来回答这个问题。</strong></p>
@@ -208,7 +211,7 @@
 <p><img src="/blog_imgs/just_javascript/03/unnamed1.gif" alt=""></p>
 <p>我在这里所做的只是告知JavaScript将左侧的“wire”（我的pet变量）指向右侧的值（“The Kraken”）。它将一直指向那个值，除非我之后重新分配它。</p>
 <p>注意，我不能在左边放任何东西：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'war'</span> = <span class="string">'peace'</span>; <span class="comment">// Nope. (Try it in the console.)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'war'</span> = <span class="string">'peace'</span>; <span class="comment">// Nope.(Try it in the console.)</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>赋值的左侧必须是导线。</strong>目前，我们只知道变量是“导线”。但是还有另一种“导线”我们将在后面的模块中讨论。也许，你能猜出是什么？（提示：它包含方括号或点，我们已经见过几次了）。</p>
 <p>还有另外一条规则。</p>
@@ -227,7 +230,7 @@
 <h3 id="名词和动词"><a href="#名词和动词" class="headerlink" title="名词和动词"></a>名词和动词</h3><p>谁在乎你说的是“传递变量”还是“传递值”？深究这点差别不是过于卖弄学问吗？我当然不会打断你的同事来纠正他们，甚至是你自己。那将会浪费大家的时间。</p>
 <p>但在你的头脑中，你需要清楚地知道你可以用每一个概念做什么。你不能骑自行车溜冰。你不能让鳄梨费气力啊。你不能像蚊子一样发嗖嗖声。而且你不能传递一个变量——至少在JavaScript中不能。</p>
 <p>这里有一个小例子说明为什么这些细节很重要。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">double</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">    x = x * <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> money = <span class="number">10</span>;</span><br><span class="line">double(money);</span><br><span class="line"><span class="built_in">console</span>.log(money); <span class="comment">// ?</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">double</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    x = x * <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> money = <span class="number">10</span>;</span><br><span class="line">double(money);</span><br><span class="line"><span class="built_in">console</span>.log(money); <span class="comment">// ?</span></span><br></pre></td></tr></table></figure>
 
 <p>如果我们认为double（money）传递了一个变量，那么我们可以预期x=x*2将使该变量加倍。但事情不是这样的。我们知道double（money）的意思是“计算出货币的价值，然后将其传递给double”。所以答案是10。真是个骗局！</p>
 <p>你脑子里有哪些不同的JavaScript名词和动词？他们之间有什么关系？将你最常使用的列一个清单。</p>
@@ -257,14 +260,18 @@
 </li>
 <li><p>把x的值赋给y</p>
 <ul>
-<li>计算表达式：x<ul>
+<li><p>计算表达式：x</p>
+<ul>
 <li>我们要回答的问题是“x”</li>
 <li><strong>跟随x的导线——答案是值10</strong></li>
 </ul>
 </li>
-<li>x表达式结果是值10</li>
-<li>因此，将10的值赋给y</li>
-<li>把y的导线指向值10</li>
+<li><p>x表达式结果是值10</p>
+</li>
+<li><p>因此，将10的值赋给y</p>
+</li>
+<li><p>把y的导线指向值10</p>
+</li>
 </ul>
 <p><strong>最后，我们进入第三行：</strong></p>
 </li>
@@ -293,14 +300,14 @@
 </li>
 </ul>
 <h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><p>本单元也有练习题供你练习！</p>
-<p><a href="https://el2.convertkit-mail.com/c/o8u6klng6ncwu4e40piv/6gtehou6oom6de/aHR0cHM6Ly9lZ2doZWFkaW8udHlwZWZvcm0uY29tL3RvL1JXSmczbT9lbWFpbD1ha2loaTk1QGdtYWlsLmNvbQ==" target="_blank" rel="noopener">点击这里，通过一些简短的练习巩固这个心理模型。</a></p>
+<p><a href="https://el2.convertkit-mail.com/c/o8u6klng6ncwu4e40piv/6gtehou6oom6de/aHR0cHM6Ly9lZ2doZWFkaW8udHlwZWZvcm0uY29tL3RvL1JXSmczbT9lbWFpbD1ha2loaTk1QGdtYWlsLmNvbQ==" target="_blank" rel="noopener">点击这里，通过一些简短的练习巩固这个思维模型。</a></p>
 <p><strong>不要跳过它们！</strong></p>
-<p>即使你可能熟悉变量的概念，这些练习将帮助你巩固我们正在建立的心理模型。我们需要这个基础才能继续更复杂的话题。</p>
+<p>即使你可能熟悉变量的概念，这些练习将帮助你巩固我们正在建立的思维模型。我们需要打好基础才能继续更复杂的话题。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/19/%E3%80%8AJust-JavaScript%E3%80%8B03-%E5%80%BC%E5%92%8C%E5%8F%98%E9%87%8F/" data-id="ck96xik9l0000sljcbv41b6wf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/15/%E3%80%8AJust-JavaScript%E3%80%8B04-%E8%AE%A1%E7%AE%97%E6%95%B0%E5%80%BC/" data-id="ckadd1l2o00006x9h6pyyb05e" class="article-share-link">Share</a>
       
       
     </footer>
@@ -308,6 +315,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2020/05/18/%E3%80%8AJust-JavaScript%E3%80%8B05.-%E8%AE%A1%E7%AE%97%E6%95%B0%E5%80%BC2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          《Just JavaScript》05. 计算数值2
+        
+      </div>
+    </a>
   
   
     <a href="/2020/04/01/%E3%80%8AJust-JavaScript%E3%80%8B02-JavaScript%E5%AE%87%E5%AE%99/" id="article-nav-older" class="article-nav-link-wrap">
@@ -357,7 +373,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
     </div>
   </div>
 
@@ -370,7 +386,11 @@
       <ul>
         
           <li>
-            <a href="/2020/04/19/%E3%80%8AJust-JavaScript%E3%80%8B03-%E5%80%BC%E5%92%8C%E5%8F%98%E9%87%8F/">《Just JavaScript》03. 值和变量</a>
+            <a href="/2020/05/18/%E3%80%8AJust-JavaScript%E3%80%8B05.-%E8%AE%A1%E7%AE%97%E6%95%B0%E5%80%BC2/">《Just JavaScript》05. 计算数值2</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/15/%E3%80%8AJust-JavaScript%E3%80%8B04-%E8%AE%A1%E7%AE%97%E6%95%B0%E5%80%BC/">《Just JavaScript》04. 计算数值</a>
           </li>
         
           <li>
@@ -382,11 +402,7 @@
           </li>
         
           <li>
-            <a href="/2019/07/31/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/">内存模型</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/01/%E9%97%AD%E5%8C%85/">闭包</a>
+            <a href="/2020/03/31/%E3%80%8AJust-JavaScript%E3%80%8B03-%E5%80%BC%E5%92%8C%E5%8F%98%E9%87%8F/">《Just JavaScript》03. 值和变量</a>
           </li>
         
       </ul>
