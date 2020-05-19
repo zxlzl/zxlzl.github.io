@@ -5,17 +5,17 @@
   
 
   
-  <title>随便写写~</title>
+  <title>随便写写</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
-<meta property="og:title" content="随便写写~">
+<meta property="og:title" content="随便写写">
 <meta property="og:url" content="http://yoursite.com/page/2/index.html">
-<meta property="og:site_name" content="随便写写~">
+<meta property="og:site_name" content="随便写写">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="zxl">
 <meta name="twitter:card" content="summary">
   
-    <link rel="alternate" href="/atom.xml" title="随便写写~" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="随便写写" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -36,7 +36,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">随便写写~</a>
+        <a href="/" id="logo">随便写写</a>
       </h1>
       
     </div>
@@ -63,6 +63,350 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-webpack3(二)" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/01/webpack3(%E4%BA%8C)/" class="article-date">
+  <time datetime="2018-04-01T10:43:08.000Z" itemprop="datePublished">2018-04-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/webpack/">webpack</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/01/webpack3(%E4%BA%8C)/">webpack(二)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>目录</p>
+<ol start="5">
+<li>模块与插件配置</li>
+</ol>
+<blockquote>
+<p>5.1 发布HTML</p>
+<p>5.2  CSS打包</p>
+<blockquote>
+<p>5.2.1  分离CSS</p>
+<p>5.2.2 压缩(丑化)css代码</p>
+<p>5.2.3 自动处理CSS3属性前缀</p>
+<p>5.2.4 消除未使用的CSS</p>
+<p>5.2.5 less打包</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2 id="5-模块与插件配置"><a href="#5-模块与插件配置" class="headerlink" title="5. 模块与插件配置"></a>5. 模块与插件配置</h2><p>什么是<code>Loaders</code>? <code>loader</code> 用于对模块的源代码进行转换。是<code>webpack</code>最重要的功能，它有如下配置项：</p>
+<pre><code>test: 用于匹配处理文件的扩展名的正则表达式，必须配置
+
+use: loader名称(就是你要使用的模块的名称)，必须配置
+
+include/exclude: 手动添加的&apos;必须处理的文件(文件夹)/屏蔽不需要处理的文件(文件夹)&apos;，可选配置
+
+query: 为loaders提供额外的设置选项（可选）</code></pre><h3 id="5-1-发布HTML"><a href="#5-1-发布HTML" class="headerlink" title="5.1 发布HTML"></a>5.1 发布HTML</h3><p>我们在src下创建一个<code>index.html</code>文件：</p>
+<pre><code>- webpack
+    + dist // 文件输出目录
+    + node_modules // node包依赖
+    - src // 源码文件目录
+        entry.js // webpack的入口文件
+        index.html 
+    package.json
+    webpack.config.js // webpack配置文件</code></pre><p><code>index.html</code>:</p>
+<pre><code>&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;!-- 手机页面中加入这句话，可以让页面适应设备的宽度。initial-scale - 初始的缩放比例 --&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;!-- Edge 模式通知 Windows Internet Explorer 以最高级别的可用模式显示内容 --&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=Edge&quot;&gt;
+    &lt;title&gt;XQF webpack test&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id=&quot;gogo&quot;&gt;&lt;/div&gt;
+    &lt;div id=&quot;title&quot;&gt;&lt;/div&gt;
+    &lt;p&gt;我是小段落123&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><p>▲ 这份<code>index.html</code>文件没有js引入，<code>webpack</code>会为我们自动引入<code>js</code>。它还能够通过入口js文件帮我们自动引入<code>css</code>文件。</p>
+<p>我们先安装<code>html-webpack-plugin</code>，它简化了HTML文件的创建，以便为你的webpack包提供服务：</p>
+<pre><code>cnpm install --save-dev html-webpack-plugin</code></pre><p>然后在<code>webpack.config.js</code>中引入插件：</p>
+<pre><code>// 头部require
+const htmlPlugin = require(&apos;html-webpack-plugin&apos;);
+
+// 在plugins中插入
+new htmlPlugin({
+    // minify：是对html文件进行压缩，removeAttrubuteQuotes是却掉属性的双引号。
+    minify:{
+        removeAttributeQuotes:true
+    },
+    // hash：为了开发中js有缓存效果，所以加入hash，这样可以有效避免缓存JS。
+    hash:true,
+    // template：是要打包的html模版路径和文件名称。
+    template:&apos;./src/index.html&apos;
+})</code></pre><h3 id="5-2-CSS打包"><a href="#5-2-CSS打包" class="headerlink" title="5.2 CSS打包"></a>5.2 CSS打包</h3><p>在<code>src</code>创建文件夹<code>css</code>，在<code>css</code>里创建<code>index.css</code>:</p>
+<pre><code>- src
+    - css
+        index.css</code></pre><p><code>index.css</code>:</p>
+<pre><code>body {
+    background-color: #D5B740;
+    color: black;
+}
+#gogo {
+    width: 466px;
+    height: 453px;
+    transform: rotate(45deg);
+    box-shadow: 1px 1px 0 rgba(0,0,0,.25);
+}
+#meiyong {
+    width: 100%;
+}
+#meiyong2 {
+    width: 50%;
+}</code></pre><p>css打包需要<code>style-loader</code>、<code>css-loader</code>两个<code>loader</code>。 ==一般这两个<code>loader</code>结合使用，顺序是<code>style-loader</code>在前== ：</p>
+<pre><code>// 使用npm下载两个`loader`:
+cnpm install --save-dev style-loader css-loader</code></pre><p><code>style-loader</code>: 让js解析css。</p>
+<p><code>css-loader</code>: <code>css-loader</code> 解释(<code>interpret</code>) <code>@import</code> 和 <code>url()</code> ，会 <code>import/require()</code> 后再解析<code>(resolve)</code>它们。</p>
+<p>在入口文件<code>entry.js</code>里引入<code>css</code>：</p>
+<pre><code>import css from &apos;./css/index.css&apos;;</code></pre><p>在<code>webpack.config.js</code>的配置:</p>
+<pre><code>module: {
+    rules: [
+        {
+            test: /\.css$/,
+            use: [ &apos;style-loader&apos;, &apos;css-loader&apos; ]
+            // use可以换作loader
+            // loader: [ &apos;style-loader&apos;, &apos;css-loader&apos; ]
+        }
+    ]
+},</code></pre><p>执行<code>npm start</code>打包一下，我们发现打包成功了。我们可以执行<code>npm run server</code>在服务端查看一下。</p>
+<h4 id="5-2-1-分离CSS"><a href="#5-2-1-分离CSS" class="headerlink" title="5.2.1 分离CSS"></a>5.2.1 分离CSS</h4><p>但是我们发现<code>css</code>是打包在<code>js</code>里的，因为<code>webpack</code>官方认为CSS就应该打包到<code>JavasScript</code>当中以减少<code>http</code>的请求数，但现实需求有时候需要分离<code>css</code>。那么我们需要一个插件<code>extract-text-webpack-plugin</code>：</p>
+<pre><code>cnpm install --save-dev extract-text-webpack-plugin</code></pre><p>安装完成后在<code>webpack.config.js</code>中引用</p>
+<pre><code>// 顶部require引入
+const extractTextPlugin = require(&quot;extract-text-webpack-plugin&quot;);
+
+// 在module中进行配置
+{
+    test: /\.css$/,
+    use: extractTextPlugin.extract({
+        fallback: &quot;style-loader&quot;,
+        use: &apos;css-loader&apos;
+    })                
+},
+
+// 在plugins中进行配置
+plugins:[
+    new extractTextPlugin(&quot;./css/index.css&quot;)
+],</code></pre><h4 id="5-2-2-压缩-丑化-css代码"><a href="#5-2-2-压缩-丑化-css代码" class="headerlink" title="5.2.2 压缩(丑化)css代码"></a>5.2.2 压缩(丑化)css代码</h4><p>设置 <code>minimize:true</code> ,就可以压缩<code>css</code>了。</p>
+<pre><code>module: {
+    rules: [
+        {
+            test: /\.css$/,
+            use: extractTextPlugin.extract({
+                fallback: &quot;style-loader&quot;,
+                use: [
+                    { loader: &apos;css-loader&apos;, options: { minimize: true } }
+                ]
+            })
+        }
+    ]
+},</code></pre><h4 id="5-2-3-自动处理CSS3属性前缀"><a href="#5-2-3-自动处理CSS3属性前缀" class="headerlink" title="5.2.3 自动处理CSS3属性前缀"></a>5.2.3 自动处理CSS3属性前缀</h4><p>下载 <code>postcss-loader</code> 和<code>autoprefixer</code>（自动添加前缀的插件）。</p>
+<pre><code>cnpm install --save-dev postcss-loader autoprefixer</code></pre><p>在<code>src</code>下建立<code>postcss.config.js</code>:</p>
+<pre><code>- webpack
+    + dist // 文件输出目录
+    + node_modules // node包依赖
+    - src // 源码文件目录
+        - css
+            index.css
+        entry.js // webpack的入口文件
+        index.html 
+    package.json
+    postcss.config.js // postcss配置文件
+    webpack.config.js // webpack配置文件</code></pre><p><code>postcss.config.js</code>:</p>
+<pre><code>module.exports = {
+    plugins: [
+        require(&apos;autoprefixer&apos;)
+    ]
+}</code></pre><p>没有配置外部css导出，在<code>module</code>这样配置<code>postcss</code>:</p>
+<pre><code>{
+      test: /\.css$/,
+      use: [
+            {
+              loader: &quot;style-loader&quot;
+            }, {
+              loader: &quot;css-loader&quot;,
+              options: {
+                 modules: true
+              }
+            }, {
+              loader: &quot;postcss-loader&quot;
+            }
+      ]
+}</code></pre><p>配置了<code>extractTextPlugin</code>，在<code>module</code>这样配置<code>postcss</code>:</p>
+<pre><code>{
+    test: /\.css$/,
+    use: extractTextPlugin.extract({
+        fallback: &apos;style-loader&apos;,
+        use: [
+            { loader: &apos;css-loader&apos;, options: { importLoaders: 1 } },
+            &apos;postcss-loader&apos;
+        ]
+    })
+
+}</code></pre><p>执行打包处理，自动加上css前缀。</p>
+<h4 id="5-2-4-消除未使用的CSS"><a href="#5-2-4-消除未使用的CSS" class="headerlink" title="5.2.4 消除未使用的CSS"></a>5.2.4 消除未使用的CSS</h4><p>对于框架(比如<code>bootstrap</code>)或者自己修改后没有使用的css，可以使用<code>PurifyCSS-webpack</code>：</p>
+<pre><code>// -D代表的是–save-dev ,只是一个简写
+//  需要安装purifyCSS-webpack、purify-css这两个包
+cnpm i -D purifycss-webpack purify-css</code></pre><p>因为我们需要同步检查html模板，所以我们需要引入node的glob对象使用。同时，引入purifycss-webpack。</p>
+<pre><code>const glob = require(&apos;glob&apos;);
+const PurifyCSSPlugin = require(&quot;purifycss-webpack&quot;);</code></pre><p>我们在<code>plugins</code>中配置:</p>
+<pre><code>// PurifyCSSPlugin 要在 extractTextPlugin 之前，不然 extractTextPlugin 里的压缩和自动前缀可能被影响
+new PurifyCSSPlugin({
+    // 配置了一个paths，主要是需找html模板，purifycss根据这个配置会遍历你的文件，查找哪些css被使用了
+    paths: glob.sync(path.join(__dirname, &apos;src/*.html&apos;)),
+}),</code></pre><h4 id="5-2-5-less打包"><a href="#5-2-5-less打包" class="headerlink" title="5.2.5 less打包"></a>5.2.5 less打包</h4><p>确定你的生产环境中配了<code>less</code>服务：</p>
+<pre><code>cnpm install --save-dev less</code></pre><p>然后安装<code>less-loader</code>:</p>
+<pre><code>cnpm install --save-dev less-loader</code></pre><p>在<code>src/css</code>下创建 <code>myless.less</code>：</p>
+<pre><code>@base :#000;
+#gogo{
+    width:300px;
+    height:300px;
+    background-color:@base;
+}</code></pre><p>配置了<code>extractTextPlugin</code>，在<code>module</code>里这样配置<code>less-loader</code>:</p>
+<pre><code>{
+    test: /\.less$/,
+    use: extractTextPlugin.extract({
+        use: [{
+            loader: &quot;css-loader&quot;,
+            options: { minimize: true }
+        }, {
+            loader: &quot;less-loader&quot;
+        },{
+            loader: &apos;postcss-loader&apos;
+        }],
+        fallback: &quot;style-loader&quot;
+    })
+}</code></pre><p>在<code>entry.js</code>中配置：</p>
+<pre><code>import less from &apos;./css/black.less&apos;;</code></pre><p>【sass亦同 : 需要在项目目录下用npm安装两个包。node-sass和sass-loader】</p>
+<p><img src="https://thumbnail0.baidupcs.com/thumbnail/9c0f8419c448613afe5e9ce4e03c42dd?fid=1737706044-250528-418203039170764&time=1517058000&rt=sh&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-Qkr71fUc1rIISl3r2mSINMehzCM%3D&expires=8h&chkv=0&chkbd=0&chkpc=&dp-logid=624108863495940664&dp-callid=0&size=c710_u400&quality=100&vuk=-&ft=video" alt="分割线"></p>
+<p>当前的<code>webpack.config.js</code></p>
+<pre><code>const path = require(&apos;path&apos;);
+const htmlPlugin= require(&apos;html-webpack-plugin&apos;);
+const extractTextPlugin = require(&quot;extract-text-webpack-plugin&quot;);
+const glob = require(&apos;glob&apos;);
+const PurifyCSSPlugin = require(&quot;purifycss-webpack&quot;);
+
+module.exports={
+
+    // 入口文件的配置项
+    entry:{
+        // 这里的entry可以随意命名，使用相对路径引入相应js
+        entry: &apos;./src/entry.js&apos;
+        // 如果需要引入多个js
+        // entry: [&apos;./src/entry.js&apos;, &apos;./src/myjs.js&apos;]
+    },
+
+    // 出口文件的配置项
+    output:{
+        // 打包的路径输出位置，resolve(解析),这里指定一个本机绝对路径
+        path: path.resolve(__dirname, &apos;dist&apos;),
+        // 打包的文件输出名称
+        filename: &apos;output.js&apos;
+    },
+
+    // 模块, 比如解读打包js/CSS, 转换压缩图片
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                use: extractTextPlugin.extract({
+                    fallback: &quot;style-loader&quot;,
+                    use: [
+                        { loader: &apos;css-loader&apos;, options: { minimize: true } },
+                        &apos;postcss-loader&apos;
+                    ]
+                })
+            },{
+                test: /\.less$/,
+                use: extractTextPlugin.extract({
+                    use: [{
+                        loader: &quot;css-loader&quot;,
+                        options: { minimize: true }
+                    }, {
+                        loader: &quot;less-loader&quot;
+                    },{
+                        loader: &apos;postcss-loader&apos;
+                    }],
+                    fallback: &quot;style-loader&quot;
+                })
+            }
+        ]
+    },
+
+    //插件
+    plugins:[
+        new htmlPlugin({
+            // minify：是对html文件进行压缩，removeAttrubuteQuotes是却掉属性的双引号。
+            minify:{
+                removeAttributeQuotes:true
+            },
+            // hash：为了开发中js有缓存效果，所以加入hash，这样可以有效避免缓存JS。
+            hash:true,
+            // template：是要打包的html模版路径和文件名称。
+            template:&apos;./src/index.html&apos;
+        }),
+
+        // PurifyCSSPlugin 要在 extractTextPlugin 之前，不然 extractTextPlugin 里的压缩和自动前缀可能被影响
+        new PurifyCSSPlugin({
+            // 配置了一个paths，主要是需找html模板，purifycss根据这个配置会遍历你的文件，查找哪些css被使用了
+            paths: glob.sync(path.join(__dirname, &apos;src/*.html&apos;)),
+        }),
+
+        new extractTextPlugin(&quot;/css/index.css&quot;),
+    ],
+
+    // 开发调试工具
+    devtool:&apos;&apos;,
+
+    //配置webpack开发服务
+    devServer:{
+        // 设置关联的基本运行路径，这里因为例子是dist，所以我们写的dist
+        contentBase:path.resolve(__dirname,&apos;dist&apos;),
+        // 服务器的IP地址，可以使用IP也可以使用localhost。可以使用ipconfig获取本机ipv4地址在这里使用。
+        host:&apos;localhost&apos;,
+        // 服务端压缩是否开启，一般为开启
+        compress:true,
+        //配置服务端口号，这里使用1010
+        port:1010
+    }
+}</code></pre><p>当前的<code>entry.js</code>:</p>
+<pre><code>import css from &apos;./css/index.css&apos;;
+import less from &apos;./css/myless.less&apos;;
+
+console.log(&quot;123&quot;);
+var xuqingfeng = &quot;asd2333&quot;;</code></pre><p><img src="https://thumbnail0.baidupcs.com/thumbnail/9c0f8419c448613afe5e9ce4e03c42dd?fid=1737706044-250528-418203039170764&time=1517058000&rt=sh&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-Qkr71fUc1rIISl3r2mSINMehzCM%3D&expires=8h&chkv=0&chkbd=0&chkpc=&dp-logid=624108863495940664&dp-callid=0&size=c710_u400&quality=100&vuk=-&ft=video" alt="分割线"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/01/webpack3(%E4%BA%8C)/" data-id="ck8gp7rxz000fkb9h3zyq8a4f" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-Ajax学习知识点" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -183,7 +527,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/01/Ajax%E5%AD%A6%E4%B9%A0%E7%9F%A5%E8%AF%86%E7%82%B9/" data-id="ck8gofbco000ohk9h8psxcg5b" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/01/Ajax%E5%AD%A6%E4%B9%A0%E7%9F%A5%E8%AF%86%E7%82%B9/" data-id="ck8gp7rxn0001kb9hge9hate0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -356,7 +700,7 @@ watchOptions: {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/01/webpack3(%E4%B8%80)/" data-id="ck8gofbcn000mhk9hfmhqdb20" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/01/webpack3(%E4%B8%80)/" data-id="ck8gp7rxx000bkb9h6gpl08wf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -458,7 +802,7 @@ watchOptions: {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/10/Fetch%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="ck8gofbca0005hk9h0ji9bvgf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/02/10/Fetch%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="ck8gp7rxg0000kb9h6rln9esb" class="article-share-link">Share</a>
       
       
     </footer>
@@ -571,7 +915,7 @@ watchOptions: {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/03/NodeJs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01/" data-id="ck8gofbcf0009hk9h92w99rls" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/03/NodeJs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01/" data-id="ck8gp7rxw0009kb9h9dxh393w" class="article-share-link">Share</a>
       
       
     </footer>
@@ -638,6 +982,10 @@ watchOptions: {
       <ul>
         
           <li>
+            <a href="/2020/04/19/%E3%80%8AJust-JavaScript%E3%80%8B03-%E5%80%BC%E5%92%8C%E5%8F%98%E9%87%8F/">《Just JavaScript》03. 值和变量</a>
+          </li>
+        
+          <li>
             <a href="/2020/04/01/%E3%80%8AJust-JavaScript%E3%80%8B02-JavaScript%E5%AE%87%E5%AE%99/">《Just JavaScript》02.JavaScript宇宙</a>
           </li>
         
@@ -651,10 +999,6 @@ watchOptions: {
         
           <li>
             <a href="/2019/04/01/%E9%97%AD%E5%8C%85/">闭包</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/30/ECMAScript5%E4%B8%AD%E7%9A%84%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/">JavaScript数组方法</a>
           </li>
         
       </ul>

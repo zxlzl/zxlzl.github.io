@@ -5,17 +5,17 @@
   
 
   
-  <title>随便写写~</title>
+  <title>随便写写</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
-<meta property="og:title" content="随便写写~">
+<meta property="og:title" content="随便写写">
 <meta property="og:url" content="http://yoursite.com/index.html">
-<meta property="og:site_name" content="随便写写~">
+<meta property="og:site_name" content="随便写写">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="zxl">
 <meta name="twitter:card" content="summary">
   
-    <link rel="alternate" href="/atom.xml" title="随便写写~" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="随便写写" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -36,7 +36,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">随便写写~</a>
+        <a href="/" id="logo">随便写写</a>
       </h1>
       
     </div>
@@ -63,6 +63,241 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-《Just-JavaScript》03-值和变量" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/04/19/%E3%80%8AJust-JavaScript%E3%80%8B03-%E5%80%BC%E5%92%8C%E5%8F%98%E9%87%8F/" class="article-date">
+  <time datetime="2020-04-19T10:36:08.000Z" itemprop="datePublished">2020-04-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/19/%E3%80%8AJust-JavaScript%E3%80%8B03-%E5%80%BC%E5%92%8C%E5%8F%98%E9%87%8F/">《Just JavaScript》03. 值和变量</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我们将以一个小的代码片段开始这个模块。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> reaction = <span class="string">'yikes'</span>;</span><br><span class="line">reaction[<span class="number">0</span>] = <span class="string">'l'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(reaction);</span><br></pre></td></tr></table></figure>
+
+<p>你希望它做什么？我们还没有讲到这个，所以如果你不确定的话没关系。<strong>试着用你目前的JavaScript知识来回答这个问题。</strong></p>
+<p>现在我想让你花点时间，一步一步地为这段代码的每一行写下你确切的思考过程。注意你现有的思维模型中的任何欠缺或不确定性，并把它们也写下来。如果你对此有任何疑问，尽可能清楚地将它表达出来。</p>
+<p><img src="/blog_imgs/just_javascript/03/spoilers.jpg" alt=""></p>
+<p>在你写完之前你的思考前不要往下滚动。</p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p>答案是这样的。此代码将打印“yikes”或抛出错误，具体取决于你是否处于严格模式。它永远不会印“likes”。</p>
+<h2 id="原始值是不可改变的"><a href="#原始值是不可改变的" class="headerlink" title="原始值是不可改变的"></a>原始值是不可改变的</h2><p>你答对了吗？这可能看起来像一个很小的问题，就像大家在JavaScript面试中问的那种问题，但在实际编码中并没有太多出现。即使如此，它也说明了关于原始值的一个重要特点。</p>
+<p><strong>我不能改变原始值。</strong></p>
+<p>我将使用一个很小的例子来解释这点。字符串（原始值）和数组（非原始值，对象）有一些表面上的相似之处。数组是项的序列，字符串是字符的序列。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">212</span>, <span class="number">8</span>, <span class="number">506</span>];</span><br><span class="line"><span class="keyword">let</span> str = <span class="string">'hello'</span>;</span><br></pre></td></tr></table></figure>
+
+<p>你可以访问字符串的第一个字符就像访问数组项那样，几乎感觉字符串就是数组（但它们并不是！）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(arr[<span class="number">0</span>]); <span class="comment">// 212</span></span><br><span class="line"><span class="built_in">console</span>.log(str[<span class="number">0</span>]); <span class="comment">// "h"</span></span><br></pre></td></tr></table></figure>
+
+<p>你可以改变数组的第一项：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">arr[<span class="number">0</span>] = <span class="number">420</span>;</span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">// [420, 8, 506]</span></span><br></pre></td></tr></table></figure>
+
+<p>所以凭直觉来说，很容易假设可以对字符串执行相同的操作：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str[<span class="number">0</span>] = <span class="string">'j'</span>; <span class="comment">// ???</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>但是你不能这样做。</strong></p>
+<p>这有一点很重要，我们需要添加到我们的思维模型。字符串是原始值，这是十分重要的。</p>
+<p><strong>所有的原始值都是不可改变的。</strong>“Immutable”是拉丁语中一种奇特的说法“unchangeable”。只读的，你根本不能改变原始值。</p>
+<p>如果你尝试在一个原始值上设置属性，不管是字符串、数字还是其他什么，JavaScript不会允许你这样做。它是否会默默拒绝你的请求或报错取决于你的代码运行在<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Strict_mode" target="_blank" rel="noopener">哪个模式</a>！</p>
+<p>但我向你保证，这永远行不通:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> fifty = <span class="number">50</span>;</span><br><span class="line">fifty.shades = <span class="string">'gray'</span>; <span class="comment">// No!</span></span><br></pre></td></tr></table></figure>
+
+<p>就像一些数组，50是一个原始值，你不能给它设置属性。</p>
+<p>在我的JavaScript宇宙里面，所有的原始值存在于离我的代码很远的外圆中——就像遥远的恒星。这提醒我，即使我可以从代码中引用它们，也无法更改它们。他们保持原样。</p>
+<p>我觉得这异常地令人安慰：</p>
+<p><img src="/blog_imgs/just_javascript/03/unnamed.png" alt=""></p>
+<h2 id="一个矛盾？"><a href="#一个矛盾？" class="headerlink" title="一个矛盾？"></a>一个矛盾？</h2><p>我刚刚演示了原始值是只读的，或者用我们这个时代的话说，是不可变的。这里有一个片段来测试你的思维模型：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> pet = <span class="string">'Narwhal'</span>;</span><br><span class="line">pet = <span class="string">'The Kraken'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(pet); <span class="comment">// ?</span></span><br></pre></td></tr></table></figure>
+
+<p>像以前一样，用几句话写下你的思考过程。别急着往前走。一步一步地关注你对每一行的想法。字符串的不变性在这里起作用吗？它起什么作用？</p>
+<p><img src="/blog_imgs/just_javascript/03/spoilers.jpg" alt=""></p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p>如果你认为我是在捣乱你的大脑，那你完全是对的！答案是“The Kraken”——字符串的不变性不起作用。</p>
+<p>如果你错了，不要气馁！最后这两个例子看起来肯定是相互矛盾的。</p>
+<p>这是一个很重要的领悟！</p>
+<p>当你对一门语言不熟悉时，你可能会倾向于忽略矛盾。毕竟，如果你追逐每一个矛盾，你会深陷入一个兔子洞深而学不到任何东西。</p>
+<p>但既然你决定建立思维模型，你就需要质疑矛盾，它们展示出了思维模型的缺口。</p>
+<h2 id="变量是导线"><a href="#变量是导线" class="headerlink" title="变量是导线"></a>变量是导线</h2><p>再看看这些例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> pet = <span class="string">'Narwhal'</span>;</span><br><span class="line">pet = <span class="string">'The Kraken'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(pet); <span class="comment">// "The Kraken"</span></span><br></pre></td></tr></table></figure>
+
+<p>我们知道字符串不能改变因为它们是原始值。但是pet变量的确变成了“The Kraken”。发生了什么呢？</p>
+<p>这似乎是一个矛盾，但事实并非如此。我们只说原始值不能改变。我们对于变量什么都没说！</p>
+<p>当我们完善我们的思维模型时候，我们可能需要整理一下相关的概念。</p>
+<p><strong>变量不是值。</strong></p>
+<p>变量指向值。</p>
+<p>在我的宇宙，一个变量代表一根导线。它有两端和方向：它从我代码中的一个名字开始，最后指向我宇宙中的某个值。</p>
+<p>举个例子，我可以将pet变量指向“Narwhal”值：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> pet = <span class="string">'Narwhal'</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/blog_imgs/just_javascript/03/unnamed.gif" alt=""></p>
+<p>之后可以对变量执行两项操作：</p>
+<h3 id="给变量赋值"><a href="#给变量赋值" class="headerlink" title="给变量赋值"></a>给变量赋值</h3><p>我可以做的一件事是给我的变量赋值：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pet = <span class="string">'The Kraken'</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/blog_imgs/just_javascript/03/unnamed1.gif" alt=""></p>
+<p>我在这里所做的只是告知JavaScript将左侧的“wire”（我的pet变量）指向右侧的值（“The Kraken”）。它将一直指向那个值，除非我之后重新分配它。</p>
+<p>注意，我不能在左边放任何东西：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'war'</span> = <span class="string">'peace'</span>; <span class="comment">// Nope. (Try it in the console.)</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>赋值的左侧必须是导线。</strong>目前，我们只知道变量是“导线”。但是还有另一种“导线”我们将在后面的模块中讨论。也许，你能猜出是什么？（提示：它包含方括号或点，我们已经见过几次了）。</p>
+<p>还有另外一条规则。</p>
+<p><strong>赋值的右侧必须是表达式。</strong>它可以是简单的值，比如2或“hello”，也可以是更复杂的表达式：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pet = count + <span class="string">' Dalmatians'</span>;</span><br></pre></td></tr></table></figure>
+
+<p>在这里，count+“Dalmatians”是一个表达式——对JavaScript来说是一个问题。JavaScript将用一个值（例如，“101 Dalmatians”）来回答这个问题。从现在起，pet“导线”将开始指向这个值。</p>
+<p>如果右边必须是表达式，这是否意味着像2这样的数字或像用代码编写的’the Kraken’这样的字符串也是表达式？对！这样的表达式称为字面量——因为我们逐字记录它们的值。</p>
+<h3 id="读取变量的值"><a href="#读取变量的值" class="headerlink" title="读取变量的值"></a>读取变量的值</h3><p>我还可以读取变量的值——例如，要记录它：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">javascript</span><br><span class="line">console.log(pet);</span><br></pre></td></tr></table></figure>
+
+<p>这并不奇怪。</p>
+<p>但是请注意，我们传递给console.log的不是pet变量。我们可以通俗地说，但是我们不能真的把变量传递给函数。我们传递的是pet变量的当前值。这是怎么工作的呢？</p>
+<p>原来，像pet这样的变量名也可以用作表达式！当我们编写pet时，我们在问JavaScript一个问题：“pet的当前价值是什么？”为了回答我们的问题，JavaScript跟随pet的“导线”，并在“导线”的末尾返回值。</p>
+<p>所以同一个表达式可以在不同的时间给我们不同的值！</p>
+<h3 id="名词和动词"><a href="#名词和动词" class="headerlink" title="名词和动词"></a>名词和动词</h3><p>谁在乎你说的是“传递变量”还是“传递值”？深究这点差别不是过于卖弄学问吗？我当然不会打断你的同事来纠正他们，甚至是你自己。那将会浪费大家的时间。</p>
+<p>但在你的头脑中，你需要清楚地知道你可以用每一个概念做什么。你不能骑自行车溜冰。你不能让鳄梨费气力啊。你不能像蚊子一样发嗖嗖声。而且你不能传递一个变量——至少在JavaScript中不能。</p>
+<p>这里有一个小例子说明为什么这些细节很重要。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">double</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">    x = x * <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> money = <span class="number">10</span>;</span><br><span class="line">double(money);</span><br><span class="line"><span class="built_in">console</span>.log(money); <span class="comment">// ?</span></span><br></pre></td></tr></table></figure>
+
+<p>如果我们认为double（money）传递了一个变量，那么我们可以预期x=x*2将使该变量加倍。但事情不是这样的。我们知道double（money）的意思是“计算出货币的价值，然后将其传递给double”。所以答案是10。真是个骗局！</p>
+<p>你脑子里有哪些不同的JavaScript名词和动词？他们之间有什么关系？将你最常使用的列一个清单。</p>
+<h3 id="把它放在一起"><a href="#把它放在一起" class="headerlink" title="把它放在一起"></a>把它放在一起</h3><p>现在让我们重温一下来自思维模型的第一个例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">let</span> y = x;</span><br><span class="line">x = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
+<p>我建议你拿一张纸或一个绘图应用程序，一步一步地画出x和y变量的“连线”的情况图。</p>
+<p><strong>第一行的作用不大：</strong></p>
+<p><img src="/blog_imgs/just_javascript/03/unnamed2.gif" alt=""></p>
+<ul>
+<li>声明一个x变量  <ul>
+<li>为x变量生成导线</li>
+</ul>
+</li>
+<li>给x赋值10<ul>
+<li>让x的导线指向10</li>
+</ul>
+</li>
+</ul>
+<p><strong>第二行很短，但它做了很多事情：</strong></p>
+<p><img src="/blog_imgs/just_javascript/03/unnamed3.gif" alt=""></p>
+<ul>
+<li><p>声明一个y变量</p>
+<ul>
+<li>为y变量生成导线</li>
+</ul>
+</li>
+<li><p>把x的值赋给y</p>
+<ul>
+<li>计算表达式：x<ul>
+<li>我们要回答的问题是“x”</li>
+<li><strong>跟随x的导线——答案是值10</strong></li>
+</ul>
+</li>
+<li>x表达式结果是值10</li>
+<li>因此，将10的值赋给y</li>
+<li>把y的导线指向值10</li>
+</ul>
+<p><strong>最后，我们进入第三行：</strong></p>
+</li>
+</ul>
+<p><img src="/blog_imgs/just_javascript/03/unnamed4.gif" alt=""></p>
+<ul>
+<li>将0的值赋给x<ul>
+<li>将x的导线指向值0</li>
+</ul>
+</li>
+</ul>
+<p>最后，x变量指向值0，y变量指向值10。注意y=x并不意味着将y指向“x”。我们不能把变量指向彼此！<strong>变量总是指向值</strong>。当我们看到一个赋值时，我们“询问”右边的值，并将左边的“线”指向它。</p>
+<p>我在思维模型中提到，把变量看作盒子是相当常见的。我们要建造的宇宙根本就没有盒子。<strong>它只有导线！</strong>这看起来有点烦人。为什么我们不能“将0和10放入变量中，而是将变量指向它们？”</p>
+<p>使用导线对于解释许多其他概念将是非常重要的，就像严格的等式，对象标识和变动。我们要坚持使用导线，所以你最好现在就开始习惯。</p>
+<p>我的宇宙充满了导线。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li><p><strong>原始值是不可变的：</strong>在我们的代码中，我们无法做任何事情来影响它们或以任何方式更改它们。他们保持原样。例如，不能对字符串值设置属性，因为它是原始值。数组不是原始值，所以我们可以设置它们的属性。</p>
+</li>
+<li><p><strong>变量不是值：</strong>每个变量都指向一个特定的值。我们可以使用=赋值运算符来更改它指向的值。</p>
+</li>
+<li><p><strong>变量就像导线：</strong>“导线”并不是JavaScript的概念——但是它帮助我们理解变量如何指向值。还有一种不同的“电线”，不是变量，但我们还没有讨论过。</p>
+</li>
+<li><p><strong>留意矛盾：</strong>如果你学到的两件事似乎互相矛盾，不要灰心。通常这是一个迹象，表明下面隐藏着更深层次的真相。</p>
+</li>
+<li><p><strong>名词和动词很重要：</strong>我们正在建立一个思维模型，这样我们就能对宇宙中可能发生或不可能发生的事情充满信心。随便马虎的说话是可以的，但我们的思维需要精确。</p>
+</li>
+</ul>
+<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><p>本单元也有练习题供你练习！</p>
+<p><a href="https://el2.convertkit-mail.com/c/o8u6klng6ncwu4e40piv/6gtehou6oom6de/aHR0cHM6Ly9lZ2doZWFkaW8udHlwZWZvcm0uY29tL3RvL1JXSmczbT9lbWFpbD1ha2loaTk1QGdtYWlsLmNvbQ==" target="_blank" rel="noopener">点击这里，通过一些简短的练习巩固这个心理模型。</a></p>
+<p><strong>不要跳过它们！</strong></p>
+<p>即使你可能熟悉变量的概念，这些练习将帮助你巩固我们正在建立的心理模型。我们需要这个基础才能继续更复杂的话题。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/04/19/%E3%80%8AJust-JavaScript%E3%80%8B03-%E5%80%BC%E5%92%8C%E5%8F%98%E9%87%8F/" data-id="ck96xik9l0000sljcbv41b6wf" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-《Just-JavaScript》02-JavaScript宇宙" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -176,7 +411,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/01/%E3%80%8AJust-JavaScript%E3%80%8B02-JavaScript%E5%AE%87%E5%AE%99/" data-id="ck8gn5gmw0001hk9hh4lw0gyj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/01/%E3%80%8AJust-JavaScript%E3%80%8B02-JavaScript%E5%AE%87%E5%AE%99/" data-id="ck8gp7rzj000nkb9hg1oc6fap" class="article-share-link">Share</a>
       
       
     </footer>
@@ -247,7 +482,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/31/%E3%80%8AJust-JavaScript%E3%80%8B01-%E6%80%9D%E7%BB%B4%E6%A8%A1%E5%9E%8B/" data-id="ck8gn5gmo0000hk9h3qj9ctnx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/31/%E3%80%8AJust-JavaScript%E3%80%8B01-%E6%80%9D%E7%BB%B4%E6%A8%A1%E5%9E%8B/" data-id="ck8gp7ry0000hkb9h5ztd1mk0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
@@ -341,7 +576,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/31/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" data-id="ck8gofbct000xhk9hg2kq2xqw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/31/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" data-id="ck8gp7rzg000mkb9h5hix24zf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -408,7 +643,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/01/%E9%97%AD%E5%8C%85/" data-id="ck8gofbcr000whk9h5ifka84c" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/01/%E9%97%AD%E5%8C%85/" data-id="ck8gp7rzk000okb9hg86ke2c6" class="article-share-link">Share</a>
       
       
     </footer>
@@ -483,7 +718,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/30/ECMAScript5%E4%B8%AD%E7%9A%84%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/" data-id="ck8gofbc30004hk9h5vn50f93" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/30/ECMAScript5%E4%B8%AD%E7%9A%84%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/" data-id="ck8gp7rxu0005kb9ha4dm5jot" class="article-share-link">Share</a>
       
       
     </footer>
@@ -557,7 +792,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/23/JavaScript%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/" data-id="ck8gofbcd0007hk9hdt6f25w5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/23/JavaScript%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/" data-id="ck8gp7rxw0007kb9h8g2t7vb2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -621,7 +856,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/18/JS%E4%B8%AD%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F/" data-id="ck8gofbcg000bhk9he82ahob5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/18/JS%E4%B8%AD%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F/" data-id="ck8gp7rxs0003kb9hetw8dkcd" class="article-share-link">Share</a>
       
       
     </footer>
@@ -890,7 +1125,7 @@ gulp.task(&apos;jsmin&apos;, () =&gt;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/06/Gulp/" data-id="ck8gofbce0008hk9heyqf3ajw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/09/06/Gulp/" data-id="ck8gp7rxp0002kb9hcd7j56f5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1030,351 +1265,7 @@ output:{
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/07/12/webpack3(%E4%B8%89)/" data-id="ck8gofbcm000lhk9h50el3do1" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-webpack3(二)" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/04/01/webpack3(%E4%BA%8C)/" class="article-date">
-  <time datetime="2018-04-01T10:43:08.000Z" itemprop="datePublished">2018-04-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/webpack/">webpack</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/01/webpack3(%E4%BA%8C)/">webpack(二)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>目录</p>
-<ol start="5">
-<li>模块与插件配置</li>
-</ol>
-<blockquote>
-<p>5.1 发布HTML</p>
-<p>5.2  CSS打包</p>
-<blockquote>
-<p>5.2.1  分离CSS</p>
-<p>5.2.2 压缩(丑化)css代码</p>
-<p>5.2.3 自动处理CSS3属性前缀</p>
-<p>5.2.4 消除未使用的CSS</p>
-<p>5.2.5 less打包</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<h2 id="5-模块与插件配置"><a href="#5-模块与插件配置" class="headerlink" title="5. 模块与插件配置"></a>5. 模块与插件配置</h2><p>什么是<code>Loaders</code>? <code>loader</code> 用于对模块的源代码进行转换。是<code>webpack</code>最重要的功能，它有如下配置项：</p>
-<pre><code>test: 用于匹配处理文件的扩展名的正则表达式，必须配置
-
-use: loader名称(就是你要使用的模块的名称)，必须配置
-
-include/exclude: 手动添加的&apos;必须处理的文件(文件夹)/屏蔽不需要处理的文件(文件夹)&apos;，可选配置
-
-query: 为loaders提供额外的设置选项（可选）</code></pre><h3 id="5-1-发布HTML"><a href="#5-1-发布HTML" class="headerlink" title="5.1 发布HTML"></a>5.1 发布HTML</h3><p>我们在src下创建一个<code>index.html</code>文件：</p>
-<pre><code>- webpack
-    + dist // 文件输出目录
-    + node_modules // node包依赖
-    - src // 源码文件目录
-        entry.js // webpack的入口文件
-        index.html 
-    package.json
-    webpack.config.js // webpack配置文件</code></pre><p><code>index.html</code>:</p>
-<pre><code>&lt;!doctype html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;!-- 手机页面中加入这句话，可以让页面适应设备的宽度。initial-scale - 初始的缩放比例 --&gt;
-    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
-    &lt;!-- Edge 模式通知 Windows Internet Explorer 以最高级别的可用模式显示内容 --&gt;
-    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=Edge&quot;&gt;
-    &lt;title&gt;XQF webpack test&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;div id=&quot;gogo&quot;&gt;&lt;/div&gt;
-    &lt;div id=&quot;title&quot;&gt;&lt;/div&gt;
-    &lt;p&gt;我是小段落123&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code></pre><p>▲ 这份<code>index.html</code>文件没有js引入，<code>webpack</code>会为我们自动引入<code>js</code>。它还能够通过入口js文件帮我们自动引入<code>css</code>文件。</p>
-<p>我们先安装<code>html-webpack-plugin</code>，它简化了HTML文件的创建，以便为你的webpack包提供服务：</p>
-<pre><code>cnpm install --save-dev html-webpack-plugin</code></pre><p>然后在<code>webpack.config.js</code>中引入插件：</p>
-<pre><code>// 头部require
-const htmlPlugin = require(&apos;html-webpack-plugin&apos;);
-
-// 在plugins中插入
-new htmlPlugin({
-    // minify：是对html文件进行压缩，removeAttrubuteQuotes是却掉属性的双引号。
-    minify:{
-        removeAttributeQuotes:true
-    },
-    // hash：为了开发中js有缓存效果，所以加入hash，这样可以有效避免缓存JS。
-    hash:true,
-    // template：是要打包的html模版路径和文件名称。
-    template:&apos;./src/index.html&apos;
-})</code></pre><h3 id="5-2-CSS打包"><a href="#5-2-CSS打包" class="headerlink" title="5.2 CSS打包"></a>5.2 CSS打包</h3><p>在<code>src</code>创建文件夹<code>css</code>，在<code>css</code>里创建<code>index.css</code>:</p>
-<pre><code>- src
-    - css
-        index.css</code></pre><p><code>index.css</code>:</p>
-<pre><code>body {
-    background-color: #D5B740;
-    color: black;
-}
-#gogo {
-    width: 466px;
-    height: 453px;
-    transform: rotate(45deg);
-    box-shadow: 1px 1px 0 rgba(0,0,0,.25);
-}
-#meiyong {
-    width: 100%;
-}
-#meiyong2 {
-    width: 50%;
-}</code></pre><p>css打包需要<code>style-loader</code>、<code>css-loader</code>两个<code>loader</code>。 ==一般这两个<code>loader</code>结合使用，顺序是<code>style-loader</code>在前== ：</p>
-<pre><code>// 使用npm下载两个`loader`:
-cnpm install --save-dev style-loader css-loader</code></pre><p><code>style-loader</code>: 让js解析css。</p>
-<p><code>css-loader</code>: <code>css-loader</code> 解释(<code>interpret</code>) <code>@import</code> 和 <code>url()</code> ，会 <code>import/require()</code> 后再解析<code>(resolve)</code>它们。</p>
-<p>在入口文件<code>entry.js</code>里引入<code>css</code>：</p>
-<pre><code>import css from &apos;./css/index.css&apos;;</code></pre><p>在<code>webpack.config.js</code>的配置:</p>
-<pre><code>module: {
-    rules: [
-        {
-            test: /\.css$/,
-            use: [ &apos;style-loader&apos;, &apos;css-loader&apos; ]
-            // use可以换作loader
-            // loader: [ &apos;style-loader&apos;, &apos;css-loader&apos; ]
-        }
-    ]
-},</code></pre><p>执行<code>npm start</code>打包一下，我们发现打包成功了。我们可以执行<code>npm run server</code>在服务端查看一下。</p>
-<h4 id="5-2-1-分离CSS"><a href="#5-2-1-分离CSS" class="headerlink" title="5.2.1 分离CSS"></a>5.2.1 分离CSS</h4><p>但是我们发现<code>css</code>是打包在<code>js</code>里的，因为<code>webpack</code>官方认为CSS就应该打包到<code>JavasScript</code>当中以减少<code>http</code>的请求数，但现实需求有时候需要分离<code>css</code>。那么我们需要一个插件<code>extract-text-webpack-plugin</code>：</p>
-<pre><code>cnpm install --save-dev extract-text-webpack-plugin</code></pre><p>安装完成后在<code>webpack.config.js</code>中引用</p>
-<pre><code>// 顶部require引入
-const extractTextPlugin = require(&quot;extract-text-webpack-plugin&quot;);
-
-// 在module中进行配置
-{
-    test: /\.css$/,
-    use: extractTextPlugin.extract({
-        fallback: &quot;style-loader&quot;,
-        use: &apos;css-loader&apos;
-    })                
-},
-
-// 在plugins中进行配置
-plugins:[
-    new extractTextPlugin(&quot;./css/index.css&quot;)
-],</code></pre><h4 id="5-2-2-压缩-丑化-css代码"><a href="#5-2-2-压缩-丑化-css代码" class="headerlink" title="5.2.2 压缩(丑化)css代码"></a>5.2.2 压缩(丑化)css代码</h4><p>设置 <code>minimize:true</code> ,就可以压缩<code>css</code>了。</p>
-<pre><code>module: {
-    rules: [
-        {
-            test: /\.css$/,
-            use: extractTextPlugin.extract({
-                fallback: &quot;style-loader&quot;,
-                use: [
-                    { loader: &apos;css-loader&apos;, options: { minimize: true } }
-                ]
-            })
-        }
-    ]
-},</code></pre><h4 id="5-2-3-自动处理CSS3属性前缀"><a href="#5-2-3-自动处理CSS3属性前缀" class="headerlink" title="5.2.3 自动处理CSS3属性前缀"></a>5.2.3 自动处理CSS3属性前缀</h4><p>下载 <code>postcss-loader</code> 和<code>autoprefixer</code>（自动添加前缀的插件）。</p>
-<pre><code>cnpm install --save-dev postcss-loader autoprefixer</code></pre><p>在<code>src</code>下建立<code>postcss.config.js</code>:</p>
-<pre><code>- webpack
-    + dist // 文件输出目录
-    + node_modules // node包依赖
-    - src // 源码文件目录
-        - css
-            index.css
-        entry.js // webpack的入口文件
-        index.html 
-    package.json
-    postcss.config.js // postcss配置文件
-    webpack.config.js // webpack配置文件</code></pre><p><code>postcss.config.js</code>:</p>
-<pre><code>module.exports = {
-    plugins: [
-        require(&apos;autoprefixer&apos;)
-    ]
-}</code></pre><p>没有配置外部css导出，在<code>module</code>这样配置<code>postcss</code>:</p>
-<pre><code>{
-      test: /\.css$/,
-      use: [
-            {
-              loader: &quot;style-loader&quot;
-            }, {
-              loader: &quot;css-loader&quot;,
-              options: {
-                 modules: true
-              }
-            }, {
-              loader: &quot;postcss-loader&quot;
-            }
-      ]
-}</code></pre><p>配置了<code>extractTextPlugin</code>，在<code>module</code>这样配置<code>postcss</code>:</p>
-<pre><code>{
-    test: /\.css$/,
-    use: extractTextPlugin.extract({
-        fallback: &apos;style-loader&apos;,
-        use: [
-            { loader: &apos;css-loader&apos;, options: { importLoaders: 1 } },
-            &apos;postcss-loader&apos;
-        ]
-    })
-
-}</code></pre><p>执行打包处理，自动加上css前缀。</p>
-<h4 id="5-2-4-消除未使用的CSS"><a href="#5-2-4-消除未使用的CSS" class="headerlink" title="5.2.4 消除未使用的CSS"></a>5.2.4 消除未使用的CSS</h4><p>对于框架(比如<code>bootstrap</code>)或者自己修改后没有使用的css，可以使用<code>PurifyCSS-webpack</code>：</p>
-<pre><code>// -D代表的是–save-dev ,只是一个简写
-//  需要安装purifyCSS-webpack、purify-css这两个包
-cnpm i -D purifycss-webpack purify-css</code></pre><p>因为我们需要同步检查html模板，所以我们需要引入node的glob对象使用。同时，引入purifycss-webpack。</p>
-<pre><code>const glob = require(&apos;glob&apos;);
-const PurifyCSSPlugin = require(&quot;purifycss-webpack&quot;);</code></pre><p>我们在<code>plugins</code>中配置:</p>
-<pre><code>// PurifyCSSPlugin 要在 extractTextPlugin 之前，不然 extractTextPlugin 里的压缩和自动前缀可能被影响
-new PurifyCSSPlugin({
-    // 配置了一个paths，主要是需找html模板，purifycss根据这个配置会遍历你的文件，查找哪些css被使用了
-    paths: glob.sync(path.join(__dirname, &apos;src/*.html&apos;)),
-}),</code></pre><h4 id="5-2-5-less打包"><a href="#5-2-5-less打包" class="headerlink" title="5.2.5 less打包"></a>5.2.5 less打包</h4><p>确定你的生产环境中配了<code>less</code>服务：</p>
-<pre><code>cnpm install --save-dev less</code></pre><p>然后安装<code>less-loader</code>:</p>
-<pre><code>cnpm install --save-dev less-loader</code></pre><p>在<code>src/css</code>下创建 <code>myless.less</code>：</p>
-<pre><code>@base :#000;
-#gogo{
-    width:300px;
-    height:300px;
-    background-color:@base;
-}</code></pre><p>配置了<code>extractTextPlugin</code>，在<code>module</code>里这样配置<code>less-loader</code>:</p>
-<pre><code>{
-    test: /\.less$/,
-    use: extractTextPlugin.extract({
-        use: [{
-            loader: &quot;css-loader&quot;,
-            options: { minimize: true }
-        }, {
-            loader: &quot;less-loader&quot;
-        },{
-            loader: &apos;postcss-loader&apos;
-        }],
-        fallback: &quot;style-loader&quot;
-    })
-}</code></pre><p>在<code>entry.js</code>中配置：</p>
-<pre><code>import less from &apos;./css/black.less&apos;;</code></pre><p>【sass亦同 : 需要在项目目录下用npm安装两个包。node-sass和sass-loader】</p>
-<p><img src="https://thumbnail0.baidupcs.com/thumbnail/9c0f8419c448613afe5e9ce4e03c42dd?fid=1737706044-250528-418203039170764&time=1517058000&rt=sh&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-Qkr71fUc1rIISl3r2mSINMehzCM%3D&expires=8h&chkv=0&chkbd=0&chkpc=&dp-logid=624108863495940664&dp-callid=0&size=c710_u400&quality=100&vuk=-&ft=video" alt="分割线"></p>
-<p>当前的<code>webpack.config.js</code></p>
-<pre><code>const path = require(&apos;path&apos;);
-const htmlPlugin= require(&apos;html-webpack-plugin&apos;);
-const extractTextPlugin = require(&quot;extract-text-webpack-plugin&quot;);
-const glob = require(&apos;glob&apos;);
-const PurifyCSSPlugin = require(&quot;purifycss-webpack&quot;);
-
-module.exports={
-
-    // 入口文件的配置项
-    entry:{
-        // 这里的entry可以随意命名，使用相对路径引入相应js
-        entry: &apos;./src/entry.js&apos;
-        // 如果需要引入多个js
-        // entry: [&apos;./src/entry.js&apos;, &apos;./src/myjs.js&apos;]
-    },
-
-    // 出口文件的配置项
-    output:{
-        // 打包的路径输出位置，resolve(解析),这里指定一个本机绝对路径
-        path: path.resolve(__dirname, &apos;dist&apos;),
-        // 打包的文件输出名称
-        filename: &apos;output.js&apos;
-    },
-
-    // 模块, 比如解读打包js/CSS, 转换压缩图片
-    module: {
-        rules: [
-            {
-                test: /\.css$/,
-                use: extractTextPlugin.extract({
-                    fallback: &quot;style-loader&quot;,
-                    use: [
-                        { loader: &apos;css-loader&apos;, options: { minimize: true } },
-                        &apos;postcss-loader&apos;
-                    ]
-                })
-            },{
-                test: /\.less$/,
-                use: extractTextPlugin.extract({
-                    use: [{
-                        loader: &quot;css-loader&quot;,
-                        options: { minimize: true }
-                    }, {
-                        loader: &quot;less-loader&quot;
-                    },{
-                        loader: &apos;postcss-loader&apos;
-                    }],
-                    fallback: &quot;style-loader&quot;
-                })
-            }
-        ]
-    },
-
-    //插件
-    plugins:[
-        new htmlPlugin({
-            // minify：是对html文件进行压缩，removeAttrubuteQuotes是却掉属性的双引号。
-            minify:{
-                removeAttributeQuotes:true
-            },
-            // hash：为了开发中js有缓存效果，所以加入hash，这样可以有效避免缓存JS。
-            hash:true,
-            // template：是要打包的html模版路径和文件名称。
-            template:&apos;./src/index.html&apos;
-        }),
-
-        // PurifyCSSPlugin 要在 extractTextPlugin 之前，不然 extractTextPlugin 里的压缩和自动前缀可能被影响
-        new PurifyCSSPlugin({
-            // 配置了一个paths，主要是需找html模板，purifycss根据这个配置会遍历你的文件，查找哪些css被使用了
-            paths: glob.sync(path.join(__dirname, &apos;src/*.html&apos;)),
-        }),
-
-        new extractTextPlugin(&quot;/css/index.css&quot;),
-    ],
-
-    // 开发调试工具
-    devtool:&apos;&apos;,
-
-    //配置webpack开发服务
-    devServer:{
-        // 设置关联的基本运行路径，这里因为例子是dist，所以我们写的dist
-        contentBase:path.resolve(__dirname,&apos;dist&apos;),
-        // 服务器的IP地址，可以使用IP也可以使用localhost。可以使用ipconfig获取本机ipv4地址在这里使用。
-        host:&apos;localhost&apos;,
-        // 服务端压缩是否开启，一般为开启
-        compress:true,
-        //配置服务端口号，这里使用1010
-        port:1010
-    }
-}</code></pre><p>当前的<code>entry.js</code>:</p>
-<pre><code>import css from &apos;./css/index.css&apos;;
-import less from &apos;./css/myless.less&apos;;
-
-console.log(&quot;123&quot;);
-var xuqingfeng = &quot;asd2333&quot;;</code></pre><p><img src="https://thumbnail0.baidupcs.com/thumbnail/9c0f8419c448613afe5e9ce4e03c42dd?fid=1737706044-250528-418203039170764&time=1517058000&rt=sh&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-Qkr71fUc1rIISl3r2mSINMehzCM%3D&expires=8h&chkv=0&chkbd=0&chkpc=&dp-logid=624108863495940664&dp-callid=0&size=c710_u400&quality=100&vuk=-&ft=video" alt="分割线"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/01/webpack3(%E4%BA%8C)/" data-id="ck8gofbcp000phk9h9ehaa93y" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/07/12/webpack3(%E4%B8%89)/" data-id="ck8gp7rxy000dkb9he6vg91nh" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1441,6 +1332,10 @@ var xuqingfeng = &quot;asd2333&quot;;</code></pre><p><img src="https://thumbnail
       <ul>
         
           <li>
+            <a href="/2020/04/19/%E3%80%8AJust-JavaScript%E3%80%8B03-%E5%80%BC%E5%92%8C%E5%8F%98%E9%87%8F/">《Just JavaScript》03. 值和变量</a>
+          </li>
+        
+          <li>
             <a href="/2020/04/01/%E3%80%8AJust-JavaScript%E3%80%8B02-JavaScript%E5%AE%87%E5%AE%99/">《Just JavaScript》02.JavaScript宇宙</a>
           </li>
         
@@ -1454,10 +1349,6 @@ var xuqingfeng = &quot;asd2333&quot;;</code></pre><p><img src="https://thumbnail
         
           <li>
             <a href="/2019/04/01/%E9%97%AD%E5%8C%85/">闭包</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/30/ECMAScript5%E4%B8%AD%E7%9A%84%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/">JavaScript数组方法</a>
           </li>
         
       </ul>

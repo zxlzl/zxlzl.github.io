@@ -18,7 +18,7 @@ console.log(reaction);
 
 现在我想让你花点时间，一步一步地为这段代码的每一行写下你确切的思考过程。注意你现有的思维模型中的任何欠缺或不确定性，并把它们也写下来。如果你对此有任何疑问，尽可能清楚地将它表达出来。
 
-![](/blog_imgs/just_javascript/spoilers.jpg)
+![](/blog_imgs/just_javascript/03/spoilers.jpg)
 
 在你写完之前你的思考前不要往下滚动。
 
