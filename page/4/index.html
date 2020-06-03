@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" href="/favicon.svg"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+  <title> [ Lemon Ray ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="/css/iLiKE.css">
+    
+  
+  
+  
+  <script src="//cdn1.lncld.net/static/js/3.1.1/av-min.js"></script>
+    <script id="leancloud">
+      AV.init({
+          appId: "6E5zTbTljdUbVW2WkXPsXGJk-gzGzoHsz",
+          appKey: "0vsyDKfNpeSECAI70J794ugv"
+      });
+    </script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="Lemon Ray" type="application/atom+xml">
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+    <div class="menu">
+      <div class="menu-left">
+        <a href="/">
+          <img src="/favicon.svg"></img>
+        </a>
+      </div>
+      <div class="menu-right">
+        
+          
+          
+          
+          
+          
+          
+          <a href="/">首页</a>
+        
+          
+          
+          
+          
+          
+          
+          <a href="/archives">归档</a>
+        
+      </div>
+    </div>
+</div>
+    </div>
+    <div class="container">
+        
+
+
+
+  <div class="article">
+    
+      <div class="article-item">
+        <h2 class="article-item-header">
+          <a href="/2018/02/10/Fetch学习笔记/">
+            Fetch学习笔记
+          </a>
+        </h2>
+        <div class="article-item-content">
+          
+            <p>什么是Fetch&amp;emsp;  Fetch 是浏览器提供的原生AJAX接口。由于原来的XMLHttpRequest不符合关注分离原则，且基于事件的模型在处理异步上已经没有现代的Promise等那么有优势。因此Fetch出现来解决这种问题。
+&amp;emsp;  Fetch API 提供了能够用于操作一部分...</p>
+          
+        </div>
+        <div class="atricle-item-time">
+          
+            <span>
+              2018-02-10
+            </span>
+          
+        </div>
+      </div>
+    
+      <div class="article-item">
+        <h2 class="article-item-header">
+          <a href="/2017/12/03/NodeJs学习笔记1/">
+            NodeJs学习笔记1
+          </a>
+        </h2>
+        <div class="article-item-content">
+          
+            <p>一、Node.js简介1.1 简介&amp;emsp; V8引擎本身就是用于Chrome浏览器的JS解释部分，但是RyanDahl把V8搬到了服务器上，用于做服务器的软件。&amp;emsp; Node.js是一个让JavaScript运行在服务器端的开发平台，它让JavaScript的触角伸到了服务器端，可以与P...</p>
+          
+        </div>
+        <div class="atricle-item-time">
+          
+            <span>
+              2017-12-03
+            </span>
+          
+        </div>
+      </div>
+    
+  </div>
+
+
+
+    <div class="pagenator">
+    
+    
+        <a class="extend prev" href="/page/3">上一页</a>
+    
+
+    
+        
+        
+            <a class="extend page-item page-item-normal" href="/">1</a>
+        
+    
+        
+        
+            <a class="extend page-item page-item-normal" href="/page/2">2</a>
+        
+    
+        
+        
+            <a class="extend page-item page-item-normal" href="/page/3">3</a>
+        
+    
+        
+            <span class="extend page-item page-item-select">4</span>
+        
+        
+    
+    
+    
+        <a class="extend next-none">下一页</a>
+    
+    
+</div>
+
+    </div>
+    <div class="footer">
+        <div class="container">
+    <!-- <div class="social">
+	<ul class="social-list">
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+	</ul>
+</div> -->
+    <div class="copyright">
+        <span>
+            
+            
+            
+                © zxl 2017 - 2020
+            
+        </span>
+    </div>
+    <!-- <div class="power">
+        <span>
+            Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> & <a href="https://github.com/CaiChenghan/iLiKE" target="_blank" rel="noopener">iLiKE Theme</a>
+        </span>
+    </div> -->
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <!--page counter part-->
+<script>
+function addCount (Counter) {
+    url=$('.article-date').attr('href').trim();
+    title = $('.article-title').text().trim();
+    var query = new AV.Query(Counter);
+    //use url as unique idnetfication
+    query.equalTo("url",url);
+    query.find({
+        success: function(results) {
+            if (results.length>0) {
+                var counter=results[0];
+                counter.fetchWhenSave(true); //get recent result
+                counter.increment("time");
+                counter.save();
+            } else {
+                var newcounter=new Counter();
+                newcounter.set("title",title);
+                newcounter.set("url",url);
+                newcounter.set("time",1);
+                newcounter.save(null,{
+                    success: function(newcounter) {
+                        //alert('New object created');
+                    }, error: function(newcounter,error) {
+                        alert('Failed to create');
+                    }
+                })
+            }
+        },
+        error: function(error) {
+            //find null is not a error
+            alert('Error:'+error.code+" "+error.message);
+        }
+    });
+}
+$(function() {
+    var Counter=AV.Object.extend("Counter");
+    //only increse visit counting when intering a page
+    if ($('.article-title').length == 1) {
+       addCount(Counter);
+    }
+    var query=new AV.Query(Counter);
+    query.descending("time");
+    // the sum of popular posts
+    query.limit(10); 
+    query.find({
+        success: function(results) {
+                for(var i=0;i<results.length;i++) {
+                    var counter=results[i];
+                    title=counter.get("title");
+                    url=counter.get("url");
+                    time=counter.get("time");
+                    // add to the popularlist widget
+                    showcontent=title+" ("+time+")";
+                    //notice the "" in href
+                    $('.popularlist').append('<li><a href="'+url+'">'+showcontent+'</a></li>');
+                }
+            },
+        error: function(error) {
+            alert("Error:"+error.code+" "+error.message);
+        }
+    });
+});
+</script>
+</div>
+    </div>
+</body>
+</html>

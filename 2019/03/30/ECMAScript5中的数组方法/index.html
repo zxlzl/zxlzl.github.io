@@ -1,278 +1,245 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" href="/favicon.svg"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   
+  <title>JavaScript数组方法 [ Lemon Ray ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="/css/iLiKE.css">
+    
+  
+  
+  
+  <script src="//cdn1.lncld.net/static/js/3.1.1/av-min.js"></script>
+    <script id="leancloud">
+      AV.init({
+          appId: "6E5zTbTljdUbVW2WkXPsXGJk-gzGzoHsz",
+          appKey: "0vsyDKfNpeSECAI70J794ugv"
+      });
+    </script>
 
-  
-  <title>JavaScript数组方法 | 随便写写</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="概述&amp;#160; &amp;#160; &amp;#160; &amp;#160;ECMAScript5定义了9个心得数组方法来遍历、映射、过滤、检测、简化和搜索数组。大多数方法的第一个参数接收一个函数，并且对数组的每个元素（或一些元素）调用一次该函数。如果是稀疏数组，对不存在的元素不调用传递的函数。在大多数情况下，调用提供的函数使用三个参数：数组元素、元素的索引和数组本身。通常，只需要第一个参数值，客户忽略后两个参数。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="JavaScript数组方法">
-<meta property="og:url" content="http://yoursite.com/2019/03/30/ECMAScript5%E4%B8%AD%E7%9A%84%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/index.html">
-<meta property="og:site_name" content="随便写写">
-<meta property="og:description" content="概述&amp;#160; &amp;#160; &amp;#160; &amp;#160;ECMAScript5定义了9个心得数组方法来遍历、映射、过滤、检测、简化和搜索数组。大多数方法的第一个参数接收一个函数，并且对数组的每个元素（或一些元素）调用一次该函数。如果是稀疏数组，对不存在的元素不调用传递的函数。在大多数情况下，调用提供的函数使用三个参数：数组元素、元素的索引和数组本身。通常，只需要第一个参数值，客户忽略后两个参数。">
-<meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2019-03-30T01:21:08.000Z">
-<meta property="article:modified_time" content="2020-04-01T02:15:52.390Z">
-<meta property="article:author" content="zxl">
-<meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="随便写写" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  
-<link rel="stylesheet" href="/css/style.css">
-
-<meta name="generator" content="Hexo 4.2.0"></head>
-
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="Lemon Ray" type="application/atom+xml">
+</head>
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">随便写写</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
+    <div class="header">
+        <div class="container">
+    <div class="menu">
+      <div class="menu-left">
+        <a href="/">
+          <img src="/favicon.svg"></img>
+        </a>
+      </div>
+      <div class="menu-right">
         
-          <a class="main-nav-link" href="/">Home</a>
+          
+          
+          
+          
+          
+          
+          <a href="/">首页</a>
         
-          <a class="main-nav-link" href="/archives">Archives</a>
+          
+          
+          
+          
+          
+          
+          <a href="/archives">归档</a>
         
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
       </div>
     </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main"><article id="post-ECMAScript5中的数组方法" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/03/30/ECMAScript5%E4%B8%AD%E7%9A%84%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/" class="article-date">
-  <time datetime="2019-03-30T01:21:08.000Z" itemprop="datePublished">2019-03-30</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      JavaScript数组方法
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>&#160; &#160; &#160; &#160;ECMAScript5定义了9个心得数组方法来遍历、映射、过滤、检测、简化和搜索数组。大多数方法的第一个参数接收一个函数，并且对数组的每个元素（或一些元素）调用一次该函数。如果是稀疏数组，对不存在的元素不调用传递的函数。在大多数情况下，调用提供的函数使用三个参数：数组元素、元素的索引和数组本身。通常，只需要第一个参数值，客户忽略后两个参数。大多数ECMAScript5数组方法的第一个参数是一个函数，第二个参数是可以选的。如果有第三个参数，则调用的函数被看做是第二个参数的方法。也就是说，在调用函数时传递进去的第二个参数作为它的this关键字的值来使用。被调用的函数的返回值非常重要，但是不同的方法处理返回值的方式也不一样。ECMAScript5中的数组方法都不会修改他们调用的原是数组。当然，传递给这些方法的函数是可以修改这些数组的。</p>
-<h5 id="1-forEach"><a href="#1-forEach" class="headerlink" title="1. forEach()"></a>1. forEach()</h5><p>&#160; &#160; &#160; &#160;<code>forEach()</code>方法从头至尾遍历数组，为每个元素调用指定的函数。传递的函数作为<code>forEach()</code> 的第一个参数。然后<code>forEach()</code>使用三个参数调用该函数：数组元素、元素的索引和元素本身。如果只关心数组元素的值，可以编写只有一个参数的函数——额外的参数将忽略：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> data = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]; <span class="comment">// 要求和的数组</span></span><br><span class="line"><span class="comment">// 计算数组元素的和值</span></span><br><span class="line"><span class="keyword">var</span> sum = <span class="number">0</span>; <span class="comment">// 初始值为0</span></span><br><span class="line">data.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">value</span>) </span>&#123; <span class="comment">// 将每个值累加到sum上</span></span><br><span class="line">  sum += value;</span><br><span class="line">&#125;);</span><br><span class="line">sum;  <span class="comment">// 15</span></span><br><span class="line"><span class="comment">// 每个数组元素的值自加1</span></span><br><span class="line">data.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">v, i, a</span>) </span>&#123;</span><br><span class="line">  a[i] = v + <span class="number">1</span>;</span><br><span class="line">&#125;);</span><br><span class="line">data; <span class="comment">// =&gt; [2,3,4,5,6]</span></span><br></pre></td></tr></table></figure>
-<p>&#160; &#160; &#160; &#160;<code>forEach()</code> 方法无法再所有元素都传递给调用的函数之前终止遍历。也就是说，没有像for循环中使用的响应的break语句。如果要提前终止，必须把<code>forEach()</code>方法放在一个try块中，并能抛出一个异常。如果<code>forEach()</code> 方法调用的函数抛出<code>forEach.break</code>异常，循环会提前终止：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foreach</span>(<span class="params">a, f, t</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    a.forEach(f, t);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="keyword">if</span> (e === foreach.break) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">throw</span> e;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">foreach.break = <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"StopIteration"</span>);</span><br></pre></td></tr></table></figure>
-
-<h5 id="2-map"><a href="#2-map" class="headerlink" title="2. map()"></a>2. map()</h5><p>&#160; &#160; &#160; &#160;<code>map()</code>方法将调用的数组的每个元素传递给指定的函数，并返回一个数组，它包含该函数的返回值。例如：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">b = a.map(<span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> x * x;</span><br><span class="line">&#125;); <span class="comment">//b是[1, 4, 9]</span></span><br></pre></td></tr></table></figure>
-<p>&#160; &#160; &#160; &#160;传递给<code>map()</code>的函数的调用方式和传递给<code>forEach()</code>的函数的调用方式一样。但传递给<code>map()</code>的函数应该有返回值。注意，<code>map()</code>返回的是新数组：它不修改调用的数组。如果是稀疏数组，返回的也是相同方式的稀疏数组：它具有相同的长度，相同的缺失元素。</p>
-<h5 id="3-filter"><a href="#3-filter" class="headerlink" title="3. filter()"></a>3. filter()</h5><p>&#160; &#160; &#160; &#160;<code>filter()</code>方法返回的数组元素是调用的数组的一个子集。传递的函数是用来逻辑判定的：该函数返回<code>true</code>或<code>false</code>。调用判定函数就像调用<code>forEach()</code>和<code>map()</code>一样。如果返回值为<code>true</code>或者<code>false</code>，那么传递给判定函数的就是这个子集的成员，它将被添加到一个座位返回值的数组中。例如：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>];</span><br><span class="line">smallvalue = a.filter(<span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> x &lt; <span class="number">3</span>;</span><br><span class="line">&#125;); <span class="comment">// [2 ,1]</span></span><br><span class="line">everyoher = a.filter(<span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> i % <span class="number">2</span> == <span class="number">0</span>;</span><br><span class="line">&#125;); <span class="comment">// [5, 3, 1]</span></span><br></pre></td></tr></table></figure>
-<p>&#160; &#160; &#160; &#160;<code>filter()</code>会跳过稀疏数组中缺少的元素，它的返回数组总是稠密的。为了压缩稀疏数组的空缺，代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var dense &#x3D; sparse.filter(function () &#123; return true; &#125;);</span><br></pre></td></tr></table></figure>
-<p>&#160; &#160; &#160; &#160;甚至，压缩空缺并删除<code>undefined</code>和<code>null</code>元素，可以这样使用<code>filter()</code>：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a &#x3D; a.filter(function (x) &#123; return x !&#x3D; undefined &amp;&amp; x !&#x3D; null; &#125;);</span><br></pre></td></tr></table></figure>
-
-<h5 id="4-every-和some"><a href="#4-every-和some" class="headerlink" title="4. every()和some()"></a>4. every()和some()</h5><p>&#160; &#160; &#160; &#160;<code>every()</code>和<code>some()</code>方法是数组的逻辑判定：它们对数组元素应用指定的函数进行判定，返回<code>true</code>或<code>false</code>。<br><code>every()</code>方法就像数学中的”针对所有”的量词∀：当且仅当数组中的所有元素调用判定函数都返回true，它才返回true：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line">a.every(<span class="function"><span class="keyword">function</span> (<span class="params">x</span>) </span>&#123; <span class="keyword">return</span> x &lt; <span class="number">10</span>; &#125;); <span class="comment">// =&gt; true:所有的值&lt;10</span></span><br><span class="line">a.every(<span class="function"><span class="keyword">function</span> (<span class="params">x</span>) </span>&#123; <span class="keyword">return</span> x % <span class="number">2</span> === <span class="number">0</span>; &#125;); <span class="comment">// =&gt; false: 不是所有的值都是偶数</span></span><br></pre></td></tr></table></figure>
-<p>&#160; &#160; &#160; &#160;<code>some()</code>方法就像数学的”存在”量词∃：当数组中至少有一个元素调用判定函数返回true，它就返回true；并且当且仅当数值中的所有元素调用判定函数都返回false，它才返回false：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line">a.some(<span class="function"><span class="keyword">function</span> (<span class="params">x</span>) </span>&#123; <span class="keyword">return</span> x %<span class="number">2</span> === <span class="number">0</span>; &#125;); <span class="comment">// =&gt; true:a包含有偶数</span></span><br><span class="line">a.some(<span class="built_in">isNaN</span>); <span class="comment">// =&gt; false: a不包含非数值元素</span></span><br></pre></td></tr></table></figure>
-<p>&#160; &#160; &#160; &#160;一旦<code>every()</code>和<code>some()</code>确认该返回什么值他们就会停止遍历数组元素。<code>some()</code>在判定函数第一次返回true后就返回true，但如果判定函数一直返回false，它将会遍历整个数组。<code>every()</code>切好相反：他在判定函数第一次返回false就返回false，但如果判定函数一直返回true，它将会便利整个数组。注意，根据数学上的惯例，在空数组上调用时，<code>every()</code>返回true，<code>some()</code>返回false。</p>
-<h5 id="5-reduce-和reduceRight"><a href="#5-reduce-和reduceRight" class="headerlink" title="5. reduce()和reduceRight()"></a>5. reduce()和reduceRight()</h5><p>&#160; &#160; &#160; &#160;<code>reduce()</code>和<code>reduceRight()</code>方法使用指定的函数将数组元素进行组合，生成单个值。这在函数式编程中是常见的操作们也可以称为”注入”和”折叠”：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line"><span class="keyword">var</span> sum = a.reduce(<span class="function"><span class="keyword">function</span> (<span class="params">x,y</span>) </span>&#123; <span class="keyword">return</span> x+y &#125;, <span class="number">0</span>); <span class="comment">// =&gt; 数组求和</span></span><br><span class="line"><span class="keyword">var</span> product = a.reduce(<span class="function"><span class="keyword">function</span> (<span class="params">x,y</span>) </span>&#123; <span class="keyword">return</span> x*y &#125;, <span class="number">1</span>); <span class="comment">// =&gt; 数组求积</span></span><br><span class="line"><span class="keyword">var</span> max = a.reduce(<span class="function"><span class="keyword">function</span> (<span class="params">x,y</span>) </span>&#123; <span class="keyword">return</span> (x&gt;y)?x:y; &#125;); <span class="comment">// =&gt; 求最大值</span></span><br></pre></td></tr></table></figure>
-<p>&#160; &#160; &#160; &#160;<code>reduce()</code>需要两个参数。第一个是执行化简操作的函数。化简函数的任务就是用某种方法把两个值组合或花间为一个值，并返回化简后的值。在上述例子中，函数通过加法、乘法或取最大值的方法组合两个值。第二个（可选）的参数是一个传递给函数的初始值。<br>&#160; &#160; &#160; &#160;<code>reduce()</code>使用的函数与<code>forEach()</code>和<code>map()</code>使用的函数不同。比较熟悉的是，数组元素、元素的索引和数组本身将作为第2~4个参数传递给函数。第一个参数是到目前为止的化简操作累积的结果。第一次调用函数式，第一个参数是一个初始值，它就是传递给<code>reduce()</code>的第二个参数。在接下来的调用中，这个值就是上一次化简函数的返回值。在示例的第一个例子中，第一次调用化简函数时的参数是0和1。将两者相加并返回1。再次调用时的参数是1和2，它返回3。然后它计算3+3=6、6+4=10，最后计算10+5=15。最后的值是15，<code>reduce()</code>返回这个值。<br>&#160; &#160; &#160; &#160;上面第三次调用<code>reduce()</code>时只有一个参数：没有指定初始值。当不指定初始值调用<code>reduce()</code>时，它将使用数组的第一个元素作为其初始值。这意味着第一次调用化简函数就使用了第一个和第二个数组元素作为其第一个和第二个参数。在上面求和和求积的例子里面，可以省略初始值参数。<br>在空数组上，不带初始值参数调用<code>reduce()</code>将导致类型错误异常。如果调用它的时候只有一个值——数组只有一个元素并且没有指定初始值，或者有一个空数组并指定一个初始值——<code>reduce()</code>只是简单地返回那个值而不会调用化简函数。<br>&#160; &#160; &#160; &#160;<code>reduceRight()</code>的工作原理和<code>reduce()</code>一样，不用的是它按照数组索引从高倒地（从右到左）处理数组，而不是从低到高。如果化简操作的优先顺序是从右到左，我们可以把它用在这些地方：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"><span class="comment">// 计算2^(3^4)。乘方操作的优先顺序是从右到左</span></span><br><span class="line"><span class="keyword">var</span> big = a.reduceRight(<span class="function"><span class="keyword">function</span>(<span class="params">accmulator, value</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Math</span>.pow(value, accmulator);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>&#160; &#160; &#160; &#160;<code>reduce()</code>和<code>reduceRight()</code>都能接收一个可选参数，它指定了化简函数调用时的<code>this关键字</code>的值。可选的初始值参数仍然需要占一个位置。如果想让化简函数作为一个特殊对象的方法调用，可以想到<code>Function.bind()</code>方法.<br>&#160; &#160; &#160; &#160;上面说的<code>every()</code>和<code>some()</code>方法是一种类型的数组化操作。但是不同的是，它们会尽早终止遍历而不总是访问每一个数组元素。<br>&#160; &#160; &#160; &#160;数学计算不是<code>reduce()</code>和<code>reduceRight()</code>的唯一用途。比如，我们可以用它写一个<code>union()</code>函数：它计算两个对象的”并集”，并返回另一个新对象，新对象具有二者的属性。该函数期待两个对象并返回另一个对象，所以它的工作原理和一个化简函数一样，并且可以使用<code>reduce()</code>来把它一般化，计算任意数目的对象的”并集”。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> objects = [&#123; <span class="attr">x</span>: <span class="number">1</span> &#125;, &#123; <span class="attr">y</span>: <span class="number">2</span> &#125;, &#123; <span class="attr">z</span>: <span class="number">3</span> &#125;];</span><br><span class="line"><span class="keyword">var</span> merged = objects.reduce(union); <span class="comment">// =&gt; &#123;x:1,y:2,z:3&#125;</span></span><br></pre></td></tr></table></figure>
-<p>&#160; &#160; &#160; &#160;当两个对象拥有同名的属性时，<code>union()</code>函数使用第一个参数的属性值。这样，<code>reduce()</code>和<code>reduceRight()</code>在使用<code>union()</code>时会给出不同的结果：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> objects = [&#123; <span class="attr">x</span>: <span class="number">1</span>, <span class="attr">a</span>: <span class="number">1</span> &#125;, &#123; <span class="attr">y</span>: <span class="number">2</span>, <span class="attr">a</span>: <span class="number">2</span> &#125;, &#123; <span class="attr">z</span>: <span class="number">3</span>, <span class="attr">a</span>: <span class="number">3</span> &#125;];</span><br><span class="line"><span class="keyword">var</span> leftunion = objects.reduce(union); <span class="comment">// =&gt; &#123;x:1, y:2, z:3, a:1&#125;</span></span><br><span class="line"><span class="keyword">var</span> rightunion = objects.reduceRight(union); <span class="comment">// =&gt; &#123;x:1, y:2, z:3, a:3&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="6-indexOf-和lastIndexOf"><a href="#6-indexOf-和lastIndexOf" class="headerlink" title="6.indexOf()和lastIndexOf()"></a>6.indexOf()和lastIndexOf()</h5><p>&#160; &#160; &#160; &#160;<code>indexOf()</code>和<code>lastIndexOf()</code>搜索整个数组中具有给定值的元素，返回找到的第一个元素的索引或者如果没有找到就返回-1。<code>indexOf()</code>从头至尾搜索，而<code>lastIndexOf()</code>则反向搜索。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = [<span class="number">0</span>, <span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>];</span><br><span class="line">a.indexOf(<span class="number">1</span>); <span class="comment">// =&gt; 1:a[1]是1</span></span><br><span class="line">a.lastIndexOf(<span class="number">1</span>); <span class="comment">// =&gt; 3:a[3]是1</span></span><br><span class="line">a.indexOf(<span class="number">3</span>); <span class="comment">// =&gt; -1:没有值为3的元素</span></span><br></pre></td></tr></table></figure>
-<p>&#160; &#160; &#160; &#160;不同于其他方法，<code>indexOf()</code>和<code>lastIndexOf()</code>方法不接受一个函数作为其参数。第一个参数是需要搜索的值，第二个参数是可选的：它指定数组中的一个索引，从那里开始搜索，如果省略该参数，<code>indexOf()</code>从头开始搜索，而<code>lastIndexOf()</code>从末尾开始搜索。第二个参数也可以是负数，它代表对数组末尾的偏移量，对于<code>splice()</code>方法：例如，-1指定数组的最后一个元素。<br>如下函数在一个数组中搜索指定的值并返回包含所有匹配的数组索引的一个数组。它展示了如何运用<code>indexOf()</code>的第二个参数来查找除了第一个意外匹配的值。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在数组中查找所有出现的x，并返回一个包含匹配索引的数组</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">findall</span>(<span class="params">a, x</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> results = [], <span class="comment">// 将会返回的数组</span></span><br><span class="line">    len = a.length, <span class="comment">// 待搜索数组的长度</span></span><br><span class="line">    pos = <span class="number">0</span>; <span class="comment">// 开始搜索的位置</span></span><br><span class="line">  <span class="keyword">while</span> (pos &lt; len) &#123;</span><br><span class="line">    <span class="comment">// 循环搜索多个元素...</span></span><br><span class="line">    pos = a.indexOf(x, pos); <span class="comment">// 搜索</span></span><br><span class="line">    <span class="keyword">if</span> (pos === <span class="number">-1</span>) &#123; <span class="comment">// 未找到，就完成搜索</span></span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    results.push(pos); <span class="comment">// 否则，在数组中存储索引</span></span><br><span class="line">    pos = pos + <span class="number">1</span>; <span class="comment">// 并从下一个位置开始搜索</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> results; <span class="comment">// 返回包含索引的数组</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>&#160; &#160; &#160; &#160;字符串也有<code>indexOf()</code>和<code>lastIndexOf()</code>方法，它们和数组方法的功能类似。</p>
-
-      
+</div>
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/30/ECMAScript5%E4%B8%AD%E7%9A%84%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/" data-id="ck8gp7rxu0005kb9ha4dm5jot" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2019/04/01/%E9%97%AD%E5%8C%85/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          闭包
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2019/03/23/JavaScript%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">JavaScript数组方法</div>
-    </a>
-  
-</nav>
+    <div class="container">
+        <h1 class="post-title">JavaScript数组方法</h1>
+<article class="post markdown-style">
+  <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>&#160; &#160; &#160; &#160; ECMAScript5定义了9个心得数组方法来遍历、映射、过滤、检测、简化和搜索数组。大多数方法的第一个参数接收一个函数，并且对数组的每个元素（或一些元素）调用一次该函数。如果是稀疏数组，对不存在的元素不调用传递的函数。在大多数情况下，调用提供的函数使用三个参数：数组元素、元素的索引和数组本身。通常，只需要第一个参数值，客户忽略后两个参数。大多数ECMAScript5数组方法的第一个参数是一个函数，第二个参数是可以选的。如果有第三个参数，则调用的函数被看做是第二个参数的方法。也就是说，在调用函数时传递进去的第二个参数作为它的this关键字的值来使用。被调用的函数的返回值非常重要，但是不同的方法处理返回值的方式也不一样。ECMAScript5中的数组方法都不会修改他们调用的原是数组。当然，传递给这些方法的函数是可以修改这些数组的。</p>
+<h5 id="1-forEach"><a href="#1-forEach" class="headerlink" title="1. forEach()"></a>1. forEach()</h5><p>&#160; &#160; &#160; &#160; <code>forEach()</code> 方法从头至尾遍历数组，为每个元素调用指定的函数。传递的函数作为 <code>forEach()</code> 的第一个参数。然后 <code>forEach()</code> 使用三个参数调用该函数：数组元素、元素的索引和元素本身。如果只关心数组元素的值，可以编写只有一个参数的函数——额外的参数将忽略：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> data = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]; <span class="hljs-comment">// 要求和的数组</span><br><span class="hljs-comment">// 计算数组元素的和值</span><br><span class="hljs-keyword">var</span> sum = <span class="hljs-number">0</span>; <span class="hljs-comment">// 初始值为0</span><br>data.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">value</span>) </span>&#123; <span class="hljs-comment">// 将每个值累加到sum上</span><br>    sum += value;<br>&#125;);<br>sum; <span class="hljs-comment">// 15</span><br><span class="hljs-comment">// 每个数组元素的值自加1</span><br>data.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">v, i, a</span>) </span>&#123;<br>    a[i] = v + <span class="hljs-number">1</span>;<br>&#125;);<br>data; <span class="hljs-comment">// =&gt; [2,3,4,5,6]</span><br></code></pre></td></tr></table></figure>
 
-  
+<p>&#160; &#160; &#160; &#160; <code>forEach()</code> 方法无法再所有元素都传递给调用的函数之前终止遍历。也就是说，没有像for循环中使用的响应的break语句。如果要提前终止，必须把 <code>forEach()</code> 方法放在一个try块中，并能抛出一个异常。如果 <code>forEach()</code> 方法调用的函数抛出 <code>forEach.break</code> 异常，循环会提前终止：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foreach</span>(<span class="hljs-params">a, f, t</span>) </span>&#123;<br>    <span class="hljs-keyword">try</span> &#123;<br>        a.forEach(f, t);<br>    &#125; <span class="hljs-keyword">catch</span> (e) &#123;<br>        <span class="hljs-keyword">if</span> (e === foreach.break) <span class="hljs-keyword">return</span>;<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">throw</span> e;<br>    &#125;<br>&#125;<br>foreach.break = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"StopIteration"</span>);<br></code></pre></td></tr></table></figure>
+
+<h5 id="2-map"><a href="#2-map" class="headerlink" title="2. map()"></a>2. map()</h5><p>&#160; &#160; &#160; &#160; <code>map()</code> 方法将调用的数组的每个元素传递给指定的函数，并返回一个数组，它包含该函数的返回值。例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript">a = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>];<br>b = a.map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">x</span>) </span>&#123;<br>    <span class="hljs-keyword">return</span> x * x;<br>&#125;); <span class="hljs-comment">//b是[1, 4, 9]</span><br></code></pre></td></tr></table></figure>
+
+<p>&#160; &#160; &#160; &#160; 传递给 <code>map()</code> 的函数的调用方式和传递给 <code>forEach()</code> 的函数的调用方式一样。但传递给 <code>map()</code> 的函数应该有返回值。注意， <code>map()</code> 返回的是新数组：它不修改调用的数组。如果是稀疏数组，返回的也是相同方式的稀疏数组：它具有相同的长度，相同的缺失元素。</p>
+<h5 id="3-filter"><a href="#3-filter" class="headerlink" title="3. filter()"></a>3. filter()</h5><p>&#160; &#160; &#160; &#160; <code>filter()</code> 方法返回的数组元素是调用的数组的一个子集。传递的函数是用来逻辑判定的：该函数返回 <code>true</code> 或 <code>false</code> 。调用判定函数就像调用 <code>forEach()</code> 和 <code>map()</code> 一样。如果返回值为 <code>true</code> 或者 <code>false</code> ，那么传递给判定函数的就是这个子集的成员，它将被添加到一个座位返回值的数组中。例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript">a = [<span class="hljs-number">5</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>];<br>smallvalue = a.filter(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">x</span>) </span>&#123;<br>    <span class="hljs-keyword">return</span> x &lt; <span class="hljs-number">3</span>;<br>&#125;); <span class="hljs-comment">// [2 ,1]</span><br>everyoher = a.filter(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">x</span>) </span>&#123;<br>    <span class="hljs-keyword">return</span> i % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>;<br>&#125;); <span class="hljs-comment">// [5, 3, 1]</span><br></code></pre></td></tr></table></figure>
+
+<p>&#160; &#160; &#160; &#160; <code>filter()</code> 会跳过稀疏数组中缺少的元素，它的返回数组总是稠密的。为了压缩稀疏数组的空缺，代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">var dense &#x3D; sparse.filter(function () &#123; return true; &#125;);<br></code></pre></td></tr></table></figure>
+
+<p>&#160; &#160; &#160; &#160; 甚至，压缩空缺并删除 <code>undefined</code> 和 <code>null</code> 元素，可以这样使用 <code>filter()</code> ：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">a &#x3D; a.filter(function (x) &#123; return x !&#x3D; undefined &amp;&amp; x !&#x3D; null; &#125;);<br></code></pre></td></tr></table></figure>
+
+<h5 id="4-every-和some"><a href="#4-every-和some" class="headerlink" title="4. every()和some()"></a>4. every()和some()</h5><p>&#160; &#160; &#160; &#160; <code>every()</code> 和 <code>some()</code> 方法是数组的逻辑判定：它们对数组元素应用指定的函数进行判定，返回 <code>true</code> 或 <code>false</code> 。<br><code>every()</code> 方法就像数学中的”针对所有”的量词∀：当且仅当数组中的所有元素调用判定函数都返回true，它才返回true：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript">a = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>];<br>a.every(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">x</span>) </span>&#123;<br>    <span class="hljs-keyword">return</span> x &lt; <span class="hljs-number">10</span>;<br>&#125;); <span class="hljs-comment">// =&gt; true:所有的值&lt;10</span><br>a.every(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">x</span>) </span>&#123;<br>    <span class="hljs-keyword">return</span> x % <span class="hljs-number">2</span> === <span class="hljs-number">0</span>;<br>&#125;); <span class="hljs-comment">// =&gt; false: 不是所有的值都是偶数</span><br></code></pre></td></tr></table></figure>
+
+<p>&#160; &#160; &#160; &#160; <code>some()</code> 方法就像数学的”存在”量词∃：当数组中至少有一个元素调用判定函数返回true，它就返回true；并且当且仅当数值中的所有元素调用判定函数都返回false，它才返回false：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript">a = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>];<br>a.some(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">x</span>) </span>&#123;<br>    <span class="hljs-keyword">return</span> x % <span class="hljs-number">2</span> === <span class="hljs-number">0</span>;<br>&#125;); <span class="hljs-comment">// =&gt; true:a包含有偶数</span><br>a.some(<span class="hljs-built_in">isNaN</span>); <span class="hljs-comment">// =&gt; false: a不包含非数值元素</span><br></code></pre></td></tr></table></figure>
+
+<p>&#160; &#160; &#160; &#160; 一旦 <code>every()</code> 和 <code>some()</code> 确认该返回什么值他们就会停止遍历数组元素。 <code>some()</code> 在判定函数第一次返回true后就返回true，但如果判定函数一直返回false，它将会遍历整个数组。 <code>every()</code> 切好相反：他在判定函数第一次返回false就返回false，但如果判定函数一直返回true，它将会便利整个数组。注意，根据数学上的惯例，在空数组上调用时， <code>every()</code> 返回true， <code>some()</code> 返回false。</p>
+<h5 id="5-reduce-和reduceRight"><a href="#5-reduce-和reduceRight" class="headerlink" title="5. reduce()和reduceRight()"></a>5. reduce()和reduceRight()</h5><p>&#160; &#160; &#160; &#160; <code>reduce()</code> 和 <code>reduceRight()</code> 方法使用指定的函数将数组元素进行组合，生成单个值。这在函数式编程中是常见的操作们也可以称为”注入”和”折叠”：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>];<br><span class="hljs-keyword">var</span> sum = a.reduce(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">x, y</span>) </span>&#123;<br>    <span class="hljs-keyword">return</span> x + y<br>&#125;, <span class="hljs-number">0</span>); <span class="hljs-comment">// =&gt; 数组求和</span><br><span class="hljs-keyword">var</span> product = a.reduce(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">x, y</span>) </span>&#123;<br>    <span class="hljs-keyword">return</span> x * y<br>&#125;, <span class="hljs-number">1</span>); <span class="hljs-comment">// =&gt; 数组求积</span><br><span class="hljs-keyword">var</span> max = a.reduce(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">x, y</span>) </span>&#123;<br>    <span class="hljs-keyword">return</span> (x &gt; y) ? x : y;<br>&#125;); <span class="hljs-comment">// =&gt; 求最大值</span><br></code></pre></td></tr></table></figure>
+
+<p>&#160; &#160; &#160; &#160; <code>reduce()</code> 需要两个参数。第一个是执行化简操作的函数。化简函数的任务就是用某种方法把两个值组合或花间为一个值，并返回化简后的值。在上述例子中，函数通过加法、乘法或取最大值的方法组合两个值。第二个（可选）的参数是一个传递给函数的初始值。<br>&#160; &#160; &#160; &#160; <code>reduce()</code> 使用的函数与 <code>forEach()</code> 和 <code>map()</code> 使用的函数不同。比较熟悉的是，数组元素、元素的索引和数组本身将作为第2~4个参数传递给函数。第一个参数是到目前为止的化简操作累积的结果。第一次调用函数式，第一个参数是一个初始值，它就是传递给 <code>reduce()</code> 的第二个参数。在接下来的调用中，这个值就是上一次化简函数的返回值。在示例的第一个例子中，第一次调用化简函数时的参数是0和1。将两者相加并返回1。再次调用时的参数是1和2，它返回3。然后它计算3+3=6、6+4=10，最后计算10+5=15。最后的值是15， <code>reduce()</code> 返回这个值。<br>&#160; &#160; &#160; &#160; 上面第三次调用 <code>reduce()</code> 时只有一个参数：没有指定初始值。当不指定初始值调用 <code>reduce()</code> 时，它将使用数组的第一个元素作为其初始值。这意味着第一次调用化简函数就使用了第一个和第二个数组元素作为其第一个和第二个参数。在上面求和和求积的例子里面，可以省略初始值参数。<br>在空数组上，不带初始值参数调用 <code>reduce()</code> 将导致类型错误异常。如果调用它的时候只有一个值——数组只有一个元素并且没有指定初始值，或者有一个空数组并指定一个初始值—— <code>reduce()</code> 只是简单地返回那个值而不会调用化简函数。<br>&#160; &#160; &#160; &#160; <code>reduceRight()</code> 的工作原理和 <code>reduce()</code> 一样，不用的是它按照数组索引从高倒地（从右到左）处理数组，而不是从低到高。如果化简操作的优先顺序是从右到左，我们可以把它用在这些地方：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a = [<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>];<br><span class="hljs-comment">// 计算2^(3^4)。乘方操作的优先顺序是从右到左</span><br><span class="hljs-keyword">var</span> big = a.reduceRight(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">accmulator, value</span>) </span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Math</span>.pow(value, accmulator);<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<p>&#160; &#160; &#160; &#160; <code>reduce()</code> 和 <code>reduceRight()</code> 都能接收一个可选参数，它指定了化简函数调用时的 <code>this关键字</code> 的值。可选的初始值参数仍然需要占一个位置。如果想让化简函数作为一个特殊对象的方法调用，可以想到 <code>Function.bind()</code> 方法.<br>&#160; &#160; &#160; &#160; 上面说的 <code>every()</code> 和 <code>some()</code> 方法是一种类型的数组化操作。但是不同的是，它们会尽早终止遍历而不总是访问每一个数组元素。<br>&#160; &#160; &#160; &#160; 数学计算不是 <code>reduce()</code> 和 <code>reduceRight()</code> 的唯一用途。比如，我们可以用它写一个 <code>union()</code> 函数：它计算两个对象的”并集”，并返回另一个新对象，新对象具有二者的属性。该函数期待两个对象并返回另一个对象，所以它的工作原理和一个化简函数一样，并且可以使用 <code>reduce()</code> 来把它一般化，计算任意数目的对象的”并集”。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> objects = [&#123;<br>    x: <span class="hljs-number">1</span><br>&#125;, &#123;<br>    y: <span class="hljs-number">2</span><br>&#125;, &#123;<br>    z: <span class="hljs-number">3</span><br>&#125;];<br><span class="hljs-keyword">var</span> merged = objects.reduce(union); <span class="hljs-comment">// =&gt; &#123;x:1,y:2,z:3&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>&#160; &#160; &#160; &#160; 当两个对象拥有同名的属性时， <code>union()</code> 函数使用第一个参数的属性值。这样， <code>reduce()</code> 和 <code>reduceRight()</code> 在使用 <code>union()</code> 时会给出不同的结果：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> objects = [&#123;<br>    x: <span class="hljs-number">1</span>,<br>    a: <span class="hljs-number">1</span><br>&#125;, &#123;<br>    y: <span class="hljs-number">2</span>,<br>    a: <span class="hljs-number">2</span><br>&#125;, &#123;<br>    z: <span class="hljs-number">3</span>,<br>    a: <span class="hljs-number">3</span><br>&#125;];<br><span class="hljs-keyword">var</span> leftunion = objects.reduce(union); <span class="hljs-comment">// =&gt; &#123;x:1, y:2, z:3, a:1&#125;</span><br><span class="hljs-keyword">var</span> rightunion = objects.reduceRight(union); <span class="hljs-comment">// =&gt; &#123;x:1, y:2, z:3, a:3&#125;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h5 id="6-indexOf-和lastIndexOf"><a href="#6-indexOf-和lastIndexOf" class="headerlink" title="6.indexOf()和lastIndexOf()"></a>6.indexOf()和lastIndexOf()</h5><p>&#160; &#160; &#160; &#160; <code>indexOf()</code> 和 <code>lastIndexOf()</code> 搜索整个数组中具有给定值的元素，返回找到的第一个元素的索引或者如果没有找到就返回-1。 <code>indexOf()</code> 从头至尾搜索，而 <code>lastIndexOf()</code> 则反向搜索。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a = [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>];<br>a.indexOf(<span class="hljs-number">1</span>); <span class="hljs-comment">// =&gt; 1:a[1]是1</span><br>a.lastIndexOf(<span class="hljs-number">1</span>); <span class="hljs-comment">// =&gt; 3:a[3]是1</span><br>a.indexOf(<span class="hljs-number">3</span>); <span class="hljs-comment">// =&gt; -1:没有值为3的元素</span><br></code></pre></td></tr></table></figure>
+
+<p>&#160; &#160; &#160; &#160; 不同于其他方法， <code>indexOf()</code> 和 <code>lastIndexOf()</code> 方法不接受一个函数作为其参数。第一个参数是需要搜索的值，第二个参数是可选的：它指定数组中的一个索引，从那里开始搜索，如果省略该参数， <code>indexOf()</code> 从头开始搜索，而 <code>lastIndexOf()</code> 从末尾开始搜索。第二个参数也可以是负数，它代表对数组末尾的偏移量，对于 <code>splice()</code> 方法：例如，-1指定数组的最后一个元素。<br>如下函数在一个数组中搜索指定的值并返回包含所有匹配的数组索引的一个数组。它展示了如何运用 <code>indexOf()</code> 的第二个参数来查找除了第一个意外匹配的值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 在数组中查找所有出现的x，并返回一个包含匹配索引的数组</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">findall</span>(<span class="hljs-params">a, x</span>) </span>&#123;<br>    <span class="hljs-keyword">var</span> results = [], <span class="hljs-comment">// 将会返回的数组</span><br>        len = a.length, <span class="hljs-comment">// 待搜索数组的长度</span><br>        pos = <span class="hljs-number">0</span>; <span class="hljs-comment">// 开始搜索的位置</span><br>    <span class="hljs-keyword">while</span> (pos &lt; len) &#123;<br>        <span class="hljs-comment">// 循环搜索多个元素...</span><br>        pos = a.indexOf(x, pos); <span class="hljs-comment">// 搜索</span><br>        <span class="hljs-keyword">if</span> (pos === <span class="hljs-number">-1</span>) &#123; <span class="hljs-comment">// 未找到，就完成搜索</span><br>            <span class="hljs-keyword">break</span>;<br>        &#125;<br>        results.push(pos); <span class="hljs-comment">// 否则，在数组中存储索引</span><br>        pos = pos + <span class="hljs-number">1</span>; <span class="hljs-comment">// 并从下一个位置开始搜索</span><br>    &#125;<br>    <span class="hljs-keyword">return</span> results; <span class="hljs-comment">// 返回包含索引的数组</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>&#160; &#160; &#160; &#160; 字符串也有 <code>indexOf()</code> 和 <code>lastIndexOf()</code> 方法，它们和数组方法的功能类似。</p>
+
 </article>
 
-</section>
-        
-          <aside id="sidebar">
-  
+    <div class="pagenator post-pagenator">
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ajax/">ajax</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/fetch/">fetch</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/gulp/">gulp</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/node/">node</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/webpack/">webpack</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">计算机基础</a></li></ul>
-    </div>
-  </div>
-
-
-  
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2020/05/18/%E3%80%8AJust-JavaScript%E3%80%8B05.-%E8%AE%A1%E7%AE%97%E6%95%B0%E5%80%BC2/">《Just JavaScript》05. 计算数值2</a>
-          </li>
-        
-          <li>
-            <a href="/2020/04/15/%E3%80%8AJust-JavaScript%E3%80%8B04-%E8%AE%A1%E7%AE%97%E6%95%B0%E5%80%BC/">《Just JavaScript》04. 计算数值</a>
-          </li>
-        
-          <li>
-            <a href="/2020/04/01/%E3%80%8AJust-JavaScript%E3%80%8B02-JavaScript%E5%AE%87%E5%AE%99/">《Just JavaScript》02.JavaScript宇宙</a>
-          </li>
-        
-          <li>
-            <a href="/2020/03/31/%E3%80%8AJust-JavaScript%E3%80%8B01-%E6%80%9D%E7%BB%B4%E6%A8%A1%E5%9E%8B/">《Just JavaScript》01.思维模型</a>
-          </li>
-        
-          <li>
-            <a href="/2020/03/31/%E3%80%8AJust-JavaScript%E3%80%8B03-%E5%80%BC%E5%92%8C%E5%8F%98%E9%87%8F/">《Just JavaScript》03. 值和变量</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2020 zxl<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
+        <a class="extend prev post-prev" href="/2019/04/01/%E9%97%AD%E5%8C%85/">上一篇</a>
     
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    <p>上次更新 2020-06-03</p>
+    
+    
+        <a class="extend next post-next" href="/2019/03/23/JavaScript%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/">下一篇</a>
+    
+    </div>
 
-
-  
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-
-  
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
-
-
-
-
-  </div>
+    </div>
+    <div class="footer">
+        <div class="container">
+    <!-- <div class="social">
+	<ul class="social-list">
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+	</ul>
+</div> -->
+    <div class="copyright">
+        <span>
+            
+            
+            
+                © zxl 2017 - 2020
+            
+        </span>
+    </div>
+    <!-- <div class="power">
+        <span>
+            Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> & <a href="https://github.com/CaiChenghan/iLiKE" target="_blank" rel="noopener">iLiKE Theme</a>
+        </span>
+    </div> -->
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <!--page counter part-->
+<script>
+function addCount (Counter) {
+    url=$('.article-date').attr('href').trim();
+    title = $('.article-title').text().trim();
+    var query = new AV.Query(Counter);
+    //use url as unique idnetfication
+    query.equalTo("url",url);
+    query.find({
+        success: function(results) {
+            if (results.length>0) {
+                var counter=results[0];
+                counter.fetchWhenSave(true); //get recent result
+                counter.increment("time");
+                counter.save();
+            } else {
+                var newcounter=new Counter();
+                newcounter.set("title",title);
+                newcounter.set("url",url);
+                newcounter.set("time",1);
+                newcounter.save(null,{
+                    success: function(newcounter) {
+                        //alert('New object created');
+                    }, error: function(newcounter,error) {
+                        alert('Failed to create');
+                    }
+                })
+            }
+        },
+        error: function(error) {
+            //find null is not a error
+            alert('Error:'+error.code+" "+error.message);
+        }
+    });
+}
+$(function() {
+    var Counter=AV.Object.extend("Counter");
+    //only increse visit counting when intering a page
+    if ($('.article-title').length == 1) {
+       addCount(Counter);
+    }
+    var query=new AV.Query(Counter);
+    query.descending("time");
+    // the sum of popular posts
+    query.limit(10); 
+    query.find({
+        success: function(results) {
+                for(var i=0;i<results.length;i++) {
+                    var counter=results[i];
+                    title=counter.get("title");
+                    url=counter.get("url");
+                    time=counter.get("time");
+                    // add to the popularlist widget
+                    showcontent=title+" ("+time+")";
+                    //notice the "" in href
+                    $('.popularlist').append('<li><a href="'+url+'">'+showcontent+'</a></li>');
+                }
+            },
+        error: function(error) {
+            alert("Error:"+error.code+" "+error.message);
+        }
+    });
+});
+</script>
+</div>
+    </div>
 </body>
 </html>
