@@ -8,13 +8,13 @@ tags:
 
 事不宜迟，让我们继续我们的JavaScript之旅吧！
 
-![](/blog_imgs/just_javascript//05/type.png)
+![](/blog_imgs/just_javascript/05/type.png)
 
 在前面的模块中，我们研究了undefined、null、boolean和number。我们现在将继续计算数值——从bigint开始。
 
 ## BigInts
 
-![](/blog_imgs/just_javascript//05/bigints.png)
+![](/blog_imgs/just_javascript/05/bigints.png)
 
 BigInts只是最近才添加到JavaScript中，所以你还不会看到它们被广泛使用。如果你使用版本较低的浏览器，它们将不起作用。常规数字不能精确地表示大整数，因此大整数填补了这一空白（字面上）：
 
@@ -41,7 +41,7 @@ console.log(alot + 5n); // 9007199254740996n
 
 ## Strings
 
-![](/blog_imgs/just_javascript//05/string.png)
+![](/blog_imgs/just_javascript/05/string.png)
 
 在JavaScript用字符串表示文本。有三种方法可以可以写字符串（单引号、双引号和反引号），但结果是一样的：
 
@@ -105,13 +105,13 @@ console.log(typeof(alohomora)); // "symbol"
 
 如果不深入研究对象和属性，很难解释它们的目的和行为，所以现在我们将跳过它们。对不起，symbols！
 
-![](/blog_imgs/just_javascript//05/sym.png)
+![](/blog_imgs/just_javascript/05/sym.png)
 
 ## Objects
 
 最后，我们来说说对象。
 
-![](/blog_imgs/just_javascript//05/bracket.png)
+![](/blog_imgs/just_javascript/05/bracket.png)
 
 对象包括arrays, dates, RegExps和其他非原始值。
 
@@ -144,7 +144,7 @@ let sisters = 3;
 let musketeers = 3;
 ```
 
-![](/blog_imgs/just_javascript//05/primitive.png)
+![](/blog_imgs/just_javascript/05/primitive.png)
 
 使对象区别于其他的是我们可以创建更多的对象。每次使用{}对象文本时，我们都会创建一个全新的对象值：
 
@@ -153,7 +153,7 @@ let shrek = {};
 let donkey = {};
 ```
 
-![](/blog_imgs/just_javascript//05/obj.png)
+![](/blog_imgs/just_javascript/05/obj.png)
 
 数组、日期和任何其他对象也是如此。例如，[]数组确实创建了一个新的数组值——以前从未存在过的值。
 
@@ -170,7 +170,7 @@ junk = null; // Doesn't necessarily destroy an object
 
 这意味着尽管我们不能销毁一个对象，如果无法通过代码中的导线跟踪它，它最终可能消失。
 
-![](/blog_imgs/just_javascript//05/obj1.png)
+![](/blog_imgs/just_javascript/05/obj1.gif)
 
 JavaScript不能保证垃圾收集何时发生。
 
@@ -180,7 +180,7 @@ JavaScript不能保证垃圾收集何时发生。
 
 ## Functions
 
-!![](/blog_imgs/just_javascript//05/fun.png)
+!![](/blog_imgs/just_javascript/05/fun.png)
 
 将函数看作与代码分离的值是特别奇怪的。毕竟，它们也是我写的代码。不是吗？
 
@@ -278,7 +278,7 @@ How many different values does this code pass to console.log?
 
 **每当我们执行一行包含函数表达式的代码时，一个全新的函数值就会出现在我们的宇宙中。**
 
-![](/blog_imgs/just_javascript//05/fun1.gif)
+![](/blog_imgs/just_javascript/05/fun1.gif)
 
 **这里，`function(){}`也是一个表达式**。与任何表达式一样，函数表达式向JavaScript宇宙提出一个“问题”——它通过每次我们提问时创建一个新的函数值来回答我们。这与`{}`在执行时创建新对象值的方式非常相似。函数就像对象！
 
@@ -332,7 +332,7 @@ console.log(dwarves);
 
 那真是一段不同寻常的旅程！在最后两个模块中，我们看了JavaScript中的每个值类型。让我们结合计算伯爵来概括每种类型有多少个值，从不同的原始类型开始：
 
-![](/blog_imgs/just_javascript//05/primitive-type.png)
+![](/blog_imgs/just_javascript/05/primitive-type.png)
 
 * `Undefined`：仅仅只是个值，表示没有定义。
 * `Null`：一个值，空。
@@ -344,7 +344,7 @@ console.log(dwarves);
 
 以下类型是特殊的，因为它们让我们可以创造自己的价值：
 
-![](/blog_imgs/just_javascript//05/special-type.png)
+![](/blog_imgs/just_javascript/05/special-type.png)
 
 * `Objects`：表示执行的每个对象文本都的值。
 * `Function`：执行的每个函数表达式的值。
