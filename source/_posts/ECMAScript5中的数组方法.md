@@ -1,5 +1,5 @@
 ﻿---
-title: JavaScript数组方法
+title: ECMAScript5中的数组方法
 date: 2019-03-30 09:21:08  
 categories: JavaScript
 tags:

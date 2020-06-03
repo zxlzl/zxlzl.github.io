@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2019/03/30/ECMAScript5%E4%B8%AD%E7%9A%84%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/</loc>
+    
+    <lastmod>2020-06-03T09:06:48.630Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2020/05/18/%E3%80%8AJust-JavaScript%E3%80%8B05-%E8%AE%A1%E7%AE%97%E6%95%B0%E5%80%BC2/</loc>
     
-    <lastmod>2020-06-03T08:41:50.074Z</lastmod>
+    <lastmod>2020-06-03T08:58:56.533Z</lastmod>
     
   </url>
   
@@ -33,13 +40,6 @@
     <loc>http://yoursite.com/2017/12/03/NodeJs%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B01/</loc>
     
     <lastmod>2020-06-03T07:23:24.912Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/03/30/ECMAScript5%E4%B8%AD%E7%9A%84%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/</loc>
-    
-    <lastmod>2020-06-03T07:17:40.437Z</lastmod>
     
   </url>
   
