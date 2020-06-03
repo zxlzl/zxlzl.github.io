@@ -1,6 +1,6 @@
 ---
-title: 《Just JavaScript》01.思维模型
-date: 2020-03-31 21:40:45
+title: 《Just JavaScript》01. 思维模型
+date: 2020-03-28 21:40:45
 tags: JavaScript
 ---
 

@@ -3,12 +3,12 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 随便写写
+title: 'Lemon Ray'
 subtitle: ''
 description: ''
 keywords:
 author: zxl
-language: en
+language: zh-CN
 timezone: ''
 
 # URL
@@ -50,8 +50,8 @@ highlight:
   auto_detect: false
   tab_replace: ''
   wrap: true
-  # hljs: false
-  hljs: true #新增项
+  hljs: false
+  # hljs: true #新增项
 
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
@@ -59,7 +59,7 @@ highlight:
 # order_by: Posts order. (Order by date descending by default)
 index_generator:
   path: ''
-  per_page: 10
+  per_page: 5
   order_by: -date
 
 # Category & Tag
@@ -94,7 +94,8 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+# theme: landscape
+theme: iLiKE
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html

@@ -1,9 +1,7 @@
 ---
 title: 《Just JavaScript》05. 计算数值2
 date: 2020-05-18 17:36:08  
-categories: JavaScript
 tags:
-
 ---
 
 事不宜迟，让我们继续我们的JavaScript之旅吧！
@@ -19,12 +17,12 @@ tags:
 BigInts只是最近才添加到JavaScript中，所以你还不会看到它们被广泛使用。如果你使用版本较低的浏览器，它们将不起作用。常规数字不能精确地表示大整数，因此大整数填补了这一空白（字面上）：
 
 ``` javascript
-let alot = 9007199254740991n; // Notice n at the end
-console.log(alot + 1n); // 9007199254740992n
-console.log(alot + 2n); // 9007199254740993n
-console.log(alot + 3n); // 9007199254740994n
-console.log(alot + 4n); // 9007199254740995n
-console.log(alot + 5n); // 9007199254740996n
+let alot = 9007199254740991n; // Notice n at the end 
+console.log(alot + 1n); // 9007199254740992n 
+console.log(alot + 2n); // 9007199254740993n 
+console.log(alot + 3n); // 9007199254740994n 
+console.log(alot + 4n); // 9007199254740995n 
+console.log(alot + 5n); // 9007199254740996n 
 ```
 
 四舍五入可不是闹着玩的！这对于财务计算来说是非常重要的，因为精确性尤其重要。请记住，没有什么是免费的。真正数量庞大的操作可能需要时间和资源。
@@ -46,9 +44,15 @@ console.log(alot + 5n); // 9007199254740996n
 在JavaScript用字符串表示文本。有三种方法可以可以写字符串（单引号、双引号和反引号），但结果是一样的：
 
 ``` javascript
-console.log(typeof("こんにちは")); // "string"
-console.log(typeof('こんにちは')); // "string"
-console.log(typeof( `こんにちは` )); // "string"
+console.log(typeof("こんにちは")); // "string" 
+console.log(typeof('こんにちは')); // "string" 
+console.log(typeof( `こんにちは` )); // "string" 
+```
+
+``` javascript
+console.log(2)
+console.log("hello")
+console.log(undefined)
 ```
 
 空字符串也是字符串：
@@ -98,7 +102,7 @@ console.log(answer); // ?
 
 Symbols是最近才加到JavaScript中的。
 
-```javascript
+``` javascript
 let alohomora = Symbol();
 console.log(typeof(alohomora)); // "symbol"
 ```
@@ -115,7 +119,7 @@ console.log(typeof(alohomora)); // "symbol"
 
 对象包括arrays, dates, RegExps和其他非原始值。
 
-```javascript
+``` javascript
 console.log(typeof({})); // "object"
 console.log(typeof([])); // "object"
 console.log(typeof(new Date())); // "object"
@@ -123,10 +127,12 @@ console.log(typeof(/\d+/)); // "object"
 console.log(typeof(Math)); // "object"
 ```
 
-与之前的一切不同，对象不是原始值。这也意味着默认情况下，它们是可变的。我们可以通过.或者[]访问他们的属性：
+与之前的一切不同，对象不是原始值。这也意味着默认情况下，它们是可变的。我们可以通过. 或者[]访问他们的属性：
 
-```javascript
-let rapper = { name: 'Malicious' };
+``` javascript
+let rapper = {
+    name: 'Malicious'
+};
 rapper.name = 'Malice'; // Dot notation
 rapper['name'] = 'No Malice'; // Bracket notation
 ```
@@ -139,7 +145,7 @@ rapper['name'] = 'No Malice'; // Bracket notation
 
 在我们的思维模型中，我们讨论过的所有原始值——null, undefined, booleans, numbers和strings——塔门都“一直存在”。我们不能“制造”一个新字符串或一个新数字，我们只能“转换”那个值。
 
-```javascript
+``` javascript
 let sisters = 3;
 let musketeers = 3;
 ```
@@ -148,7 +154,7 @@ let musketeers = 3;
 
 使对象区别于其他的是我们可以创建更多的对象。每次使用{}对象文本时，我们都会创建一个全新的对象值：
 
-```javascript
+``` javascript
 let shrek = {};
 let donkey = {};
 ```
@@ -159,10 +165,10 @@ let donkey = {};
 
 ### 对象消失了吗？
 
-你可能会想：对象会永远消失，还是永远在周围徘徊？JavaScript的设计方式是从我们的代码中我们不知道是怎么回事。例如，我们不能销毁对象：
+你可能会想：”对象会永远消失，还是永远在周围徘徊？JavaScript的设计方式是从我们的代码中我们不知道是怎么回事”。例如，我们不能销毁对象：
 
-```javascript
-let junk = {};
+``` javascript
+let junk = {};  
 junk = null; // Doesn't necessarily destroy an object
 ```
 
@@ -178,9 +184,10 @@ JavaScript不能保证垃圾收集何时发生。
 
 在我的宇宙中，对象和函数漂浮在离我的代码最近的地方。这提醒我，我可以操纵他们，甚至更多地使用它们。
 
+
 ## Functions
 
-!![](/blog_imgs/just_javascript/05/fun.png)
+![](/blog_imgs/just_javascript/05/fun.png)
 
 将函数看作与代码分离的值是特别奇怪的。毕竟，它们也是我写的代码。不是吗？
 
@@ -190,45 +197,43 @@ JavaScript不能保证垃圾收集何时发生。
 
 为了理解函数，我们将它们与数字和对象进行比较。
 
-首先，考虑运行console.log（2）七次的循环：
+首先，考虑运行console.log(2)七次的循环：
 
-```javascript
+``` javascript
 for (let i = 0; i < 7; i++) {
-  console.log(2);
+    console.log(2);
 }
-```
+```  
 
-**它给`console.log()`传递给多少不同的值。**为了回答这个问题，让我们回忆一下当我们写下2时是什么意思。字面上它是一个数字，文字是一种表达式——这对我们宇宙来说是个问题。在我们宇宙中，每个数字只有一个值，所以它通过每次“调用”相同的值——数字2的来“回答”我们的问题。**所以答案是一个值，**我们将看到七次打印，但每次调用都传递相同的值。
+它给 `console.log()` 传递给多少不同的值。为了回答这个问题，让我们回忆一下当我们写下2时是什么意思。字面上它是一个数字，文字是一种表达式——这对我们宇宙来说是个问题。在我们宇宙中，每个数字只有一个值，所以它通过每次“调用”相同的值——数字2的来“回答”我们的问题。**所以答案是一个值，**我们将看到七次打印，但每次调用都传递相同的值。
 
 现在来简单的复习一下对象。
 
-下面是运行`console.log({})`七次的另一个for循环：
+下面是运行 `console.log({})` 七次的另一个for循环：
 
-```javascript
+``` javascript
 for (let i = 0; i < 7; i++) {
-  console.log({});
+    console.log({});
 }
-```
+``` 
 
-**现在它传递给多少不同的值给`console.log()`？**在这里，`{}`也是一个文本——不同的是它是一个对象文本。正如我们刚刚了解到的，JavaScript宇宙不会通过调用任何东西来“回答”一个对象。相反，他会创建新的对象值——这是`{}`对象文本的结果。**所以上面的代码创建并记录了七个完全不同的对象值。**
+现在它传递给多少不同的值给 `console.log()？` 在这里， `{}` 也是一个文本——不同的是它是一个对象文本。正如我们刚刚了解到的，JavaScript宇宙不会通过调用任何东西来“回答”一个对象。相反，他会创建新的对象值——这是 `{}` 对象文本的结果。**所以上面的代码创建并记录了七个完全不同的对象值。**
 
 先把它抛之脑后。
 
 现在让我们来看看函数。
 
-```javascript
+``` javascript
 for (let i = 0; i < 7; i++) {
-  console.log(function() {});
+    console.log(function() {});
 }
 ```
 
-How many different values does this code pass to console.log?
-**现在它传递给多少不同的值给`console.log()`？**
+**现在它传递给多少不同的值给 `console.log()` ？**
 
 ![](/blog_imgs/just_javascript//03/spoilers.jpg)
 
 在你决定答案之前不要再滚动。
-
 
 `... ` 
 
@@ -280,7 +285,7 @@ How many different values does this code pass to console.log?
 
 ![](/blog_imgs/just_javascript/05/fun1.gif)
 
-**这里，`function(){}`也是一个表达式**。与任何表达式一样，函数表达式向JavaScript宇宙提出一个“问题”——它通过每次我们提问时创建一个新的函数值来回答我们。这与`{}`在执行时创建新对象值的方式非常相似。函数就像对象！
+**这里， `function(){}` 也是一个表达式**。与任何表达式一样，函数表达式向JavaScript宇宙提出一个“问题”——它通过每次我们提问时创建一个新的函数值来回答我们。这与 `{}` 在执行时创建新对象值的方式非常相似。函数就像对象！
 
 严格来说，函数是JavaScript中的对象。我们将继续将它们视为单独的基本类型，因为它们与常规对象相比具有独特的功能。但是，一般来说，如果你能对一个对象做些什么，你也可以对一个函数做。它们是非常特殊的对象。
 
@@ -288,8 +293,10 @@ How many different values does this code pass to console.log?
 
 下面的代码打印什么？
 
-```javascript
-let countDwarves = function() { return 7; };
+``` javascript
+let countDwarves = function() {
+    return 7;
+};
 let dwarves = countDwarves;
 console.log(dwarves);
 ```
@@ -300,31 +307,33 @@ console.log(dwarves);
 
 如果你遵循我们的思维模型，这种表现应该是有道理的：
 
-1. 首先，我们用一个`function(){}`表达式创建了一个新的函数值，并将`countdwaves`变量指向这个值。
-2. 接下来，我们将`dwarves`变量指向`countDwarves`所指向的值——这是相同的函数值
-3. 最后，我们输出了`dwarves`当前指向的值。
+1. 首先，我们用一个 `function(){}` 表达式创建了一个新的函数值，并将 `countdwaves` 变量指向这个值。
+2. 接下来，我们将 `dwarves` 变量指向 `countDwarves` 所指向的值——这是相同的函数值
+3. 最后，我们输出了 `dwarves` 当前指向的值。
 
 在任何时候，我们都没有调用函数！
 
-结果，`countDwarves`和`dwarves`都指向同一个值，这恰好是一个函数。所以，函数是值，我们可以将变量指向它们，就像处理数字或对象一样。
+结果， `countDwarves` 和 `dwarves` 都指向同一个值，这恰好是一个函数。所以，函数是值，我们可以将变量指向它们，就像处理数字或对象一样。
 
 **当然，如果我们想调用函数，我们也可以这样做：**
 
-```javascript
-let countDwarves = function() { return 7; };
+``` javascript
+let countDwarves = function() {
+    return 7;
+};
 let dwarves = countDwarves(); // () is a function call
 console.log(dwarves);
 ```
 
-注意，let声明和=赋值都与函数调用无关。是`()`执行函数调用——而且是单独执行的！
+注意，let声明和=赋值都与函数调用无关。是 `()` 执行函数调用——而且是单独执行的！
 
-添加`()`改变了代码的含义：
+添加 `()` 改变了代码的含义：
 
-* 让`dwarves=countDwarves`意味着“将`dwarves`指向`countDwarves`所指向的值”
+* 让 `dwarves=countDwarves` 意味着“将 `dwarves` 指向 `countDwarves` 所指向的值”
 
-* let`dwarves=countDwarves()`表示“将`dwarves`指向`countDwarves`所指向的函数**返回的值**。”
+* let `dwarves=countDwarves()` 表示“将 `dwarves` 指向 `countDwarves` 所指向的函数**返回的值**。”
 
-实际上，`countDwarves()`也是一个表达式。它被称为调用表达式。为了“应答”调用表达式，JavaScript在函数内部运行代码，并将返回的值作为结果（在本例中是7）。
+实际上， `countDwarves()` 也是一个表达式。它被称为调用表达式。为了“应答”调用表达式，JavaScript在函数内部运行代码，并将返回的值作为结果（在本例中是7）。
 
 我们将在未来的模块中更详细地研究函数调用。
 
@@ -334,22 +343,22 @@ console.log(dwarves);
 
 ![](/blog_imgs/just_javascript/05/primitive-type.png)
 
-* `Undefined`：仅仅只是个值，表示没有定义。
-* `Null`：一个值，空。
-* `Booleans`：两个值: true 和 false。
-* `Numbers`： 数学中每个浮点数的值。
-* `BigInts`：每一个可能的整数的值。
-* `Strings`：每个可能的字符串的值。
-* `Symbols`：我们暂时跳过了Symbols，但总有一天我们会讨论到它们的！
+* `Undefined` ：仅仅只是个值，表示没有定义。
+* `Null` ：一个值，空。
+* `Booleans` ：两个值: true 和 false。
+* `Numbers` ： 数学中每个浮点数的值。
+* `BigInts` ：每一个可能的整数的值。
+* `Strings` ：每个可能的字符串的值。
+* `Symbols` ：我们暂时跳过了Symbols，但总有一天我们会讨论到它们的！
 
 以下类型是特殊的，因为它们让我们可以创造自己的价值：
 
 ![](/blog_imgs/just_javascript/05/special-type.png)
 
-* `Objects`：表示执行的每个对象文本都的值。
-* `Function`：执行的每个函数表达式的值。
+* `Objects` ：表示执行的每个对象文本都的值。
+* `Function` ：执行的每个函数表达式的值。
 
-访问JavaScript的不同“天体”很有趣。现在我们已经计算了所有的值，我们也了解了是什么使它们彼此不同。例如，写2或“hello”总是“调用”相同的数字或字符串值。但是编写`{}`或`function()`{}`总是会创建一个全新的、不同的值。这个概念对于理解JavaScript中的相等至关重要，这将是下一个模块的主题。
+访问JavaScript的不同“天体”很有趣。现在我们已经计算了所有的值，我们也了解了是什么使它们彼此不同。例如，写2或“hello”总是“调用”相同的数字或字符串值。但是编写 `{}` 或 `function()` {}`总是会创建一个全新的、不同的值。这个概念对于理解JavaScript中的相等至关重要，这将是下一个模块的主题。
 
 # 练习
 
@@ -360,38 +369,3 @@ console.log(dwarves);
 **不要跳过它们！**
 
 即使你可能熟悉不同类型的值，这些练习将帮助你巩固我们正在建立的思维模型。我们需要打好基础才能继续更复杂的话题。
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
