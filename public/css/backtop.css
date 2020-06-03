@@ -1,0 +1,18 @@
+/* *********回到顶部图案********* */
+.backtop {
+  width: 0;
+  height: 0;
+  border: 10px solid;
+  border-color: #312b2b transparent transparent transparent;
+  position: fixed;
+  bottom: 10vh;
+  right: 5vh;
+}
+.backtop::after {
+  content: '';
+  position: absolute;
+  top: 12px;
+  left: 10px;
+  border: 10px solid;
+  border-color: #fff transparent transparent transparent;
+}
