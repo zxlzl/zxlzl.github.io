@@ -1,18 +1,26 @@
 /* *********回到顶部图案********* */
 .backtop {
-  width: 0;
-  height: 0;
-  border: 10px solid;
-  border-color: #312b2b transparent transparent transparent;
   position: fixed;
   bottom: 10vh;
-  right: 5vh;
+  right: 15vw;
+  height: 30px;
 }
-.backtop::after {
-  content: '';
-  position: absolute;
-  top: 12px;
-  left: 10px;
-  border: 10px solid;
-  border-color: #fff transparent transparent transparent;
+.arrow {
+  width: 30px;
+  height: 30px;
+  background-color: rgba(204,204,204,0.5);
+  text-align: center;
+  line-height: 30px;
+  font-size: 25px;
+  transition: background-color 0.3s, opacity 0.3s;
+  opacity: 0;
+}
+.arrow:hover {
+  background-color: #b5b5b5;
+}
+.arrow-show {
+  opacity: 1;
+}
+.icon {
+  color: #f8f8f8;
 }

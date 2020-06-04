@@ -751,8 +751,28 @@
 }
 .backtop {
   position: fixed;
-  width: 20px;
-  height: 20px;
+  bottom: 10vh;
+  right: 15vw;
+  height: 30px;
+}
+.arrow {
+  width: 30px;
+  height: 30px;
+  background-color: rgba(204,204,204,0.5);
+  text-align: center;
+  line-height: 30px;
+  font-size: 25px;
+  transition: background-color 0.3s, opacity 0.3s;
+  opacity: 0;
+}
+.arrow:hover {
+  background-color: #b5b5b5;
+}
+.arrow-show {
+  opacity: 1;
+}
+.icon {
+  color: #f8f8f8;
 }
 .container {
   margin: 25px auto 20px;
