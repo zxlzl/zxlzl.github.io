@@ -71,10 +71,6 @@
 .fa-github {
   background-image: url("../image/github.png");
 }
-.power a {
-  color: #333;
-  font-weight: 700;
-}
 .social {
   text-align: center;
 }
@@ -752,6 +748,11 @@
 }
 .markdown-style .code .link {
   text-decoration: underline;
+}
+.backtop {
+  position: fixed;
+  width: 20px;
+  height: 20px;
 }
 .container {
   margin: 25px auto 20px;

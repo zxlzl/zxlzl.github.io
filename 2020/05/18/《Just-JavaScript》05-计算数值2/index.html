@@ -355,5 +355,38 @@ $(function() {
 </script>
 </div>
     </div>
+    <div class="backtop">
+        <div class="arrow" id="arrow">
+  <a href="#" class="icon">↑</a>
+  <script>
+    window.addEventListener("scroll", showBackTop, false);
+
+    const gototop = _getbyId("arrow");
+    // if (gototop) {
+    //   gototop.className = "doc-gototop" + (mainTop <= 0 ? " doc-gototop-show" : "");
+    // }
+    function showBackTop() {
+      const scrollheight = getheight()
+      if (scrollheight > 100) {
+        const arrow = _getbyId("arrow")
+        arrow.classList.add("arrow-show");
+      } else {
+        arrow.classList.remove("arrow-show");
+      }
+
+    }
+
+    function _getbyId(id) {
+      return document.getElementById(id);
+    }
+
+    function getheight() {
+      let scrollheight = document.body.scrollTop == 0 ? document.documentElement.scrollTop
+        : document.body.scrollTop;
+      return scrollheight;
+    }
+  </script>
+</div>
+    </div>
 </body>
 </html>
