@@ -777,7 +777,10 @@
 .container {
   margin: 25px auto 20px;
 }
-/********** 通用控制 **********/
+html {
+  scroll-behavior: smooth;
+}
+/* ********* 通用控制 ********* */
 body,
 a,
 p,
@@ -809,7 +812,7 @@ span {
 img {
   width: 100%;
 }
-/********** MarkDown **********/
+/* ********* MarkDown ********* */
 blockquote {
   border-left: 0.25em solid #dfe2e5;
   padding: 20px;
@@ -820,7 +823,7 @@ blockquote {
 blockquote p {
   font-size: 17px;
 }
-/********** 媒体查询 **********/
+/* ********* 媒体查询 ********* */
 @media only screen and (min-width: 1200px) {
   .container {
     width: 930px;
