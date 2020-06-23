@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+  <title>《Just-JavaScript》07-属性 [ Lemon Ray ]</title>
+  
+  <!-- stylesheets list from config.yml -->
+  
+  <link rel="stylesheet" href="/css/iLiKE.css">
+  
+  
+
+  
+  <!-- <script src="//cdn1.lncld.net/static/js/3.1.1/av-min.js"></script>
+  <script id="leancloud">
+    AV.init({
+      appId: "6E5zTbTljdUbVW2WkXPsXGJk-gzGzoHsz",
+      appKey: "0vsyDKfNpeSECAI70J794ugv"
+    });
+  </script> -->
+  
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="Lemon Ray" type="application/atom+xml">
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+    <div class="menu">
+      <div class="menu-left">
+        <a href="/">
+          <img src="/favicon.svg"></img>
+        </a>
+      </div>
+      <div class="menu-right">
+        
+          
+          
+          
+          
+          
+          
+          <a href="/">首页</a>
+        
+          
+          
+          
+          
+          
+          
+          <a href="/archives">归档</a>
+        
+      </div>
+    </div>
+</div>
+    </div>
+    <div class="container">
+        <h1 class="post-title">《Just-JavaScript》07-属性</h1>
+<article class="post markdown-style">
+  <p>认识来自伦敦的世界著名侦探夏洛克·福尔摩斯：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> sherlock = &#123;</span><br><span class="line">  surname: <span class="string">'Holmes'</span>,</span><br><span class="line">  address: &#123; <span class="attr">city</span>: <span class="string">'London'</span> &#125; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>他的朋友约翰·沃森最近搬来和夏洛克住在一起：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> john = &#123;</span><br><span class="line">  surname: <span class="string">'Watson'</span>,</span><br><span class="line">  address: sherlock.address</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>夏洛克是个出色的侦探，但他是个难相处的室友。有一天，约翰觉得他受够了。约翰改姓，搬到马里布居住：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">john.surname = <span class="string">'Lennon'</span>;</span><br><span class="line">john.address.city = <span class="string">'Malibu'</span>;</span><br></pre></td></tr></table></figure>
+
+<p>是时候做个小练习了。<strong>写下你对这些问题的答案：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(sherlock.surname); <span class="comment">// ? </span></span><br><span class="line"><span class="built_in">console</span>.log(sherlock.address.city); <span class="comment">// ? </span></span><br><span class="line"><span class="built_in">console</span>.log(john.surname); <span class="comment">// ? </span></span><br><span class="line"><span class="built_in">console</span>.log(john.address.city); <span class="comment">// ?</span></span><br></pre></td></tr></table></figure>
+
+<p>在你向上滚动以重新阅读代码之前，我希望您以特定的方式处理它。打开一个<a href="https://excalidraw.com/" target="_blank" rel="noopener">素描应用程序</a>，或者拿纸和笔，<strong>画出每一行在你的思维模型上发生的事情的</strong>。如果你不知道怎么表达也没关系。我们还没有讨论这些话题，所以尽你所能。</p>
+<p>然后，在你的最终草图的帮助下，回答上面的四个问题。</p>
+<p><img src="/blog_imgs/just_javascript/03/spoilers.jpg" alt=""></p>
+<p>在你写完这四个问题的答案之前不要往下滚动。</p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p>现在来检查你的答案：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(sherlock.surname); <span class="comment">// "Holmes"</span></span><br><span class="line"><span class="built_in">console</span>.log(sherlock.address.city); <span class="comment">// "Malibu"</span></span><br><span class="line"><span class="built_in">console</span>.log(john.surname); <span class="comment">// "Lennon"</span></span><br><span class="line"><span class="built_in">console</span>.log(john.address.city); <span class="comment">// "Malibu"</span></span><br></pre></td></tr></table></figure>
+
+<p>这不是打字错误——他们确实都在马里布。摆脱夏洛克可不容易！如果建立了错误的思维模型，大家可能会得出这样的结论<code>sherlock.address.city</code>是<code>London</code>——但不是的。</p>
+<p>要了解原因，我们需要了解属性在JavaScript中是如何工作的。</p>
+<h1 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h1><p>我们以前讨论过对象。例如，这里有一个<code>sherlock</code>变量，它指向一个对象值。我们通过写入<code>{}</code>来创建新的对象值：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> sherlock = &#123;&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在我们的宇宙中，可能是这样的：</p>
+<p><img src="/blog_imgs/just_javascript/07/sherlock.png" alt=""></p>
+<p>但是，对象是用于将相关数据分组在一起。例如，我们可能想将关于夏洛克的不同的东西进行分组：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> sherlock = &#123;</span><br><span class="line">  surname: <span class="string">'Holmes'</span>,</span><br><span class="line">  age: <span class="number">64</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在这里，<code>sherlock</code>仍然是一个变量，但<code>surname</code>和<code>age</code>不是。它们是属性。与变量不同，属性属于特定对象。</p>
+<p><strong>在我们的JavaScript宇宙中，变量和属性都像“连线”一样</strong>。但是，属性的连接从对象开始，而不是从我们的代码开始：</p>
+<p><img src="/blog_imgs/just_javascript/07/wires.png" alt=""></p>
+<p>在这里，我们可以看到<code>sherlock</code><strong>变量</strong>指向我们创建的对象。那个对象有两个<strong>属性</strong>。其<code>surname</code>属性指向<code>“Holmes”</code>字符串值，其<code>age</code>属性指向<code>64</code>这个数字值。</p>
+<p>重要的是，属性不包含值——属性指向值！原来我们的宇宙充满了导线。其中一些从我们的代码（变量）开始，另一些从对象（属性）开始。所有导线始终指向值。</p>
+<p>在阅读本文之前，您可能已经想象到值存在于对象的“内部”，因为它们在代码中显示为“内部”。这种直觉常常导致错误，因此我们将“在导线中思考”取而代之。再看一眼代码和图表。在你继续之前，确保这样思考是让你感到放松的。</p>
+<h2 id="读取属性"><a href="#读取属性" class="headerlink" title="读取属性"></a>读取属性</h2><p>我们可以使用“点符号”读取属性的当前值：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(sherlock.age); <span class="comment">// 64</span></span><br></pre></td></tr></table></figure>
+
+<p>在这里，<code>sherlock</code>是我们的老朋友——一个表达式，一个向JavaScript宇宙提出的问题。要回答这个问题，JavaScript首先要跟随<code>sherlock</code>导线：</p>
+<p><img src="/blog_imgs/just_javascript/07/follow.gif" alt=""></p>
+<p>它通向一个对象。从这个对象中，JavaScript沿着导线找到<code>age</code>属性。</p>
+<p>我们这个对象的年龄属性的值是64，所以<code>sherlock.age</code>结果是64。</p>
+<h2 id="属性名称"><a href="#属性名称" class="headerlink" title="属性名称"></a>属性名称</h2><p>属性有名称。一个对象不能有两个同名的属性。例如，我们的对象不能有两个名为age的属性。</p>
+<p>属性名称始终区分大小写！例如，从JavaScript的角度来看，age和Age是两个完全不同的属性。</p>
+<p>如果我们事先不知道属性名，但在代码中将其作为字符串值，则可以使用<code>[]</code>“括号表示法”从对象中读取它：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> sherlock = &#123; <span class="attr">surname</span>: <span class="string">'Holmes'</span>, <span class="attr">age</span>: <span class="number">64</span> &#125;;</span><br><span class="line"><span class="keyword">let</span> propertyName = prompt(<span class="string">'What do you want to know?'</span>);</span><br><span class="line">alert(sherlock[propertyName]); <span class="comment">// 按属性名称读取属性</span></span><br></pre></td></tr></table></figure>
+
+<p>在浏览器控制台中尝试此代码，并在提示时输入age。</p>
+<h2 id="分配给属性"><a href="#分配给属性" class="headerlink" title="分配给属性"></a>分配给属性</h2><p>当我们给属性赋值时会发生什么？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sherlock.age = <span class="number">65</span>;</span><br></pre></td></tr></table></figure>
+
+<p>让我们用=将这段代码分为左侧和右侧。</p>
+<p>首先，我们找出哪根导线在左边：<code>sherlock.age</code>。</p>
+<p>我们沿着<code>sherlock</code>线，然后选择<code>age</code>属性线：</p>
+<p><img src="/blog_imgs/just_javascript/07/property.gif" alt=""></p>
+<p>请注意，我们没有按照<code>age</code>导线到64。我们不在乎它现在的值是多少。在赋值的左边，我们正在寻找<strong>导线本身</strong>。</p>
+<p>还记得我们选哪根电线吗？接下来继续。</p>
+<p><strong>接下来，我们得到哪个值在右边：65。</strong></p>
+<p>与左边不同，赋值的右边总是表示一个值。在本例中，右边的值是数值65。让我们召唤它：</p>
+<p><img src="/blog_imgs/just_javascript/07/summon.gif" alt=""></p>
+<p>现在我们准备好执行任务了。</p>
+<p><strong>最后，我们将左侧的导线指向右侧的值：</strong></p>
+<p><img src="/blog_imgs/just_javascript/07/assign.gif" alt=""></p>
+<p>我们完成了！从现在开始，阅读<code>sherlock.age</code>会给我们65。</p>
+<h2 id="找不到的属性"><a href="#找不到的属性" class="headerlink" title="找不到的属性"></a>找不到的属性</h2><p>你可能想知道如果我们读取不存在的属性会发生什么：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> sherlock = &#123; <span class="attr">surname</span>: <span class="string">'Holmes'</span>, <span class="attr">age</span>: <span class="number">64</span> &#125;;</span><br><span class="line"><span class="built_in">console</span>.log(sherlock.boat); <span class="comment">// ?</span></span><br></pre></td></tr></table></figure>
+
+<p>我们知道<code>sherlock.boat</code>是一个属性表达式。JavaScript宇宙遵循一定的规则来决定用哪个值来“回答”我们的问题。</p>
+<p><strong>这些规则大致如下：</strong></p>
+<ol>
+<li>在点（.）之前计算出这部分的值。</li>
+<li>如果该值为空或未定义，则立即抛出错误。</li>
+<li>检查对象中是否存在具有该名称的属性。<br> a. 如果<strong>存在</strong>，则使用此属性指向的值进行应答。<br> b. 如果<strong>不存在</strong>，用未定义的值回答。</li>
+</ol>
+<p>注意这些规则有点简化，我们需要在以后的模块中对它们进行修改。不过，他们已经告诉了我们很多关于JavaScript的工作原理！</p>
+<p>例如，sherlock指向一个<strong>没有</strong>boat属性的对象。所以<code>sherlock.boat</code>给我们一个未定义的答案：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> sherlock = &#123; <span class="attr">surname</span>: <span class="string">'Holmes'</span>, <span class="attr">age</span>: <span class="number">64</span> &#125;;</span><br><span class="line"><span class="built_in">console</span>.log(sherlock.boat); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+
+<p>注意这<strong>并不意味着</strong>我们的对象拥有指向值为<code>undefined</code>的<code>boat</code>属性！它只有两个属性，它们都不叫<code>boat</code>：</p>
+<p><img src="/blog_imgs/just_javascript/07/properties.png" alt=""></p>
+<p>很容易思考<code>sherlock.boat</code>直接对应于我们思维模型中的属性概念，但这<strong>并不完全正确</strong>。这是JavaScript引擎的一个问题，因此引擎遵循规则来回答它。</p>
+<p>它查看sherlock指向的对象，发现它<strong>没有</strong>boat属性，并返回undefined值，因为<strong>规则就是这么说的</strong>。没有更深层次的原因：计算机遵循规则。</p>
+<p>向上滚动并重新阅读规则。你能在实践中应用它们吗？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> sherlock = &#123; <span class="attr">surname</span>: <span class="string">'Holmes'</span>, <span class="attr">age</span>: <span class="number">64</span> &#125;;</span><br><span class="line"><span class="built_in">console</span>.log(sherlock.boat.name); <span class="comment">// ?</span></span><br></pre></td></tr></table></figure>
+
+<p>如果我们运行这个代码会怎么样？<strong>别猜——遵守规则</strong>。</p>
+<p>提示：这里有两个点，所以你需要遵循规则两次。</p>
+<p><img src="/blog_imgs/just_javascript/03/spoilers.jpg" alt=""></p>
+<p>在你得到答案之前不要再滚动。</p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p>答案是计算<code>sherlock.boat.name</code>会<strong>引发错误</strong>：</p>
+<ul>
+<li>我们首先要弄清楚<code>sherlock.boat</code>。<ul>
+<li>要做到这一点，我们需要找出<code>sherlock</code>的值。<ul>
+<li><code>sherlock</code>变量的导线指向一个对象。</li>
+<li>因此，<code>sherlock</code>的值就是这个对象。</li>
+</ul>
+</li>
+<li>对象不是空或者未定义，所以我们继续往下。</li>
+<li>该对象<strong>并没有</strong>属性<code>boat</code>。</li>
+<li>因此，<code>sherlock.boat</code>的值是undefined。</li>
+</ul>
+</li>
+<li>我们在点（.）的左边得到值undefined。</li>
+<li>规则告诉我们左边为空或未定义是错误的。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> sherlock = &#123; <span class="attr">surname</span>: <span class="string">'Holmes'</span>, <span class="attr">age</span>: <span class="number">64</span> &#125;;</span><br><span class="line"><span class="built_in">console</span>.log(sherlock.boat); <span class="comment">// undefined</span></span><br><span class="line"><span class="built_in">console</span>.log(sherlock.boat.name); <span class="comment">// TypeError!</span></span><br></pre></td></tr></table></figure>
+
+<p>如果这看起来仍然令人困惑，向上滚动并机械地遵循规则。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li>属性是导线——有点像变量。它们都指向值。与变量不同，属性<strong>从我们宇宙中的对象开始</strong>。</li>
+<li>属性有名称。属性属于特定对象。一个对象上不能有多个同名属性。</li>
+<li>通常，您可以通过三个步骤执行赋值：<ol>
+<li>找出哪根导线在左边。</li>
+<li>找出右边的值。</li>
+<li>把导线指向那个值。</li>
+</ol>
+</li>
+<li>像这样的表达式<code>obj.property</code>分三步计算：<ol>
+<li>找出哪个值在左边。</li>
+<li>如果为空或未定义，则抛出错误。</li>
+<li>如果该属性存在，则结果是其导线指向的值。</li>
+<li>如果该属性不存在，则结果未定义。</li>
+</ol>
+</li>
+</ul>
+<p>注意，这个属性的思维模型仍然有点简化。对于接下来的几个模块来说，它已经足够好了，但是我们需要在将来扩展它。</p>
+<p>如果你在一开始就被福尔摩斯的例子弄糊涂了，你可以有选择地回到这里，试着用我们的新思维模型来思考它。下一个模块将包括一个详细的演练，以防你仍然不太确定它为什么这样工作。试着习惯于将属性视为导线。</p>
+<h1 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h1><p>本单元也有练习题供你练习！</p>
+<p><a href="https://eggheadio.typeform.com/to/IDJBPQ?email=akihi95@gmail.com&ck_subscriber_id=767004595" target="_blank" rel="noopener">点击这里，通过一些简短的练习巩固这个思维模型。</a></p>
+<p><strong>不要跳过它们！</strong></p>
+<p>尽管你可能对属性的概念很熟悉，这些练习将帮助你巩固我们正在建立的思维模型。我们需要打好基础才能继续更复杂的话题。</p>
+
+</article>
+
+    <div class="pagenator post-pagenator">
+    
+    
+
+    
+    <p>上次更新 2020-06-23</p>
+    
+    
+        <a class="extend next post-next" href="/2020/06/09/%E3%80%8AJust-JavaScript%E3%80%8B06-%E5%80%BC%E7%9B%B8%E7%AD%89/">下一篇</a>
+    
+    </div>
+
+    </div>
+    <div class="footer">
+        <div class="container">
+    <!-- <div class="social">
+	<ul class="social-list">
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+	</ul>
+</div> -->
+    <div class="copyright">
+        <span>
+            
+            
+            
+                © zxl 2017 - 2020
+            
+        </span>
+    </div>
+    <!-- <div class="power">
+        <span>
+            Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> & <a href="https://github.com/CaiChenghan/iLiKE" target="_blank" rel="noopener">iLiKE Theme</a>
+        </span>
+    </div> -->
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <!--page counter part-->
+<script>
+    function addCount(Counter) {
+        url = $('.article-date').attr('href').trim();
+        title = $('.article-title').text().trim();
+        var query = new AV.Query(Counter);
+        //use url as unique idnetfication
+        query.equalTo("url", url);
+        query.find({
+            success: function (results) {
+                if (results.length > 0) {
+                    var counter = results[0];
+                    counter.fetchWhenSave(true); //get recent result
+                    counter.increment("time");
+                    counter.save();
+                } else {
+                    var newcounter = new Counter();
+                    newcounter.set("title", title);
+                    newcounter.set("url", url);
+                    newcounter.set("time", 1);
+                    newcounter.save(null, {
+                        success: function (newcounter) {
+                            //alert('New object created');
+                        }, error: function (newcounter, error) {
+                            alert('Failed to create');
+                        }
+                    })
+                }
+            },
+            error: function (error) {
+                //find null is not a error
+                alert('Error:' + error.code + " " + error.message);
+            }
+        });
+    }
+    // $(function () {
+    //     var Counter = AV.Object.extend("Counter");
+    //     //only increse visit counting when intering a page
+    //     if ($('.article-title').length == 1) {
+    //         addCount(Counter);
+    //     }
+    //     var query = new AV.Query(Counter);
+    //     query.descending("time");
+    //     // the sum of popular posts
+    //     query.limit(10);
+    //     query.find({
+    //         success: function (results) {
+    //             for (var i = 0; i < results.length; i++) {
+    //                 var counter = results[i];
+    //                 title = counter.get("title");
+    //                 url = counter.get("url");
+    //                 time = counter.get("time");
+    //                 // add to the popularlist widget
+    //                 showcontent = title + " (" + time + ")";
+    //                 //notice the "" in href
+    //                 $('.popularlist').append('<li><a href="' + url + '">' + showcontent + '</a></li>');
+    //             }
+    //         },
+    //         error: function (error) {
+    //             alert("Error:" + error.code + " " + error.message);
+    //         }
+    //     });
+    // });
+</script>
+</div>
+    </div>
+    <div class="backtop">
+        <div class="arrow" id="arrow">
+  <a href="#" class="icon">↑</a>
+  <script>
+    window.addEventListener("scroll", showBackTop, false);
+
+    const gototop = _getbyId("arrow");
+    // if (gototop) {
+    //   gototop.className = "doc-gototop" + (mainTop <= 0 ? " doc-gototop-show" : "");
+    // }
+    function showBackTop() {
+      const scrollheight = getheight()
+      if (scrollheight > 100) {
+        const arrow = _getbyId("arrow")
+        arrow.classList.add("arrow-show");
+      } else {
+        arrow.classList.remove("arrow-show");
+      }
+
+    }
+
+    function _getbyId(id) {
+      return document.getElementById(id);
+    }
+
+    function getheight() {
+      let scrollheight = document.body.scrollTop == 0 ? document.documentElement.scrollTop
+        : document.body.scrollTop;
+      return scrollheight;
+    }
+  </script>
+</div>
+    </div>
+</body>
+</html>
