@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+  <title>《Just-JavaScript》08-突变 [ Lemon Ray ]</title>
+  
+  <!-- stylesheets list from config.yml -->
+  
+  <link rel="stylesheet" href="/css/iLiKE.css">
+  
+  
+
+  
+  <!-- <script src="//cdn1.lncld.net/static/js/3.1.1/av-min.js"></script>
+  <script id="leancloud">
+    AV.init({
+      appId: "6E5zTbTljdUbVW2WkXPsXGJk-gzGzoHsz",
+      appKey: "0vsyDKfNpeSECAI70J794ugv"
+    });
+  </script> -->
+  
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="Lemon Ray" type="application/atom+xml">
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+    <div class="menu">
+      <div class="menu-left">
+        <a href="/">
+          <img src="/favicon.svg"></img>
+        </a>
+      </div>
+      <div class="menu-right">
+        
+          
+          
+          
+          
+          
+          
+          <a href="/">首页</a>
+        
+          
+          
+          
+          
+          
+          
+          <a href="/archives">归档</a>
+        
+      </div>
+    </div>
+</div>
+    </div>
+    <div class="container">
+        <h1 class="post-title">《Just-JavaScript》08-突变</h1>
+<article class="post markdown-style">
+  <p>在上一个关于属性的模块中，我们介绍了福尔摩斯搬到马里布的奥秘。但我们还没有对它进行解释。</p>
+<p>打开一个<a href="https://excalidraw.com/?ck_subscriber_id=767004595" target="_blank" rel="noopener">素描应用程序</a>或拿一支笔和一张纸。<strong>这一次，我们将一步一步地绘制示意图</strong>，这样你就可以检查你的思维模型了。</p>
+<p>虽然你早前自己试过了，但多练习也无妨！在本单元的最后，我们将讨论这个例子背后的更多的知识。</p>
+<h2 id="第1步：声明sherlock变量"><a href="#第1步：声明sherlock变量" class="headerlink" title="第1步：声明sherlock变量"></a>第1步：声明sherlock变量</h2><p>我们从这个变量声明开始：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> sherlock = &#123;</span><br><span class="line">  surname: <span class="string">'Holmes'</span>,</span><br><span class="line">  address: &#123; <span class="attr">city</span>: <span class="string">'London'</span> &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>现在开始绘制示意图的步骤。</p>
+<p><img src="/blog_imgs/just_javascript/03/spoilers.jpg" alt=""></p>
+<p>在你画出示意图之前不要再滚动。</p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p>你的图表应该是这样的：</p>
+<p><img src="/blog_imgs/just_javascript/08/sherlock.png" alt=""></p>
+<p>有一个sherlock变量指向一个对象。该对象有两个属性。它的<code>surname</code>属性指向“Holmes”字符串值。它的<code>address</code>属性指向另一个对象。另一个对象只有一个名为<code>city</code>的属性。该属性指向“London”字符串值。</p>
+<p>仔细看看我绘制这个图表的过程：</p>
+<p><img src="/blog_imgs/just_javascript/08/sherlock.gif" alt=""></p>
+<p>你的过程相似吗？</p>
+<h3 id="无嵌套对象"><a href="#无嵌套对象" class="headerlink" title="无嵌套对象"></a>无嵌套对象</h3><p>请注意，这里不是一个，而是两个完全独立的对象。两对大括号意味着两个对象。</p>
+<p><strong>对象可能在代码中显示为“嵌套”，但在我们的宇宙中，每个对象都是完全独立的。一个对象不能在其他对象的“内部”！</strong></p>
+<p>如果你仍然认为对象是嵌套的，现在就试着摆脱这个想法。</p>
+<h2 id="第2步：声明john变量"><a href="#第2步：声明john变量" class="headerlink" title="第2步：声明john变量"></a>第2步：声明john变量</h2><p>在此步骤中，我们声明另一个变量：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> john = &#123;</span><br><span class="line">  surname: <span class="string">'Watson'</span>,</span><br><span class="line">  address: sherlock.address</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>编辑之前绘制的图表以反映这些更改。</p>
+<p><img src="/blog_imgs/just_javascript/03/spoilers.jpg" alt=""></p>
+<p>在你画出示意图之前不要再滚动。</p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p>你在图表中添加的内容应如下所示：</p>
+<p><img src="/blog_imgs/just_javascript/08/john.png" alt=""></p>
+<p>现在还有一个<code>john</code>变量。它指向具有两个属性的对象。它的<code>address</code>属性指向<code>sherlock</code>的<code>address</code>属性已经指向的地方。它的<code>surname</code>属性指向“Watson”字符串。</p>
+<p>可以详细了解我的流程：</p>
+<p><img src="/blog_imgs/just_javascript/08/john.gif" alt=""></p>
+<p>你做了什么不同的事吗？</p>
+<h3 id="属性总是指向值"><a href="#属性总是指向值" class="headerlink" title="属性总是指向值"></a>属性总是指向值</h3><p>当您看到<code>address</code>时：<code>sherlock.address</code>，我们很容易认为<code>John</code>的<code>address</code>属性指向<code>Sherlock</code>的<code>address</code>属性。</p>
+<p>这是误导。</p>
+<p><strong>记住：属性总是指向一个值！它不能指向另一个属性或变量。一般来说，宇宙中所有的导线都指向值。</strong></p>
+<p><img src="/blog_imgs/just_javascript/08/point.png" alt=""></p>
+<p>当我们看到<code>address</code>时：<code>sherlock.address</code>，我们必须计算出<code>sherlock.address</code>，并将地址属性线指向该值。重要的是值本身，而不是我们如何找到它<code>(sherlock.address)</code>。</p>
+<p>因此，现在有两个不同的对象，它们的<code>address</code>属性指向同一个对象。你能在图表上找到它们吗？</p>
+<h2 id="第3步：更改属性"><a href="#第3步：更改属性" class="headerlink" title="第3步：更改属性"></a>第3步：更改属性</h2><p>现在让我们回顾一下属性模块中示例的最后一步。</p>
+<p><code>John</code>身陷身份危机，厌倦了伦敦的细雨。他决定改名，搬到马里布。我们通过设置一些属性做了这件事：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">john.surname = <span class="string">'Lennon'</span>;</span><br><span class="line">john.address.city = <span class="string">'Malibu'</span>;</span><br></pre></td></tr></table></figure>
+
+<p>我们如何通过改变图表来反映它？</p>
+<p><img src="/blog_imgs/just_javascript/03/spoilers.jpg" alt=""></p>
+<p>在你画出示意图之前不要再滚动。</p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p>你的图表应该是这样的：</p>
+<p><img src="/blog_imgs/just_javascript/08/leave.png" alt=""></p>
+<p><code>john</code>变量指向的对象现在有一个指向“Lennon”字符串值的<code>name</code>属性。更有趣的是，<code>john</code>和<code>sherlock</code>的<code>address</code>属性指向的对象现在具有不同的<code>city</code>属性值。它现在指向“Malibu”字符串。</p>
+<p>在一起奇怪的地点劫持案中，夏洛克和约翰最终都在马里布。按照图中的接线图进行操作，并验证是否正确。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(sherlock.surname); <span class="comment">// "Holmes"</span></span><br><span class="line"><span class="built_in">console</span>.log(sherlock.address.city); <span class="comment">// "Malibu"</span></span><br><span class="line"><span class="built_in">console</span>.log(john.surname); <span class="comment">// "Lennon"</span></span><br><span class="line"><span class="built_in">console</span>.log(john.address.city); <span class="comment">// "Malibu"</span></span><br></pre></td></tr></table></figure>
+
+<p>以下是我最后一系列更改的过程：</p>
+<p><img src="/blog_imgs/just_javascript/08/leave.gif" alt=""></p>
+<p>我们弄清连线，然后是值，最后把导线指向那个值。</p>
+<p>这个结果现在应该讲得通了，但是这个例子在更深层次上令人困惑。哪里出错了？我们如何真正修复代码，让约翰独自一人搬到马里布？为了弄清楚，我们需要谈谈突变。</p>
+<h1 id="突变"><a href="#突变" class="headerlink" title="突变"></a>突变</h1><p>突变是“改变”一种别致的说法。</p>
+<p><strong>例如，我们可以说我们改变了一个对象的属性，或者我们可以说我们改变了这个对象（及其属性）。这是同一件事。</strong></p>
+<p>人们喜欢说“突变”，因为这个词有一种阴险的基调。它提醒你要格外小心。这并不意味着突变是“坏的”——这只是编程而已！-但你需要非常有意识地去做这件事。</p>
+<p>让我们回忆一下我们最初的任务。我们想给约翰换个姓，把他搬到马里布。现在让我们看看我们的两个突变：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Step 3: Changing the Properties</span></span><br><span class="line">john.surname = <span class="string">'Lennon'</span>;</span><br><span class="line">john.address.city = <span class="string">'Malibu'</span>;</span><br></pre></td></tr></table></figure>
+
+<p>哪些对象正在发生突变？</p>
+<p>第一行改变了<code>john</code>指向的对象——具体地说，是它的<code>surname</code>属性。这是可以理解的：事实上，我们的意思是改变<code>john</code>的<code>surname</code>。那个对象代表John的数据。所以我们改变了它的姓氏属性。</p>
+<p>然而，第二行却有很大的不同。它不会改变<code>john</code>指向的对象。相反，它改变了一个完全不同的对象——我们可以通过<code>john.address</code>到达. 如果我们看这个图，我们知道它是同一个对象，我们也可以通过<code>sherlock.address</code>到达!</p>
+<p><strong>通过改变程序中其他地方使用的对象，我们把事情搞得一团糟。</strong></p>
+<h2 id="可能的解决方案：改变另一个对象"><a href="#可能的解决方案：改变另一个对象" class="headerlink" title="可能的解决方案：改变另一个对象"></a>可能的解决方案：改变另一个对象</h2><p>解决此问题的一种方法是避免更改共享数据：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Replace Step 3 with this code:</span></span><br><span class="line">john.surname = <span class="string">'Lennon'</span>;</span><br><span class="line">john.address = &#123; <span class="attr">city</span>: <span class="string">'Malibu'</span> &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>第二行的区别是微妙的，但非常重要。</p>
+<p>当我们得到<code>john.address.city = &quot;Malibu&quot;</code>，左边的导线是<code>john.address.city</code>. 我们通过<code>john.address</code>改变了这个这个对象的<code>city</code>属性。但同样的对象也可以通过<code>sherlock.address</code>得到。结果，我们无意中改变了共享数据。</p>
+<p>通过<code>john.address = { city: &#39;Malibu&#39; }</code>，导线的左边是<code>john.address</code>，我们正在改变<code>john</code>指向的对象的<code>address</code>属性。换句话说，我们只是改变了代表<code>John</code>数据的对象。这就是<code>sherlock.address.city</code>保持不变的原因：</p>
+<p><img src="/blog_imgs/just_javascript/08/unchanged.png" alt=""></p>
+<p>如你所见，视觉上相似的代码可能会产生非常不同的结果。一定要注意哪根导线在赋值的左边！</p>
+<h2 id="替代方案：不要改变对象"><a href="#替代方案：不要改变对象" class="headerlink" title="替代方案：不要改变对象"></a>替代方案：不要改变对象</h2><p>我们还有另一种方法让<code>john.address.city</code>为<code>&quot;Malibu&quot;</code>,而<code>sherlock.address.cit</code>仍然是<code>&quot;London&quot;</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Replace Step 3 with this code:</span></span><br><span class="line">john = &#123;</span><br><span class="line">  surname: <span class="string">'Lennon'</span>,</span><br><span class="line">  address: &#123; <span class="attr">city</span>: <span class="string">'Malibu'</span> &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在这里，我们根本没有改变<code>John</code>的对象。相反，我们重新指定<code>john</code>变量以指向<code>john</code>数据的“新版本”。从现在起，<code>john</code>指向另一个对象，该对象的地址也指向一个全新的对象：</p>
+<p><img src="/blog_imgs/just_javascript/08/reassign.png" alt=""></p>
+<p>你可能会注意到，现在在我们的图表中有一个“废弃的”旧版本的<code>John</code>对象。我们不用担心。如果没有导线指向它，JavaScript最终会自动将其从内存中删除。</p>
+<p>请注意，这两种方法都满足我们的所有要求：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(sherlock.surname); <span class="comment">// "Sherlock"</span></span><br><span class="line"><span class="built_in">console</span>.log(sherlock.address.city); <span class="comment">// "London"</span></span><br><span class="line"><span class="built_in">console</span>.log(john.surname); <span class="comment">// "Lennon"</span></span><br><span class="line"><span class="built_in">console</span>.log(john.address.city); <span class="comment">// "Malibu"</span></span><br></pre></td></tr></table></figure>
+
+<p>比较他们的示意图。你对这两种方法有个人偏好吗？你认为他们的优点和缺点是什么？</p>
+<h2 id="向夏洛克学习"><a href="#向夏洛克学习" class="headerlink" title="向夏洛克学习"></a>向夏洛克学习</h2><p>福尔摩斯曾经说过：“当你排除了不可能，剩下的，无论多么不可能，都必须是真相。”</p>
+<p><strong>当你的思维模型变得更完整时，你会发现调试问题更容易，因为你会知道要寻找什么可能的原因。</strong></p>
+<p>例如，如果你知道<code>sherlock.address.city</code>在运行一些代码后发生了变化，图中的连线给出了三种解释：</p>
+<p><img src="/blog_imgs/just_javascript/08/explanations.png" alt=""></p>
+<ol>
+<li>也许<code>sherlock</code>变量被重新分配了。</li>
+<li>也许我们通过<code>sherlock</code>可以到达的对象发生了变化，它的<code>address</code>属性被设置为不同的东西。</li>
+<li>也许我们通过<code>sherlock.address</code>可以到达的对象变化了，它的属性<code>city</code>被设置成不同的值。</li>
+</ol>
+<p>你的思维模型为你提供了一个起点，你可以从中研究bug。这也正好相反。有时候，你可以看出一段代码不是问题的根源，因为思维模型证明了这一点！</p>
+<p>假设，如果我们将<code>john</code>变量指向另一个对象，我们可以相当肯定<code>sherlock.address.city</code>不会改变的。我们的图表显示，改变<code>john</code>导线不会影响任何从<code>sherlock</code>开始的链条：</p>
+<p><img src="/blog_imgs/just_javascript/08/affect.png" alt=""></p>
+<p>不过，请记住，除非你是福尔摩斯，否则你很难对某些事情充满信心。这种方法和你的思维模式一样好！思维模型可以帮助你提出理论，但你需要设计实验，这样你才能用通过控制台或者调试器来证实它们。</p>
+<h2 id="Let-vs-Const"><a href="#Let-vs-Const" class="headerlink" title="Let vs Const"></a>Let vs Const</h2><p>值得注意的是，您可以使用const关键字作为替代：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> shrek = &#123; <span class="attr">species</span>: <span class="string">'ogre'</span> &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>const关键字允许你创建只读变量——也称为常量。一旦我们声明了一个常量，就不能将它指向另一个值：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shrek = fiona; <span class="comment">// TypeError</span></span><br></pre></td></tr></table></figure>
+
+<p>但有一点很关键。<strong>我们仍然可以改变object const指向：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">shrek.species = <span class="string">'human'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(shrek.species); <span class="comment">// 'human'</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/blog_imgs/just_javascript/08/const.png" alt=""></p>
+<p>在这个例子中，只有<code>shrek</code>变量线本身是只读的（<code>const</code>）。它指向一个对象——并且该对象的属性可以被改变！</p>
+<p><code>const</code>的有用性是一个热议的话题。有些人喜欢完全禁止<code>let</code>，并且总是使用<code>const</code>。其他人可能会说，应该信任程序员重新分配他们自己的变量。无论你的偏好是什么，请记住<code>const</code>防止变量重新分配，而不是对象改变。</p>
+<h2 id="突变有害吗？"><a href="#突变有害吗？" class="headerlink" title="突变有害吗？"></a>突变有害吗？</h2><p>我想确保你不会轻易获得这个想法——突变是“坏的”。这将是一个懒惰的过度简化，模糊了真正的理解。如果随着时间的推移，某个数据发生了改变。问题是什么会发生改变，在哪里，什么时候。这也是一个备受争议的话题。</p>
+<p>突变是“远距离的恐怖行为”。改变<code>john.address.city</code>导致<code>console.log(sherlock.address.city)</code>打印其他东西。</p>
+<p><strong>当你改变一个对象时，变量和属性可能已经指向它了。你的改变会影响以后“跟随”这些连线的任何代码。</strong></p>
+<p>这既是福也是祸。变异使更改某些数据变得很容易，并立即“看到”整个程序中的更改。然而，不受约束的突变使得预测程序会做什么变得更加困难。</p>
+<p>有一个学派认为，最好将突变控制在应用程序的一个非常窄的层中。缺点是你可能会编写更多的样板代码来“传递信息”。但是好处是根据这一理念，程序的行为将变得更加可预测。</p>
+<p>值得注意的是，对刚创建的对象进行变异总是可以的，因为还没有其他导线指向它们。在其他情况下，我建议你对你正在发生的改变以及何时发生改变要非常小心。你对改变的依赖程度取决于你的应用程序的架构。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li>对象永远不会“嵌套”在我们的宇宙中。</li>
+<li>密切注意赋值左侧的导线。</li>
+<li>改变一个对象的属性也叫做改变这个对象。</li>
+<li>如果你改变了一个对象，你可以“看到”这个变化通过指向该对象的任何导线。有时候，这可能是你想要的。但是，意外更改共享数据可能会导致错误。</li>
+<li>改变你刚刚在代码中创建的对象是安全的。大体上，你会使用多少改变取决于你的应用程序的架构。即使你不会经常使用它，也值得你花时间去了解它的工作原理。</li>
+<li>可以用<code>const</code>而不是<code>let</code>声明变量。这允许您强制此变量的连线始终指向同一值。但请记住，const不能阻止对象突变！</li>
+</ul>
+<h1 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h1><p>本单元也有练习题供你练习！</p>
+<p><a href="https://eggheadio.typeform.com/to/Ql4IPM?email=akihi95@gmail.com&ck_subscriber_id=767004595" target="_blank" rel="noopener">点击这里用一些简短的练习巩固这个心智模型。</a></p>
+<p><strong>不要跳过它们！</strong></p>
+<p>尽管你可能对突变的概念很熟悉，但这些练习将帮助你巩固我们正在建立的心理模型。我们需要这个基础才能得到更复杂的话题。</p>
+
+</article>
+
+    <div class="pagenator post-pagenator">
+    
+    
+
+    
+    <p>上次更新 2020-08-06</p>
+    
+    
+        <a class="extend next post-next" href="/2020/06/23/%E3%80%8AJust-JavaScript%E3%80%8B07-%E5%B1%9E%E6%80%A7/">下一篇</a>
+    
+    </div>
+
+    </div>
+    <div class="footer">
+        <div class="container">
+    <!-- <div class="social">
+	<ul class="social-list">
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+	</ul>
+</div> -->
+    <div class="copyright">
+        <span>
+            
+            
+            
+                © zxl 2017 - 2020
+            
+        </span>
+    </div>
+    <!-- <div class="power">
+        <span>
+            Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> & <a href="https://github.com/CaiChenghan/iLiKE" target="_blank" rel="noopener">iLiKE Theme</a>
+        </span>
+    </div> -->
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <!--page counter part-->
+<script>
+    function addCount(Counter) {
+        url = $('.article-date').attr('href').trim();
+        title = $('.article-title').text().trim();
+        var query = new AV.Query(Counter);
+        //use url as unique idnetfication
+        query.equalTo("url", url);
+        query.find({
+            success: function (results) {
+                if (results.length > 0) {
+                    var counter = results[0];
+                    counter.fetchWhenSave(true); //get recent result
+                    counter.increment("time");
+                    counter.save();
+                } else {
+                    var newcounter = new Counter();
+                    newcounter.set("title", title);
+                    newcounter.set("url", url);
+                    newcounter.set("time", 1);
+                    newcounter.save(null, {
+                        success: function (newcounter) {
+                            //alert('New object created');
+                        }, error: function (newcounter, error) {
+                            alert('Failed to create');
+                        }
+                    })
+                }
+            },
+            error: function (error) {
+                //find null is not a error
+                alert('Error:' + error.code + " " + error.message);
+            }
+        });
+    }
+    // $(function () {
+    //     var Counter = AV.Object.extend("Counter");
+    //     //only increse visit counting when intering a page
+    //     if ($('.article-title').length == 1) {
+    //         addCount(Counter);
+    //     }
+    //     var query = new AV.Query(Counter);
+    //     query.descending("time");
+    //     // the sum of popular posts
+    //     query.limit(10);
+    //     query.find({
+    //         success: function (results) {
+    //             for (var i = 0; i < results.length; i++) {
+    //                 var counter = results[i];
+    //                 title = counter.get("title");
+    //                 url = counter.get("url");
+    //                 time = counter.get("time");
+    //                 // add to the popularlist widget
+    //                 showcontent = title + " (" + time + ")";
+    //                 //notice the "" in href
+    //                 $('.popularlist').append('<li><a href="' + url + '">' + showcontent + '</a></li>');
+    //             }
+    //         },
+    //         error: function (error) {
+    //             alert("Error:" + error.code + " " + error.message);
+    //         }
+    //     });
+    // });
+</script>
+</div>
+    </div>
+    <div class="backtop">
+        <div class="arrow" id="arrow">
+  <a href="#" class="icon">↑</a>
+  <script>
+    window.addEventListener("scroll", showBackTop, false);
+
+    const gototop = _getbyId("arrow");
+    // if (gototop) {
+    //   gototop.className = "doc-gototop" + (mainTop <= 0 ? " doc-gototop-show" : "");
+    // }
+    function showBackTop() {
+      const scrollheight = getheight()
+      if (scrollheight > 100) {
+        const arrow = _getbyId("arrow")
+        arrow.classList.add("arrow-show");
+      } else {
+        arrow.classList.remove("arrow-show");
+      }
+
+    }
+
+    function _getbyId(id) {
+      return document.getElementById(id);
+    }
+
+    function getheight() {
+      let scrollheight = document.body.scrollTop == 0 ? document.documentElement.scrollTop
+        : document.body.scrollTop;
+      return scrollheight;
+    }
+  </script>
+</div>
+    </div>
+</body>
+</html>
