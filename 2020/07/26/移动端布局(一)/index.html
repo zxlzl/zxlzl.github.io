@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+  <title>移动端布局 [ Lemon Ray ]</title>
+  
+  <!-- stylesheets list from config.yml -->
+  
+  <link rel="stylesheet" href="/css/iLiKE.css">
+  
+  
+
+  
+  <!-- <script src="//cdn1.lncld.net/static/js/3.1.1/av-min.js"></script>
+  <script id="leancloud">
+    AV.init({
+      appId: "6E5zTbTljdUbVW2WkXPsXGJk-gzGzoHsz",
+      appKey: "0vsyDKfNpeSECAI70J794ugv"
+    });
+  </script> -->
+  
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="Lemon Ray" type="application/atom+xml">
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+    <div class="menu">
+      <div class="menu-left">
+        <a href="/">
+          <img src="/favicon.svg"></img>
+        </a>
+      </div>
+      <div class="menu-right">
+        
+          
+          
+          
+          
+          
+          
+          <a href="/">首页</a>
+        
+          
+          
+          
+          
+          
+          
+          <a href="/archives">归档</a>
+        
+      </div>
+    </div>
+</div>
+    </div>
+    <div class="container">
+        <h1 class="post-title">移动端布局</h1>
+<article class="post markdown-style">
+  <h1 id="移动端布局"><a href="#移动端布局" class="headerlink" title="移动端布局"></a>移动端布局</h1><h6 id="为什么移动端不能像pc网站一样写"><a href="#为什么移动端不能像pc网站一样写" class="headerlink" title="为什么移动端不能像pc网站一样写"></a>为什么移动端不能像pc网站一样写</h6><p>首先我们来看下，我们正常的电脑网站，放到手机上会如何</p>
+<p>今日热点：<a href="https://news.2345.com/shouye/?dh" target="_blank" rel="noopener">https://news.2345.com/shouye/?dh</a></p>
+<p><img src="/blog_imgs/mobile/03/phone5.png" alt=""></p>
+<p><strong>缺点：</strong></p>
+<ol>
+<li>屏幕小，字太小，看起来非常的不方便</li>
+<li>内容比较小，手指不容易精确点击目标</li>
+<li>屏幕小，内容排版显得非常的拥挤</li>
+</ol>
+<p>而且，当我们选中元素的时候，会惊奇的发现，元素看着很小，但是宽高挺大的，特别和移动端网站对比，就会发现，很奇怪的一个事情</p>
+<p><img src="/blog_imgs/mobile/01/duibi.jpg" alt=""></p>
+<p><strong>这里的<code>70 * 78</code>看着居然比<code>110 * 26</code>大出来好多！这是怎么回事？？？？我们来现场验证下</strong></p>
+<p>想要了解清楚？那我们先要来学习一个关于单位的知识点</p>
+<h6 id="先来弄清楚单位"><a href="#先来弄清楚单位" class="headerlink" title="先来弄清楚单位"></a>先来弄清楚单位</h6><p><strong>英寸</strong></p>
+<p>一般我们都用英寸来描述设备的物理尺寸，例如电脑：17英寸、13英寸，手机：6.5英寸、4英寸</p>
+<img src="/blog_imgs/mobile/01/phone4.jpg" width="700"/>
+
+<p>注：上面的尺寸都是屏幕对角线的长度，例如我们说一个手机 6.5英寸屏幕，其实指的就是对角线的距离</p>
+<blockquote>
+<p>1英寸 = 2.54 厘米 </p>
+</blockquote>
+<p><strong>分辨率</strong></p>
+<ul>
+<li><p>屏幕分辨率</p>
+<p>屏幕具体由多少个像素组成，并不是分辨率高，就说明屏幕清晰的，这个还需要考虑尺寸问题。</p>
+</li>
+</ul>
+<ul>
+<li><p>像素</p>
+<p>一个小正方形的方块，每一个像素都具备 <strong>颜色</strong> 和 <strong>特定的位置</strong>。</p>
+<p>我们平时看到的 图片、电脑屏幕这些就是由像素组成的，所以当我们修改分辨率的时候，屏幕会发生变化。</p>
+</li>
+</ul>
+<p>  <strong>以图片为例：</strong></p>
+<p>  <img src="/blog_imgs/mobile/01/lufei.jpg" alt=""></p>
+<p>  左边的这个图用 <code>1000 * 500</code>像素点制作，右边的用 <code>10000 * 5000</code>的像素制作，从直观的视觉上面，我们就可以看出，右侧的图片更加清晰，是因为它用了更多的像素点，去处理颜色。</p>
+<p>  <strong>以我们平时看的视频为例</strong></p>
+<p>  <img src="/blog_imgs/mobile/01/tv.jpg" alt=""></p>
+<p>  在同尺寸下，超清的像素点是最多的，，所以最清晰</p>
+<ul>
+<li><p>像素并不是个绝对单位</p>
+<p>像素和我们使用的 厘米、毫米不一样，它并不是个绝对单位，我们可以看下，下面的表格</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th align="center"><strong>索尼（SONY）Xperia 10/Plus</strong></th>
+<th align="center"><strong>华为荣耀8X</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>屏幕尺寸（英寸）</td>
+<td align="center">6.5</td>
+<td align="center">6.5</td>
+</tr>
+<tr>
+<td>分辨率</td>
+<td align="center">2560 * 1440</td>
+<td align="center">2340 * 1080</td>
+</tr>
+<tr>
+<td>像素点数量</td>
+<td align="center">2，918，400</td>
+<td align="center">2，527，200</td>
+</tr>
+</tbody></table>
+<p>在同样的屏幕尺寸下，索尼放的像素点 比 华为 的更多</p>
+<p>索尼：<a href="https://item.jd.hk/49980024227.html" target="_blank" rel="noopener">https://item.jd.hk/49980024227.html</a></p>
+<p>华为：<a href="https://item.jd.com/8735304.html" target="_blank" rel="noopener">https://item.jd.com/8735304.html</a></p>
+</li>
+</ul>
+<p>  而且，像我们电脑大部份分辨率为： <code>1920 * 1080</code>（手机屏幕可比电脑小多啦）</p>
+<p>  <img src="/blog_imgs/mobile/01/QQ%E6%88%AA%E5%9B%BE20190703115049.jpg" alt="">)<img src="/blog_imgs/mobile/01/QQ%E6%88%AA%E5%9B%BE20190703114912.jpg" alt=""></p>
+<p>  在相同大小的位置里面，我在第一个中，放个 <code>9</code>个像素点，后面的放了<code>36</code>个像素点</p>
+<ul>
+<li><p>像素点和清晰度的关系（PPI）</p>
+<p>如果说像素点越多，屏幕显示越清晰，这句话其实是不够准确的，因为在这里，我们还要考虑屏幕尺寸</p>
+</li>
+</ul>
+<p>  <strong>PPI</strong></p>
+<p>  每英寸包含的像素点。根据这个可以判断出，哪个屏幕清晰度更高，以我们上面的数据为例：</p>
+<p>  ​    公式：</p>
+<p>  ​        <img src="/blog_imgs/mobile/01/equation.svg" alt=""></p>
+<p>  ​    根据公式：计算<a href="https://item.jd.com/8735304.html" target="_blank" rel="noopener">https://item.jd.com/8735304.html</a> 华为手机ppi</p>
+<p>  ​    最终结果：396.49</p>
+<p>  比较哪个屏幕更加清晰的时候，要根据 <code>PPI</code>来进行对比。</p>
+<p><strong>物理像素</strong></p>
+<p>上面我们描述的这个像素，我们称为物理像素，即设备真实存在的物理单元</p>
+<p>时代发展的迅速，给我们的生活带来了很大的影响，手机方面尤其明显。</p>
+<p><img src="/blog_imgs/mobile/01/phone7.jpg" alt=""></p>
+<p>旧款的手机，我们可以很明显的看到粗糙的像素点。无论是文字的显示，还是图标的显示，看起来都不圆润</p>
+<p>下面我们做一个假设：</p>
+<img src="/blog_imgs/mobile/01/phone6.jpg" width="800" />
+
+<p>左侧的为低分辨率手机 <code>320 * 480</code></p>
+<p>右侧的为高分辨率手机<code>640 * 960</code></p>
+<p>右侧的两个像素点的大小 = 左侧的一个像素点的大小</p>
+<p>由于大家设定的像素点都一样，所以这里，分辨率高的屏幕上，看上去会更小。</p>
+<p><strong>这就是为什么同样大小的元素，在<code>PC</code>下 和 移动端下，显示的有差别的原因，因为移动端下的像素点，比<code>pc</code>下的像素点要更小</strong></p>
+<blockquote>
+<p>那为什么同样都是移动端<code>70 * 78</code>看着比<code>110 * 26</code>还要大呢？？</p>
+<p>那就要从厉害的乔布斯说起啦~ </p>
+</blockquote>
+<h6 id="视网膜屏幕"><a href="#视网膜屏幕" class="headerlink" title="视网膜屏幕"></a>视网膜屏幕</h6><p>首先，我们的手机屏幕尺寸是非常多的，但是即使尺寸很多，我们会发现一个很神奇的事情，就是显示上面好像都差不多</p>
+<img src="/blog_imgs/mobile/01/phone.jpg" width="800">
+
+<p>例如上面的，我们会看到虽然手机尺寸变化比较明显，但是页面显示上，看起来居然一样？？分辨率不一样难道不应该是：看着大大小小，每种分辨率的显示都不一样的么？</p>
+<blockquote>
+<p>科普：</p>
+<p>这就要感谢乔布斯大大了。</p>
+<p>在<code>iphone4</code>的发布会上，乔布斯首次提出了<code>视网膜屏幕</code>的概念，这个的概念可谓是，惊为天人，我们来看下，到底什么是视网膜屏幕</p>
+</blockquote>
+<p><strong>一张图带你了解：视网膜屏幕</strong></p>
+<p><img src="/blog_imgs/mobile/01/phone8.jpg" alt=""></p>
+<p>分辨率低手机<code>1</code>的大小 = 高分辨率手机<code>2 * 2</code>的大小</p>
+<p>这样屏幕更精致，看上去也不会有大小的变化，像下面这样做</p>
+<img src="/blog_imgs/mobile/01/iphone9.jpg" width="800">
+
+<p>左边的用<code>300物理像素</code>，右边的用<code>600物理像素</code>，但是…我们也不可能每个手机来一个像素吧？？？</p>
+<p>那要多少设计图？写多少样式？？</p>
+<p>所以我们必须用同一种单位来告诉不同分辨率的设备，在界面上显示的像素大小应该是多少，这个单位就是<code>设备独立像素</code></p>
+<h6 id="设备独立像素"><a href="#设备独立像素" class="headerlink" title="设备独立像素"></a>设备独立像素</h6><p>每个设备都有属于自己的独立像素，通过浏览器的模拟器，我们可以看到，每个设备的独立像素。</p>
+<p>那设备独立像素，和我们说的 物理像素之间到底什么关系呢？ </p>
+<ul>
+<li><p>设备像素比</p>
+<p>像素比：物理像素 和 设备独立像素的比值。</p>
+<p>这个比值，我们可以利用js进行获取<code>window.devicePixelRatio</code></p>
+<table>
+<thead>
+<tr>
+<th>iphone6</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>物理像素</td>
+<td>750 * 1334</td>
+</tr>
+<tr>
+<td>像素比</td>
+<td>2</td>
+</tr>
+<tr>
+<td>设备独立像素</td>
+<td>375 * 667</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<p>  当然也有设备例外：</p>
+<table>
+<thead>
+<tr>
+<th align="left">iPhone6 plus</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">物理像素</td>
+<td>1080 * 1920</td>
+</tr>
+<tr>
+<td align="left">像素比</td>
+<td>3</td>
+</tr>
+<tr>
+<td align="left">设备独立像素</td>
+<td>414 * 736</td>
+</tr>
+</tbody></table>
+<p>  ？？？？？？？？？？</p>
+<p>  <img src="/blog_imgs/mobile/01/wenhao.jpg" alt=""></p>
+<p>  说好的 像素比 = 物理像素 / 设备独立像素呢？？</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">（414 * 736 ）* 3 &#x3D; 1242 * 2208</span><br></pre></td></tr></table></figure>
+
+<p>   说好的 1080 * 1920呢？？ 多出来的要怎么办？</p>
+<p>  <strong>放心，手机会自动把 1242 * 2208 的设备独立像素，塞进 1080 * 1920 的物理像素中</strong></p>
+<p>  大家也可以看到  iphone6 是贴合我们像素比的要求的，所以一般我们拿到的手机设计图，就是 <strong>750*1334</strong> 的</p>
+<blockquote>
+<p>安卓的就不要试啦,设备，尺寸太多，也不一定严格按照分辨率了。</p>
+</blockquote>
+<h6 id="Web开发"><a href="#Web开发" class="headerlink" title="Web开发"></a>Web开发</h6><p>上面看了这么多关于尺寸的内容，但是我们还是不知道应该怎么做，设备独立尺寸和我们写css有什么关系么？或者，怎么让我们设置的 css 就是 根据设备独立尺寸的呢？首先我们要知道，我们原来看到的宽高是怎么来的</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>div元素</td>
+<td>300 * 300</td>
+</tr>
+<tr>
+<td>iphone6</td>
+<td>128 * 128</td>
+</tr>
+<tr>
+<td>布局视口</td>
+<td>980</td>
+</tr>
+<tr>
+<td>设备独立像素</td>
+<td>375 * 667</td>
+</tr>
+</tbody></table>
+<p>375 / 980 * 300 = 114</p>
+<p>根据上面的公式，我们发现，我们只要把布局视口设置为和设备独立像素一致，我们的 css像素 就等于 设备独立像素了</p>
+<p>那什么是布局视口呢？</p>
+<p>*<em>注意！！！ 一定不能有缩放，要是 100% *</em></p>
+<h6 id="视口概念"><a href="#视口概念" class="headerlink" title="视口概念"></a>视口概念</h6><p>视口可以细分为三种：布局视口、视觉视口、理想视口，那分别是什么呢~ 来看看吧</p>
+<ul>
+<li><p>布局视口</p>
+<p>布局视口：是网页布局的基准窗口，在这里只考虑布局，也就是不会有非布局的内容，例如滚动条，例如菜单栏。</p>
+<p>而在移动端，布局视口有一个默认值<code>980px</code>，这保证了PC网站可以在手机上显示（尽管丑丑的）。</p>
+<p>在 js 中可以通过<code>document.documentElement.clientWidth</code>来获取布局视口大小</p>
+<p><img src="/blog_imgs/mobile/01/viewport.jpg" alt=""></p>
+</li>
+<li><p>视觉视口</p>
+<p>视觉视口：用户视觉上看到的真实区域，包括滚动条。</p>
+<p>在 js 中可以通过<code>window.innerWidth</code></p>
+<p><img src="/blog_imgs/mobile/01/viewport2.jpg" alt=""></p>
+</li>
+<li><p>理想视口</p>
+<p>其实就是我们说的设备独立像素，不过当布局视口和视口一致的时候，那结果就是一样的了。</p>
+<p>在 js 中利用<code>window.screen.width</code>可以获取到</p>
+<p><img src="/blog_imgs/mobile/01/lixiang.jpg" alt=""></p>
+</li>
+</ul>
+<h6 id="适配"><a href="#适配" class="headerlink" title="适配"></a>适配</h6><p><strong>视口设置</strong></p>
+<p>想要更改布局视口，利用<code>meta</code>标签的<code>viewport</code>来进行设置，除此之外，还可以进行页面的缩放等操作。</p>
+<p><strong><code>viewport</code>相关配置</strong></p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>width</td>
+<td>正整数 或 device-width</td>
+<td>以像素为单位，定义布局视口的宽度</td>
+</tr>
+<tr>
+<td>height</td>
+<td>正整数 或 device-height</td>
+<td>以像素为单位，定义布局视口的高度</td>
+</tr>
+<tr>
+<td>initial-scale</td>
+<td>允许是小数</td>
+<td>定义页面初始缩放比例</td>
+</tr>
+<tr>
+<td>minimum-scale</td>
+<td>0.0 - 10.0</td>
+<td>定义缩放的最小值</td>
+</tr>
+<tr>
+<td>maximum-scale</td>
+<td>允许是小数</td>
+<td>定义缩放的最大值（ios10&amp;ios10+无效）</td>
+</tr>
+<tr>
+<td>user-scalable</td>
+<td>yes / no</td>
+<td>设置是否允许缩放，同上无效</td>
+</tr>
+</tbody></table>
+<p>initial-scale = 设备独立像素 / 视觉视口宽度</p>
+<p>视觉视口宽度 = 设备独立像素 / initial-scale</p>
+<p><strong>注意事项：</strong></p>
+<ol>
+<li>ios10 及 ios10+ 设置最大缩放值无效</li>
+<li>initial 和 width 是有冲突的</li>
+<li>initial 和 最小值 是一致的</li>
+<li>部分安卓机型，不接受width = 具体数值 这样的操作</li>
+</ol>
+<p>正常情况下，我们会把初始、最小 、最大都设置为1，不允许用户缩放页面。但是因为maximum无效，后期，我们会通过 js 来禁止缩放</p>
+<p>视口设置：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>根据像素比进行适配</strong></p>
+<p>这种方式，采用的是，直接写物理像素，还是以 iphone6 为例</p>
+<table>
+<thead>
+<tr>
+<th>iphone6</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>物理像素</td>
+<td>750 * 1334</td>
+</tr>
+<tr>
+<td>像素比</td>
+<td>2</td>
+</tr>
+<tr>
+<td>设备独立像素</td>
+<td>375 * 667</td>
+</tr>
+</tbody></table>
+<p>布局视口 = 物理像素</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> meta = <span class="built_in">document</span>.createElement(<span class="string">'meta'</span>);</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> scale = <span class="number">1</span> / <span class="built_in">window</span>.devicePixelRatio;</span></span><br><span class="line"><span class="actionscript">    meta.name = <span class="string">"viewport"</span>;</span></span><br><span class="line"><span class="actionscript">    meta.content=<span class="string">"initial-scale="</span>+ scale +<span class="string">",minimum-scale="</span>+ scale+<span class="string">",maximum-scale="</span>+ scale+<span class="string">",user-scalable=no"</span>;</span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.head.appendChild(meta);</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>缺点：非常明显，在写的时候必须要写 物理像素，但实际我们设计图上拿到的，都是css像素</p>
+</blockquote>
+<p>像素的处理是完成了，但是移动端的适配可没有这么简单哦~ 为什么呢？</p>
+<p><img src="/blog_imgs/mobile/01/sp1.jpg" alt=""></p>
+<p><img src="/blog_imgs/mobile/01/sp2.jpg" alt=""></p>
+<p>同样一个元素，在<code>414 * 736</code>占了屏幕宽度的一半，但是在<code>320*480</code>的屏幕超出了一半，这会产生什么问题？</p>
+<ol>
+<li>按照大屏幕尺寸写，本应该一排显示的内容，在小屏幕因宽度不够，掉下去了</li>
+<li>按照小屏幕写，那你告诉我，我买个大屏是为了什么</li>
+</ol>
+<p><img src="/blog_imgs/mobile/01/phone3.jpg" alt=""></p>
+<p>所以这种时候，我们就要对屏幕来进行适配：</p>
+<p>换句话说，就是一个元素，小屏手机，我就显示小点，大屏手机，我就显示大点</p>
+<p>那么想要做到这点，我们就要改变策略</p>
+<p><strong>rem适配</strong></p>
+<p>什么是<code>rem</code>？ 不觉得 它 和 <code>em</code>  长的很像么？</p>
+<p><strong>回顾 em</strong></p>
+<p>公式：1em = 1 font-size大小</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="selector-tag">style</span>&gt;</span><br><span class="line">    <span class="selector-tag">body</span>&#123;</span><br><span class="line">        <span class="attribute">font-size</span>: <span class="number">20px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-tag">div</span>&#123;</span><br><span class="line">        <span class="attribute">font-size</span>: <span class="number">15px</span>;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">5em</span>;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">5em</span>;</span><br><span class="line">        <span class="attribute">background</span>: rebeccapurple;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<p>width = 15 * 5 = 75px;</p>
+<p>缺点：font-size 经常会修改，em是根据当前自身的font-size进行计算的，很容易宽高就发生变化。</p>
+<p>基于这个问题，我们就要来了解一个新的单位了，叫做 <code>rem</code></p>
+<p><code>rem -&gt; root em</code>  其实翻译过来就是根据 根节点计算em，这里的根节点指的是<code>&lt;html&gt;&lt;/html&gt;</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="selector-tag">style</span>&gt;</span><br><span class="line">    <span class="selector-tag">html</span>&#123;</span><br><span class="line">        <span class="attribute">font-size</span>: <span class="number">20px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-tag">div</span>&#123;</span><br><span class="line">        <span class="attribute">font-size</span>: <span class="number">15px</span>;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">5rem</span>;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">5rem</span>;</span><br><span class="line">        <span class="attribute">background</span>: rebeccapurple;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<p>width = 20* 5 = 100px;</p>
+<p>但是好像~ 并改变不了我们上面提到的问题啊…..别着急！ 那是因为你还没有让<code>font-size</code>变化起来</p>
+<p>利用<code>js</code>动态设定<code>font-size</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">    <span class="keyword">var</span> html = <span class="built_in">document</span>.documentElement;</span><br><span class="line">    <span class="keyword">var</span> widths = html.clientWidth;</span><br><span class="line">    <span class="keyword">var</span> num = <span class="number">10</span>;</span><br><span class="line">    html.style.fontSize = widths / num + <span class="string">'px'</span>;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这样的话，你就只要关心<code>rem</code>写多少就好了</p>
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><hr>
+<h5 id="1-transform"><a href="#1-transform" class="headerlink" title="1. transform"></a>1. transform</h5><blockquote>
+<p>不脱离文档流，不改变页面结构</p>
+</blockquote>
+<ul>
+<li><p>translate（x，y） 位移</p>
+<ul>
+<li>如果只有一个值的情况下，设置的是<code>x</code></li>
+<li><code>x</code>和<code>y</code>同时移动</li>
+<li>百分比数值，基于自己本身计算（未知宽高的居中特别好用）</li>
+</ul>
+</li>
+<li><p>rotate（180deg）旋转</p>
+<ul>
+<li>角度（单位：deg）</li>
+<li>圈数（单位：turn）</li>
+</ul>
+</li>
+<li><p>scale（x，y）缩放</p>
+<ul>
+<li>单位：倍数</li>
+<li>如果只有一个值的情况下，同时设置<code>x</code>和<code>y</code></li>
+<li><code>x</code>和<code>y</code>同时缩放</li>
+</ul>
+</li>
+<li><p>skew（x，y）斜切</p>
+<ul>
+<li>单位（deg）</li>
+<li>如果只有一个值的情况下，设置的是<code>x</code></li>
+</ul>
+</li>
+</ul>
+<h5 id="3-变化原点"><a href="#3-变化原点" class="headerlink" title="3. 变化原点"></a>3. 变化原点</h5><ul>
+<li>transform-origin 变化原点<ul>
+<li>关键词<code>left</code>、<code>right</code>、<code>top</code>、<code>bottom</code></li>
+<li>数值（px）</li>
+<li>默认 center center</li>
+</ul>
+</li>
+</ul>
+
+</article>
+
+    <div class="pagenator post-pagenator">
+    
+    
+
+    
+    <p>上次更新 2020-08-13</p>
+    
+    
+        <a class="extend next post-next" href="/2020/07/25/DOM/">下一篇</a>
+    
+    </div>
+
+    </div>
+    <div class="footer">
+        <div class="container">
+    <!-- <div class="social">
+	<ul class="social-list">
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+	</ul>
+</div> -->
+    <div class="copyright">
+        <span>
+            
+            
+            
+                © zxl 2017 - 2020
+            
+        </span>
+    </div>
+    <!-- <div class="power">
+        <span>
+            Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> & <a href="https://github.com/CaiChenghan/iLiKE" target="_blank" rel="noopener">iLiKE Theme</a>
+        </span>
+    </div> -->
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <!--page counter part-->
+<script>
+    function addCount(Counter) {
+        url = $('.article-date').attr('href').trim();
+        title = $('.article-title').text().trim();
+        var query = new AV.Query(Counter);
+        //use url as unique idnetfication
+        query.equalTo("url", url);
+        query.find({
+            success: function (results) {
+                if (results.length > 0) {
+                    var counter = results[0];
+                    counter.fetchWhenSave(true); //get recent result
+                    counter.increment("time");
+                    counter.save();
+                } else {
+                    var newcounter = new Counter();
+                    newcounter.set("title", title);
+                    newcounter.set("url", url);
+                    newcounter.set("time", 1);
+                    newcounter.save(null, {
+                        success: function (newcounter) {
+                            //alert('New object created');
+                        }, error: function (newcounter, error) {
+                            alert('Failed to create');
+                        }
+                    })
+                }
+            },
+            error: function (error) {
+                //find null is not a error
+                alert('Error:' + error.code + " " + error.message);
+            }
+        });
+    }
+    // $(function () {
+    //     var Counter = AV.Object.extend("Counter");
+    //     //only increse visit counting when intering a page
+    //     if ($('.article-title').length == 1) {
+    //         addCount(Counter);
+    //     }
+    //     var query = new AV.Query(Counter);
+    //     query.descending("time");
+    //     // the sum of popular posts
+    //     query.limit(10);
+    //     query.find({
+    //         success: function (results) {
+    //             for (var i = 0; i < results.length; i++) {
+    //                 var counter = results[i];
+    //                 title = counter.get("title");
+    //                 url = counter.get("url");
+    //                 time = counter.get("time");
+    //                 // add to the popularlist widget
+    //                 showcontent = title + " (" + time + ")";
+    //                 //notice the "" in href
+    //                 $('.popularlist').append('<li><a href="' + url + '">' + showcontent + '</a></li>');
+    //             }
+    //         },
+    //         error: function (error) {
+    //             alert("Error:" + error.code + " " + error.message);
+    //         }
+    //     });
+    // });
+</script>
+</div>
+    </div>
+    <div class="backtop">
+        <div class="arrow" id="arrow">
+  <a href="#" class="icon">↑</a>
+  <script>
+    window.addEventListener("scroll", showBackTop, false);
+
+    const gototop = _getbyId("arrow");
+    // if (gototop) {
+    //   gototop.className = "doc-gototop" + (mainTop <= 0 ? " doc-gototop-show" : "");
+    // }
+    function showBackTop() {
+      const scrollheight = getheight()
+      if (scrollheight > 100) {
+        const arrow = _getbyId("arrow")
+        arrow.classList.add("arrow-show");
+      } else {
+        arrow.classList.remove("arrow-show");
+      }
+
+    }
+
+    function _getbyId(id) {
+      return document.getElementById(id);
+    }
+
+    function getheight() {
+      let scrollheight = document.body.scrollTop == 0 ? document.documentElement.scrollTop
+        : document.body.scrollTop;
+      return scrollheight;
+    }
+  </script>
+</div>
+    </div>
+</body>
+</html>
