@@ -60,7 +60,7 @@
     <div class="container">
         <h1 class="post-title">移动端布局</h1>
 <article class="post markdown-style">
-  <h1 id="移动端布局"><a href="#移动端布局" class="headerlink" title="移动端布局"></a>移动端布局</h1><h6 id="为什么移动端不能像pc网站一样写"><a href="#为什么移动端不能像pc网站一样写" class="headerlink" title="为什么移动端不能像pc网站一样写"></a>为什么移动端不能像pc网站一样写</h6><p>首先我们来看下，我们正常的电脑网站，放到手机上会如何</p>
+  <h6 id="为什么移动端不能像pc网站一样写"><a href="#为什么移动端不能像pc网站一样写" class="headerlink" title="为什么移动端不能像pc网站一样写"></a>为什么移动端不能像pc网站一样写</h6><p>首先我们来看下，我们正常的电脑网站，放到手机上会如何</p>
 <p>今日热点：<a href="https://news.2345.com/shouye/?dh" target="_blank" rel="noopener">https://news.2345.com/shouye/?dh</a></p>
 <p><img src="/blog_imgs/mobile/03/phone5.png" alt=""></p>
 <p><strong>缺点：</strong></p>
@@ -209,7 +209,8 @@
 </tbody></table>
 </li>
 </ul>
-<p>  当然也有设备例外：</p>
+<ul>
+<li><p>当然也有设备例外：</p>
 <table>
 <thead>
 <tr>
@@ -230,12 +231,14 @@
 <td>414 * 736</td>
 </tr>
 </tbody></table>
-<p>  ？？？？？？？？？？</p>
-<p>  <img src="/blog_imgs/mobile/01/wenhao.jpg" alt=""></p>
-<p>  说好的 像素比 = 物理像素 / 设备独立像素呢？？</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">（414 * 736 ）* 3 &#x3D; 1242 * 2208</span><br></pre></td></tr></table></figure>
+<p>？？？？？？？？？？</p>
+<p><img src="/blog_imgs/mobile/01/wenhao.jpg" alt=""></p>
+<p>说好的 像素比 = 物理像素 / 设备独立像素呢？？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">（414 * 736 ）* 3 &#x3D; 1242 * 2208</span><br></pre></td></tr></table></figure>
 
-<p>   说好的 1080 * 1920呢？？ 多出来的要怎么办？</p>
+<p> 说好的 1080 * 1920呢？？ 多出来的要怎么办？</p>
+</li>
+</ul>
 <p>  <strong>放心，手机会自动把 1242 * 2208 的设备独立像素，塞进 1080 * 1920 的物理像素中</strong></p>
 <p>  大家也可以看到  iphone6 是贴合我们像素比的要求的，所以一般我们拿到的手机设计图，就是 <strong>750*1334</strong> 的</p>
 <blockquote>
@@ -245,7 +248,7 @@
 <table>
 <thead>
 <tr>
-<th></th>
+<th>元素</th>
 <th></th>
 </tr>
 </thead>
@@ -449,6 +452,8 @@
 
     <div class="pagenator post-pagenator">
     
+    
+        <a class="extend prev post-prev" href="/2020/08/08/%E3%80%8AJust-JavaScript%E3%80%8B09-%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1/">上一篇</a>
     
 
     
