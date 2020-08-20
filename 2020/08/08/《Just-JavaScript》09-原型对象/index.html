@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+  <title>《Just-JavaScript》09-原型对象 [ Lemon Ray ]</title>
+  
+  <!-- stylesheets list from config.yml -->
+  
+  <link rel="stylesheet" href="/css/iLiKE.css">
+  
+  
+
+  
+  <!-- <script src="//cdn1.lncld.net/static/js/3.1.1/av-min.js"></script>
+  <script id="leancloud">
+    AV.init({
+      appId: "6E5zTbTljdUbVW2WkXPsXGJk-gzGzoHsz",
+      appKey: "0vsyDKfNpeSECAI70J794ugv"
+    });
+  </script> -->
+  
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="Lemon Ray" type="application/atom+xml">
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+    <div class="menu">
+      <div class="menu-left">
+        <a href="/">
+          <img src="/favicon.svg"></img>
+        </a>
+      </div>
+      <div class="menu-right">
+        
+          
+          
+          
+          
+          
+          
+          <a href="/">首页</a>
+        
+          
+          
+          
+          
+          
+          
+          <a href="/archives">归档</a>
+        
+      </div>
+    </div>
+</div>
+    </div>
+    <div class="container">
+        <h1 class="post-title">《Just-JavaScript》09-原型对象</h1>
+<article class="post markdown-style">
+  <p>在前面的模块中，我们讨论了对象、属性和变异。但我们还没有完全讨论对象！</p>
+<p>下面是一个小谜语来检验我们的思维模型：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> pizza = &#123;&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(pizza.taste); <span class="comment">// "pineapple"</span></span><br></pre></td></tr></table></figure>
+
+<p>问你自己：这可能吗？</p>
+<p>我们刚刚用<code>{}</code>创建了一个空对象。在日志记录之前，我们绝对没有设置任何属性。所以看起来<code>pizza.taste</code>不能向<code>pineapple</code>。我们会料到的是<code>pizza.taste</code>给我们一个<code>undefined</code>。（当一个属性不存在时，我们通常无法得到<code>undefined</code>，对吗？）</p>
+<p>我们可以在这两行之前添加一些代码让<code>pizza.taste</code>为<code>pineapple</code>！这可能是一个人为的例子，但它表明我们对JavaScript宇宙的思维模型是不完整的。</p>
+<p>在本模块中，我们将介绍原型的概念。原型解释了在这个谜题中发生了什么。更重要的是，原型是其他几个JavaScript特性的核心。有时人们会因为它们看起来太不寻常而忽视学习。然而，核心思想非常简单。</p>
+<h1 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h1><p>这里有几个变量指向几个对象：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> human = &#123;</span><br><span class="line">  teeth: <span class="number">32</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> gwen = &#123;</span><br><span class="line">  age: <span class="number">19</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以用熟悉的方式直观地表示它们：</p>
+<p><img src="/blog_imgs/just_javascript/09/example.png" alt=""></p>
+<p>在本例中，<code>gwen</code>指向一个没有<code>teeth</code>属性的对象。根据我们所学的规则，如果我们读到它，我们就会得到<code>undefined</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(gwen.teeth); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+
+<p>但故事不必就此结束。我们可以指示JavaScript继续搜索另一个对象上丢失的属性，而不是返回未定义的默认行为。我们只需一行代码就可以做到：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> human = &#123;</span><br><span class="line">  teeth: <span class="number">32</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> gwen = &#123;</span><br><span class="line">  <span class="comment">// We added this line:</span></span><br><span class="line">  __proto__: human,</span><br><span class="line">  age: <span class="number">19</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>那神秘的<code>__proto__</code>是什么？</p>
+<p>它代表了JavaScript原型的概念。任何JavaScript对象都可以选择另一个对象作为原型。我们将很快讨论这在实践中意味着什么。现在，让我们把它看作是一种特殊的<code>__proto__</code>导线：</p>
+<p><img src="/blog_imgs/just_javascript/09/proto.png" alt=""></p>
+<p>花点时间验证图表是否与代码匹配。我们像以前一样画出它。唯一的新东西就是神秘的<code>__proto__</code>导线。</p>
+<p>通过指定<code>__proto__</code>（也称为对象的原型），我们指示JavaScript继续查找该对象上缺少的属性。</p>
+<h2 id="使用原型"><a href="#使用原型" class="headerlink" title="使用原型"></a>使用原型</h2><p>早些时候，当我们去寻找<code>gwen.teeth</code>。我们得到的是<code>undefined</code>，因为在gwen指向的对象上不存在<code>teeth</code>属性。</p>
+<p>但多亏了这一点<code>__proto__</code>：人为的指向，现在答案不同了：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> human = &#123;</span><br><span class="line">  teeth: <span class="number">32</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> gwen = &#123;</span><br><span class="line">  <span class="comment">// "Look for other properties here"</span></span><br><span class="line">  __proto__: human,</span><br><span class="line">  age: <span class="number">19</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(gwen.teeth); <span class="comment">// 32</span></span><br></pre></td></tr></table></figure>
+
+<p>现在步骤顺序如下：</p>
+<p><img src="/blog_imgs/just_javascript/09/proto.gif" alt=""></p>
+<ol>
+<li>遵循<code>gwen</code>导线。它指向一个对象。</li>
+<li>这个对象有<code>teeth</code>属性吗？<ul>
+<li>没有</li>
+<li><strong>但它有一个原型</strong>。我们来看看吧</li>
+</ul>
+</li>
+<li>那个对象有<code>teeth</code>属性吗？<ul>
+<li>是的，它指向32。</li>
+<li>因此，<code>gwen.teeth</code>的结果是32。</li>
+</ul>
+</li>
+</ol>
+<p>这和你在工作中可能会说：“我不知道，但爱丽丝可能知道”相似。使用<code>__proto__</code>，可以指示JavaScript去“询问另一个对象”。</p>
+<p>要检查你目前的理解情况，请写下你的答案：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> human = &#123;</span><br><span class="line">  teeth: <span class="number">32</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> gwen = &#123;</span><br><span class="line">  __proto__: human,</span><br><span class="line">  age: <span class="number">19</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(human.age); <span class="comment">// ?</span></span><br><span class="line"><span class="built_in">console</span>.log(gwen.age); <span class="comment">// ?</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(human.teeth); <span class="comment">// ?</span></span><br><span class="line"><span class="built_in">console</span>.log(gwen.teeth); <span class="comment">// ?</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(human.tail); <span class="comment">// ?</span></span><br><span class="line"><span class="built_in">console</span>.log(gwen.tail); <span class="comment">// ?</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/blog_imgs/just_javascript/03/spoilers.jpg" alt=""></p>
+<p>在你写完六个问题的答案之前不要再滚动。。</p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p><code>...</code> </p>
+<p>现在让我们检查一下你的答案。</p>
+<p>变量<code>human</code>指向的对象没有属性<code>age</code>，所以<code>human.age</code>是<code>undefined</code>。变量<code>gwen</code>指向具有age属性的对象。这条线指向19，所以<code>gwen.age</code>是19。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(human.age); <span class="comment">// undefined</span></span><br><span class="line"><span class="built_in">console</span>.log(gwen.age); <span class="comment">// 19</span></span><br></pre></td></tr></table></figure>
+
+<p>变量<code>human</code>指向具有属性<code>teeth</code>的对象，因此<code>human.teeth</code>是32。变量<code>gwen</code>指向一个没有属性<code>teeth</code>的对象。但是，该对象有一个原型，它确实具有<code>teeth</code>属性。这就是为什么<code>gwen.teeth</code>也是32。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(human.teeth); <span class="comment">// 32</span></span><br><span class="line"><span class="built_in">console</span>.log(gwen.teeth); <span class="comment">// 32</span></span><br></pre></td></tr></table></figure>
+
+<p>我们的两个对象都没有tail属性，因此这两个对象都未定义：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(human.tail); <span class="comment">// undefined</span></span><br><span class="line"><span class="built_in">console</span>.log(gwen.tail); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+
+<p>注意，虽然<code>gwen.teeth</code>是32，这并不意味着<code>gwen</code>有属性<code>teeth</code>！实际上，在这个例子中，<code>gwen</code>没有<code>teeth</code>属性。但它的原型对象——<code>human</code>指向的对象确有。</p>
+<p>这提醒我们<code>gwen.teeth</code>是一个表达式——对JavaScript宇宙的一个问题——JavaScript将遵循一系列步骤来回答它。现在我们知道这些步骤包括查看原型。</p>
+<h2 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h2><p>在JavaScript中，原型不是一个特殊的“东西”。原型更像是一种关系。一个对象可以指向另一个对象作为它的原型。</p>
+<p>这自然会引出一个问题：但是如果我的对象的原型有自己的原型呢？那个原型有它自己的原型吗？这怎么作用呢？</p>
+<p>答案正是它的工作原理！</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> mammal = &#123;</span><br><span class="line">  brainy: <span class="literal">true</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> human = &#123;</span><br><span class="line">  __proto__: mammal,</span><br><span class="line">  teeth: <span class="number">32</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> gwen = &#123;</span><br><span class="line">  __proto__: human,</span><br><span class="line">  age: <span class="number">19</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(gwen.brainy); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>我们可以看到JavaScript将会搜索对象上的属性，然后搜索其原型，然后搜索该对象的原型，依此类推。如果我们查找完了原型，还没有找到我们的属性，我们就会得到<code>undefined</code>。</p>
+<p><img src="/blog_imgs/just_javascript/09/proto2.png" alt=""></p>
+<p>这和你在工作中可能会说：“我不知道，但爱丽丝可能知道”。但爱丽丝可能会说“其实我也不知道，问问鲍勃”。最终，你要么得到答案，要么就没人可问了！</p>
+<p>这个要“访问”的对象序列称为对象的原型链。（然而，与你可能戴的链不同，原型链不能是圆形的！）</p>
+<h2 id="跟踪"><a href="#跟踪" class="headerlink" title="跟踪"></a>跟踪</h2><p>考虑一下这个稍加修改的例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> human = &#123;</span><br><span class="line">  teeth: <span class="number">32</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> gwen = &#123;</span><br><span class="line">  __proto__: human,</span><br><span class="line">  <span class="comment">// This object has its own teeth property:</span></span><br><span class="line">  teeth: <span class="number">31</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>两个对象都定义了一个名为<code>teeth</code>的属性，因此结果不同：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(human.teeth); <span class="comment">// 32</span></span><br><span class="line"><span class="built_in">console</span>.log(gwen.teeth); <span class="comment">// 31</span></span><br></pre></td></tr></table></figure>
+
+<p>请注意<code>gwen.teeth</code>是31。如果<code>gwen</code>没有自己的<code>teeth</code>属性，我们会看看原型。但是因为<code>gwen</code>所指的对象有它自己的<code>teeth</code>属性，所以我们不需要一直寻找答案。</p>
+<p><img src="/blog_imgs/just_javascript/09/proto3.png" alt=""></p>
+<p>换句话说，一旦我们找到我们的属性，<strong>我们就停止搜索</strong>。</p>
+<p>如果你想检查一个对象自身是否有某个属性，你可以调用一个名为hasOwnProperty的内置函数。对于“own”属性，它返回true，并且不查看原型。在上一个示例中，两个对象都有自己的<code>teeth</code>指向，因此这两个对象都适用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(human.hasOwnProperty(<span class="string">'teeth'</span>)); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(gwen.hasOwnProperty(<span class="string">'teeth'</span>)); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h2><p>考虑这个例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> human = &#123;</span><br><span class="line">  teeth: <span class="number">32</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> gwen = &#123;</span><br><span class="line">  __proto__: human,</span><br><span class="line">  <span class="comment">// Note: no own teeth property</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">gwen.teeth = <span class="number">31</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(human.teeth); <span class="comment">// ?</span></span><br><span class="line"><span class="built_in">console</span>.log(gwen.teeth); <span class="comment">// ?</span></span><br></pre></td></tr></table></figure>
+
+<p>在赋值之前，两个表达式的结果都是32：</p>
+<p><img src="/blog_imgs/just_javascript/09/proto4.png" alt=""></p>
+<p>然后我们需要执行这个任务：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gwen.teeth = <span class="number">31</span>;</span><br></pre></td></tr></table></figure>
+
+<p>现在的问题是哪根导线对<code>gwen.teeth</code>起了作用？答案一般来说，是发生在对象本身上的赋值。</p>
+<p>所以<code>gwen.teeth=31</code>是在gwen指向的对象上创建一个名为<code>teeth</code>的新的自有属性。它对原型没有任何影响：</p>
+<p><img src="/blog_imgs/just_javascript/09/proto5.png" alt=""></p>
+<p>因此，<code>human.teeth</code>还是32，但是<code>gwen.teeth</code>现在31：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(human.teeth); <span class="comment">// 32</span></span><br><span class="line"><span class="built_in">console</span>.log(gwen.teeth); <span class="comment">// 31</span></span><br></pre></td></tr></table></figure>
+
+<p>我们可以用一个简单的经验法则来总结这种行为。</p>
+<p>当我们读取对象上不存在的属性时，我们将继续在原型链上查找它。如果我们找不到它，我们就得到<code>undefined</code>。</p>
+<p>但是当我们写一个在我们的对象上不存在的属性时，它会在我们的对象上创建这个属性。一般来说，原型不会起作用。</p>
+<h2 id="对象原型"><a href="#对象原型" class="headerlink" title="对象原型"></a>对象原型</h2><p>这个对象没有原型，对吧？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>请尝试在浏览器的控制台中运行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(obj.__proto__); <span class="comment">// Play with it!</span></span><br></pre></td></tr></table></figure>
+
+<p>令人惊讶的是，<code>obj.__proto__</code>不为<code>null</code>或<code>undefined</code>！相反，你将看到一个具有一系列属性的奇怪对象，包括hasOwnProperty。</p>
+<p>我们将这个特殊的对象称为对象原型：</p>
+<p><img src="/blog_imgs/just_javascript/09/proto6.png" alt=""></p>
+<p>一开始，这可能有点令人费解。让我们充分理解它。我们一直认为<code>{}</code>创建了一个“空”对象。但不是空的！它有一个隐藏的<code>__proto__</code>线，默认情况下指向对象原型。</p>
+<p>这解释了为什么JavaScript对象似乎具有“内置”属性：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> human = &#123;</span><br><span class="line">  teeth: <span class="number">32</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(human.hasOwnProperty); <span class="comment">// function hasOwnProperty() &#123; &#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(human.toString); <span class="comment">// function toString() &#123; &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>这些“内置”属性只不过是对象原型上存在的普通属性。我们对象的原型就是对象原型，这就是为什么我们可以访问它们。（它们的实现在JS引擎中。）</p>
+<h2 id="没有原型的对象"><a href="#没有原型的对象" class="headerlink" title="没有原型的对象"></a>没有原型的对象</h2><p>我们刚刚了解到，所有使用<code>{}</code>语法创建的对象都有一个默认的对象原型，即特殊的<code>{}</code>原型。但我们也知道我们可以定制。你可能会想：我们能把它设为<code>null</code>吗？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> weirdo = &#123;</span><br><span class="line">  __proto__: <span class="literal">null</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>答案是肯定的_这将产生一个根本没有原型的对象。因此，它甚至没有内置的对象方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(weirdo.hasOwnProperty); <span class="comment">// undefined</span></span><br><span class="line"><span class="built_in">console</span>.log(weirdo.toString); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+
+<p>就算可以，您通常不想创建这样的对象。然而，对象原型本身就是这样一个对象。它是一个没有原型的对象。</p>
+<h2 id="原型污染"><a href="#原型污染" class="headerlink" title="原型污染"></a>原型污染</h2><p>现在我们知道，默认情况下，所有JavaScript对象都获得相同的原型。让我们简单回顾一下突变模块中的示例：</p>
+<p><img src="/blog_imgs/just_javascript/09/proto7.png" alt=""></p>
+<p>这幅画给了我们一个有趣的见解。如果JavaScript在原型上搜索缺失的属性，而大多数对象共享同一个原型，我们是否可以通过改变原型使新属性“出现”在所有对象上？</p>
+<p>答案是肯定的！</p>
+<p>让我们添加这两行代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;&#125;;</span><br><span class="line">obj.__proto__.smell = <span class="string">'banana'</span>;</span><br></pre></td></tr></table></figure>
+
+<p>我们通过添加一个<code>smell</code>属性来改变对象原型。因此，两位侦探现在似乎都在使用香蕉味的香水：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(sherlock.smell); <span class="comment">// "banana"</span></span><br><span class="line"><span class="built_in">console</span>.log(watson.smell); <span class="comment">// "banana"</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/blog_imgs/just_javascript/09/proto8.png" alt=""></p>
+<p>像我们刚才那样对共享原型进行改变称为原型污染。</p>
+<p>在过去，原型污染是用自定义特性扩展JavaScript的流行方法。然而，多年来，web社区意识到它是脆弱的，很难添加新的语言特性。宁愿避免这样操作。</p>
+<p>现在你可以从本单元开始解决<code>Pineapple Pizza</code>之谜了！在DevTools中检查您的解决方案。</p>
+<h1 id="proto-和-prototype"><a href="#proto-和-prototype" class="headerlink" title="proto 和 prototype"></a><strong>proto</strong> 和 prototype</h1><p>你可能会想知道：原型属性到底是什么？你可能已经在文档中看到了原型，例如在MDN页面标题中。</p>
+<p>我有一个坏消息：<code>prototype</code>属性几乎与原型的核心机制完全无关（正如您可能还记得的那样，它是<code>__proto__</code>）。</p>
+<p>原型属性主要与解释新操作符有关。我相信这一个不幸的命名选择是为什么这么多人被原型迷惑而放弃学习它们的主要原因。</p>
+<h2 id="为什么这很重要？"><a href="#为什么这很重要？" class="headerlink" title="为什么这很重要？"></a>为什么这很重要？</h2><p>你可能会想：为什么要关心原型呢？你会经常用吗？实际上，您可能不会直接使用它们。不要养成写<code>__proto__</code>的习惯。这些例子只说明了机制。（事实上，即使直接使用<code>__proto__</code>语法本身也是<a href="https://2ality.com/2015/09/proto-es6.html?ck_subscriber_id=767004595" target="_blank" rel="noopener">不可取</a>的。）</p>
+<p>原型有点不寻常，大多数人和框架从来没有真正将它们作为一个范例完全接受。相反，人们通常将原型仅仅用作传统“类继承”模型的构建块，这种模型在其他编程语言中很流行。事实上，JavaScript添加了一个<code>class</code>语法作为一种约定，将原型“隐藏”在视线之外。</p>
+<p>不过，您会注意到原型隐藏在类和其他JavaScript特性的“表面之下”。例如，下面是一个JavaScript类的<a href="https://gist.github.com/gaearon/a25fd42a1e6b4cc24851978df0a36571?ck_subscriber_id=767004595" target="_blank" rel="noopener">片段</a>，它用<code>__proto__</code>重写，以演示幕后发生的事情。</p>
+<p>就我个人而言，我在日常编码中使用的类不多，也很少直接处理原型。但是，了解这些特性是如何相互构建的，以及当我读取或设置对象的属性时会发生什么情况，这会有帮助。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li><p>当我们读取<code>obj.prop</code>，如果<code>obj</code>没有<code>prop</code>属性，JavaScript将查找<code>obj.__proto__.prop</code>，然后查找<code>obj.__proto__.__proto__.prop</code>，依此类推，直到找到我们的属性或到达原型链的末尾。</p>
+</li>
+<li><p>写<code>obj.prop</code>的时候，JavaScript通常会直接写入对象，而不是遍历原型链。</p>
+</li>
+<li><p>我们可以利用<code>obj.hasOwnProperty(&#39;prop&#39;)</code>来确定我们的对象自身是否有一个名为prop的属性。换句话说，这意味着有一个名为prop的属性线直接连接到该对象。</p>
+</li>
+<li><p>我们可以通过改变原型来“污染”多个对象共享的原型。我们甚至可以对对象原型做这个操作——修改<code>{}</code>对象的默认原型！但我们不应该这样做，除非我们在和同事开玩笑。</p>
+</li>
+<li><p>你可能不会在实践中直接使用原型。然而，它们是JavaScript对象如何工作的基础，因此理解它们的底层机制很方便。一些高级JavaScript特性，包括类，可以用原型来表示。</p>
+</li>
+</ul>
+<h1 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h1><p>本模块还有习题供你练习！</p>
+<p><a href="https://eggheadio.typeform.com/to/S7p8NB?" target="_blank" rel="noopener">点击这里用一些简短的练习巩固这个心智模型。</a></p>
+<p><strong>不要跳过它们！</strong></p>
+<p>尽管你可能对原型的概念很熟悉，但这些练习将帮助你巩固我们正在建立的思维模型。我们需要这个基础才能得到更复杂的话题。</p>
+
+</article>
+
+    <div class="pagenator post-pagenator">
+    
+    
+
+    
+    <p>上次更新 2020-08-20</p>
+    
+    
+        <a class="extend next post-next" href="/2020/07/26/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%B8%83%E5%B1%80(%E4%B8%80)/">下一篇</a>
+    
+    </div>
+
+    </div>
+    <div class="footer">
+        <div class="container">
+    <!-- <div class="social">
+	<ul class="social-list">
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+	</ul>
+</div> -->
+    <div class="copyright">
+        <span>
+            
+            
+            
+                © zxl 2017 - 2020
+            
+        </span>
+    </div>
+    <!-- <div class="power">
+        <span>
+            Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> & <a href="https://github.com/CaiChenghan/iLiKE" target="_blank" rel="noopener">iLiKE Theme</a>
+        </span>
+    </div> -->
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <!--page counter part-->
+<script>
+    function addCount(Counter) {
+        url = $('.article-date').attr('href').trim();
+        title = $('.article-title').text().trim();
+        var query = new AV.Query(Counter);
+        //use url as unique idnetfication
+        query.equalTo("url", url);
+        query.find({
+            success: function (results) {
+                if (results.length > 0) {
+                    var counter = results[0];
+                    counter.fetchWhenSave(true); //get recent result
+                    counter.increment("time");
+                    counter.save();
+                } else {
+                    var newcounter = new Counter();
+                    newcounter.set("title", title);
+                    newcounter.set("url", url);
+                    newcounter.set("time", 1);
+                    newcounter.save(null, {
+                        success: function (newcounter) {
+                            //alert('New object created');
+                        }, error: function (newcounter, error) {
+                            alert('Failed to create');
+                        }
+                    })
+                }
+            },
+            error: function (error) {
+                //find null is not a error
+                alert('Error:' + error.code + " " + error.message);
+            }
+        });
+    }
+    // $(function () {
+    //     var Counter = AV.Object.extend("Counter");
+    //     //only increse visit counting when intering a page
+    //     if ($('.article-title').length == 1) {
+    //         addCount(Counter);
+    //     }
+    //     var query = new AV.Query(Counter);
+    //     query.descending("time");
+    //     // the sum of popular posts
+    //     query.limit(10);
+    //     query.find({
+    //         success: function (results) {
+    //             for (var i = 0; i < results.length; i++) {
+    //                 var counter = results[i];
+    //                 title = counter.get("title");
+    //                 url = counter.get("url");
+    //                 time = counter.get("time");
+    //                 // add to the popularlist widget
+    //                 showcontent = title + " (" + time + ")";
+    //                 //notice the "" in href
+    //                 $('.popularlist').append('<li><a href="' + url + '">' + showcontent + '</a></li>');
+    //             }
+    //         },
+    //         error: function (error) {
+    //             alert("Error:" + error.code + " " + error.message);
+    //         }
+    //     });
+    // });
+</script>
+</div>
+    </div>
+    <div class="backtop">
+        <div class="arrow" id="arrow">
+  <a href="#" class="icon">↑</a>
+  <script>
+    window.addEventListener("scroll", showBackTop, false);
+
+    const gototop = _getbyId("arrow");
+    // if (gototop) {
+    //   gototop.className = "doc-gototop" + (mainTop <= 0 ? " doc-gototop-show" : "");
+    // }
+    function showBackTop() {
+      const scrollheight = getheight()
+      if (scrollheight > 100) {
+        const arrow = _getbyId("arrow")
+        arrow.classList.add("arrow-show");
+      } else {
+        arrow.classList.remove("arrow-show");
+      }
+
+    }
+
+    function _getbyId(id) {
+      return document.getElementById(id);
+    }
+
+    function getheight() {
+      let scrollheight = document.body.scrollTop == 0 ? document.documentElement.scrollTop
+        : document.body.scrollTop;
+      return scrollheight;
+    }
+  </script>
+</div>
+    </div>
+</body>
+</html>
