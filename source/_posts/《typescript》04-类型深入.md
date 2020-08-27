@@ -310,8 +310,3 @@ function fn2(elements: Element[]|NodeList|Element) {
 - 类型断言
 - 类型操作符
 - 类型保护
-
-
-
-## 思考
-
