@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+  <title>《typescript》02-类型系统 [ Lemon Ray ]</title>
+  
+  <!-- stylesheets list from config.yml -->
+  
+  <link rel="stylesheet" href="/css/iLiKE.css">
+  
+  
+
+  
+  <!-- <script src="//cdn1.lncld.net/static/js/3.1.1/av-min.js"></script>
+  <script id="leancloud">
+    AV.init({
+      appId: "6E5zTbTljdUbVW2WkXPsXGJk-gzGzoHsz",
+      appKey: "0vsyDKfNpeSECAI70J794ugv"
+    });
+  </script> -->
+  
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="Lemon Ray" type="application/atom+xml">
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+    <div class="menu">
+      <div class="menu-left">
+        <a href="/">
+          <img src="/favicon.svg"></img>
+        </a>
+      </div>
+      <div class="menu-right">
+        
+          
+          
+          
+          
+          
+          
+          <a href="/">首页</a>
+        
+          
+          
+          
+          
+          
+          
+          <a href="/archives">归档</a>
+        
+      </div>
+    </div>
+</div>
+    </div>
+    <div class="container">
+        <h1 class="post-title">《typescript》02-类型系统</h1>
+<article class="post markdown-style">
+  <h1 id="TypeScript-类型系统"><a href="#TypeScript-类型系统" class="headerlink" title="TypeScript - 类型系统"></a>TypeScript - 类型系统</h1><h2 id="类型系统"><a href="#类型系统" class="headerlink" title="类型系统"></a>类型系统</h2><p>简单来说类型系统包含：</p>
+<ul>
+<li>类型标注（签名）</li>
+<li>类型检测</li>
+</ul>
+<h3 id="类型标注"><a href="#类型标注" class="headerlink" title="类型标注"></a>类型标注</h3><p>类型标注就是给数据（变量、函数、类等）添加类型说明</p>
+<p>类型标注语法：</p>
+<p>变量: 标注类型</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> 变量: 数据类型;</span><br></pre></td></tr></table></figure>
+
+<h3 id="类型检测"><a href="#类型检测" class="headerlink" title="类型检测"></a>类型检测</h3><p>有了类型标注，编译器会在编译过程中根据标注的类型进行检测，使数据的使用更安全，帮助我们减少错误</p>
+<p>同时配合 编辑器/IDE ，类型标注还能提供更加强大和友好的智能提示</p>
+<blockquote>
+<p><span style="color:green">注意：类型系统检测的是类型，而不是具体值，即 <u>数据是否与标注的类型一致</u></span></p>
+</blockquote>
+<h3 id="标注类型有哪些？"><a href="#标注类型有哪些？" class="headerlink" title="标注类型有哪些？"></a>标注类型有哪些？</h3><ul>
+<li>基础类型</li>
+<li>空和未定义类型</li>
+<li>对象类型</li>
+<li>数组类型</li>
+<li>元组类型</li>
+<li>枚举类型</li>
+<li>无值类型</li>
+<li>Never类型</li>
+<li>任意类型</li>
+<li>未知类型（Version3.0 Added）</li>
+</ul>
+<h4 id="基础类型"><a href="#基础类型" class="headerlink" title="基础类型"></a>基础类型</h4><p>基础类型包含：<u>string</u>，<u>number</u>，<u>boolean</u></p>
+<p>标注语法</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">变量: <span class="built_in">string</span>;</span><br><span class="line">变量: <span class="built_in">number</span>;</span><br><span class="line">变量: <span class="built_in">boolean</span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> title: <span class="built_in">string</span> = <span class="string">'zxl'</span>;</span><br><span class="line"><span class="keyword">let</span> n: <span class="built_in">number</span> = <span class="number">100</span>;</span><br><span class="line"><span class="keyword">let</span> isOk: <span class="built_in">boolean</span> = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">title = <span class="number">100</span>;	<span class="comment">//错误</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="空和未定义类型"><a href="#空和未定义类型" class="headerlink" title="空和未定义类型"></a>空和未定义类型</h4><p>因为在 <u>Null</u> 和 <u>Undefined</u> 这两种类型有且只有一个值，在标注一个变量为 <u>Null</u> 和 <u>Undefined</u> 类型，那就表示该变量不能修改了</p>
+<p>默认情况下 <u>null</u> 和 <u>undefined</u> 是所有类型的子类型。 就是说你可以把 <u>null</u> 和 <u>undefined</u> 赋给其它类型的变量</p>
+<p>如果一个变量声明了，但是未赋值，那么该变量的值为 undefined，但是如果它同时也没有标注类型的话，默认类型为 <u>any</u></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> un: <span class="literal">undefined</span>;</span><br><span class="line">un = <span class="number">1</span>;	<span class="comment">// 错误</span></span><br><span class="line"><span class="keyword">let</span> nul: <span class="literal">null</span>;</span><br><span class="line">nul = <span class="number">1</span>; <span class="comment">//错误</span></span><br><span class="line"><span class="keyword">let</span> a: <span class="built_in">string</span> = <span class="string">'zxl'</span>;</span><br><span class="line">a = <span class="literal">null</span>; <span class="comment">// 可以</span></span><br><span class="line">a = <span class="literal">undefined</span>; <span class="comment">// 可以</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><span style="color:green">小技巧：指定 <u>strictNullChecks</u> 配置为 <u>true</u>，可以有效的检测 <u>null</u> 值数据，避免很多常见问题，建议对可能出现的 <u>null</u> 和 <u>undefined</u> 进行容错处理，使程序更加严谨</span></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> ele = <span class="built_in">document</span>.querySelector(<span class="string">'#box'</span>);</span><br><span class="line"><span class="keyword">if</span> (ele) &#123;</span><br><span class="line">		ele.style.display = <span class="string">'none'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="对象类型"><a href="#对象类型" class="headerlink" title="对象类型"></a>对象类型</h4><p>Object 类型表示非原始值类型</p>
+<p>标注语法</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">变量: object</span><br></pre></td></tr></table></figure>
+
+<p><strong>基于对象字面量的类型标注</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> ot: &#123;x: <span class="built_in">number</span>, y: <span class="built_in">string</span>&#125; = &#123;</span><br><span class="line">    x: <span class="number">1</span>,</span><br><span class="line">    y: <span class="string">'zmouse'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>针对对象这种特殊而有复杂的数据，<u>TypeScript</u> 有许多的方式来进行类型标注</p>
+<p><strong>内置对象类型</strong></p>
+<p>除了 Object 类型，在 JavaScript 中还有很多的内置对象，如：Date，标注如下：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">变量: 内置对象构造函数名</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> d1: <span class="built_in">Date</span> = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line"><span class="keyword">let</span> set1: Set = <span class="keyword">new</span> Set();</span><br></pre></td></tr></table></figure>
+
+<p><strong>包装对象</strong></p>
+<p>这里说的包装对象其实就是 <u>JavaScript</u> 中的 <u>String</u>、<u>Number</u>、<u>Boolean</u>，我们知道 <u>string</u> 类型 和 <u>String</u> 类型并不一样，在 <u>TypeScript</u> 中也是一样</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a: <span class="built_in">string</span>;</span><br><span class="line">a = <span class="string">'1'</span>;</span><br><span class="line">a = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">'1'</span>);	<span class="comment">// 错误</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b: <span class="built_in">String</span>;</span><br><span class="line">b = <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">'2'</span>);</span><br><span class="line">b = <span class="string">'2'</span>;	<span class="comment">// 正确</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="数组类型"><a href="#数组类型" class="headerlink" title="数组类型"></a>数组类型</h4><blockquote>
+<p><span style="color:green"><u>TypeScript</u> 中的数组存储的类型必须一致，所以在标注数组类型的时候，同时要标注数组中存储的数据类型</span></p>
+</blockquote>
+<p>标注语法</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">变量: 类型[]</span><br></pre></td></tr></table></figure>
+
+<p>数组还有另外一种基于 泛型 的标注</p>
+<p>变量: Array&lt;类型&gt;</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr1: <span class="built_in">string</span>[] = [];</span><br><span class="line">arr1.push(<span class="string">'开课吧'</span>); <span class="comment">// 正确</span></span><br><span class="line">arr1.push(<span class="number">1</span>); <span class="comment">// 错误</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> arr2: <span class="built_in">Array</span>&lt;<span class="built_in">number</span>&gt; = [];</span><br><span class="line">arr2.push(<span class="number">100</span>); <span class="comment">// 正确</span></span><br><span class="line">arr2.push(<span class="string">'开课吧'</span>); <span class="comment">// 错误</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="元组类型"><a href="#元组类型" class="headerlink" title="元组类型"></a>元组类型</h4><p>元组类似数组，但是存储的元素类型不必相同，但是需要注意：</p>
+<blockquote>
+<ul>
+<li><span style="color: green">初始化数据的个数以及对应位置标注类型必须一致</span></li>
+<li><span style="color: green">越界数据必须是元组标注中的类型之一（标注越界数据可以不用对应顺序 - <u>联合类型</u>）</span></li>
+</ul>
+</blockquote>
+<p>标注语法</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">变量: [类型一, 类型二,...]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> data1: [<span class="built_in">string</span>, <span class="built_in">number</span>] = [<span class="string">'开课吧'</span>, <span class="number">100</span>];</span><br><span class="line">data1.push(<span class="number">100</span>); <span class="comment">// 正确</span></span><br><span class="line">data1.push(<span class="string">'100'</span>); <span class="comment">// 正确</span></span><br><span class="line">data1.push(<span class="literal">true</span>); <span class="comment">// 错误</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><span style="color:green">注意：未开启 <u>strictNullChecks: true</u> 会使用 undefined 进行初始化</span></p>
+</blockquote>
+<h4 id="枚举类型"><a href="#枚举类型" class="headerlink" title="枚举类型"></a>枚举类型</h4><p>枚举的作用组织收集一组关联数据的方式</p>
+<p>标注语法</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> 枚举名称 &#123; key1=value, key2=value2 &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><u>key</u> 不能是数字</li>
+<li><u>value</u> 可以是数字，称为 <u>数字类型枚举</u>，也可以是字符串，称为 <u>字符串类型枚举</u>，但不能是其它值，默认为数字：<u>0</u></li>
+<li>第一个枚举值或者前一个枚举值为数字时，可以省略赋值，其值为 <u>前一个数字值 + 1</u> </li>
+</ul>
+<p>数字类型枚举</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> HTTP_CODE &#123;</span><br><span class="line">    OK = <span class="number">200</span>,</span><br><span class="line">    NOT_FOUND = <span class="number">404</span></span><br><span class="line">&#125;;</span><br><span class="line">HTTP_CODE.OK	<span class="comment">//200</span></span><br></pre></td></tr></table></figure>
+
+<p>字符串类型枚举</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> URLS  &#123;</span><br><span class="line">    USER_REGISETER = <span class="string">'/user/register'</span>,</span><br><span class="line">    USER_LOGIN = <span class="string">'/user/login'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="无值类型"><a href="#无值类型" class="headerlink" title="无值类型"></a>无值类型</h4><p>表示没有任何数据的类型，通常用于标注无返回值函数的返回值类型，函数默认标注类型位：<u>void</u></p>
+<p>标注语法</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">变量: <span class="built_in">void</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>):<span class="title">void</span> </span>&#123;</span><br><span class="line">  	<span class="comment">// 没有 return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Never类型"><a href="#Never类型" class="headerlink" title="Never类型"></a>Never类型</h4><p>当一个函数永远不可能执行 <u>return</u> 的时候，返回的就是 <u>never</u> ，与 <u>void</u> 不同，<u>void</u> 是执行了 <u>return</u>， 只是没有值，<u>never</u> 是不会执行 <u>return</u>，比如抛出错误，导致函数终止执行</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>): <span class="title">never</span> </span>&#123;</span><br><span class="line">  	<span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'error'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><u>never</u> 类型是所有其它类型的子类</li>
+<li>其它不能赋值给 <u>never</u> 类型，即使是 <u>any</u></li>
+</ul>
+<h4 id="任意类型"><a href="#任意类型" class="headerlink" title="任意类型"></a>任意类型</h4><p>有的时候，我们并不确定这个值到底是什么类型或者不需要对该值进行类型检测，就可以标注为 any 类型</p>
+<ul>
+<li>任何值都可以赋值给 <u>any</u> 类型</li>
+<li><u>any</u> 类型也可以赋值给任意类型</li>
+<li><u>any</u> 类型有任意属性和方法</li>
+</ul>
+<p>标注语法</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">变量: <span class="built_in">any</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><span style="color:green">注意：标注为 <u>any</u> 类型，也意味着放弃对该值的类型检测，同时放弃 IDE 的智能提示</span></p>
+</blockquote>
+<blockquote>
+<p><span style="color:green">小技巧：指定 <u>noImplicitAny</u> 配置为 <u>true</u>，当函数参数出现隐含的 <u>any</u> 类型时报错</span></p>
+</blockquote>
+<h4 id="未知类型"><a href="#未知类型" class="headerlink" title="未知类型"></a>未知类型</h4><p><u>unknow</u>，3.0 版本中新增，属于安全版的 <u>any</u>，但是与 any 不同的是：</p>
+<ul>
+<li><u>unknow</u> 仅能赋值给 <u>unknow</u>、<u>any</u></li>
+<li><u>unknow</u> 没有任何属性和方法</li>
+</ul>
+<p>标注语法</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">变量: unknow;</span><br></pre></td></tr></table></figure>
+
+<h4 id="函数类型"><a href="#函数类型" class="headerlink" title="函数类型"></a>函数类型</h4><p>在 <u>JavaScript</u> 中函数是一等公民的存在，在 <u>TypeScript</u> 也是如此，同样的，函数也有自己的类型标注格式</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">函数名称( 参数<span class="number">1</span>: 类型, 参数<span class="number">2</span>: 类型... ): 返回值类型;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">x: <span class="built_in">number</span>, y: <span class="built_in">number</span></span>): <span class="title">number</span> </span>&#123;</span><br><span class="line">  	<span class="keyword">return</span> x + y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>类型标注语法</li>
+<li>基础类型标注<ul>
+<li>字符串、数字、布尔值、空、未定义</li>
+</ul>
+</li>
+<li>非基础类型标注<ul>
+<li>对象、数组</li>
+</ul>
+</li>
+<li>特殊类型<ul>
+<li>元组、枚举、无值类型、Never类型、任意类型、未知类型</li>
+</ul>
+</li>
+<li>包装对象</li>
+</ul>
+
+</article>
+
+    <div class="pagenator post-pagenator">
+    
+    
+
+    
+    <p>上次更新 2020-08-27</p>
+    
+    
+        <a class="extend next post-next" href="/2020/08/17/%E3%80%8Atypescript%E3%80%8B01-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E4%B8%8E%E7%BC%96%E8%AF%91/">下一篇</a>
+    
+    </div>
+
+    </div>
+    <div class="footer">
+        <div class="container">
+    <!-- <div class="social">
+	<ul class="social-list">
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+	</ul>
+</div> -->
+    <div class="copyright">
+        <span>
+            
+            
+            
+                © zxl 2017 - 2020
+            
+        </span>
+    </div>
+    <!-- <div class="power">
+        <span>
+            Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> & <a href="https://github.com/CaiChenghan/iLiKE" target="_blank" rel="noopener">iLiKE Theme</a>
+        </span>
+    </div> -->
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <!--page counter part-->
+<script>
+    function addCount(Counter) {
+        url = $('.article-date').attr('href').trim();
+        title = $('.article-title').text().trim();
+        var query = new AV.Query(Counter);
+        //use url as unique idnetfication
+        query.equalTo("url", url);
+        query.find({
+            success: function (results) {
+                if (results.length > 0) {
+                    var counter = results[0];
+                    counter.fetchWhenSave(true); //get recent result
+                    counter.increment("time");
+                    counter.save();
+                } else {
+                    var newcounter = new Counter();
+                    newcounter.set("title", title);
+                    newcounter.set("url", url);
+                    newcounter.set("time", 1);
+                    newcounter.save(null, {
+                        success: function (newcounter) {
+                            //alert('New object created');
+                        }, error: function (newcounter, error) {
+                            alert('Failed to create');
+                        }
+                    })
+                }
+            },
+            error: function (error) {
+                //find null is not a error
+                alert('Error:' + error.code + " " + error.message);
+            }
+        });
+    }
+    // $(function () {
+    //     var Counter = AV.Object.extend("Counter");
+    //     //only increse visit counting when intering a page
+    //     if ($('.article-title').length == 1) {
+    //         addCount(Counter);
+    //     }
+    //     var query = new AV.Query(Counter);
+    //     query.descending("time");
+    //     // the sum of popular posts
+    //     query.limit(10);
+    //     query.find({
+    //         success: function (results) {
+    //             for (var i = 0; i < results.length; i++) {
+    //                 var counter = results[i];
+    //                 title = counter.get("title");
+    //                 url = counter.get("url");
+    //                 time = counter.get("time");
+    //                 // add to the popularlist widget
+    //                 showcontent = title + " (" + time + ")";
+    //                 //notice the "" in href
+    //                 $('.popularlist').append('<li><a href="' + url + '">' + showcontent + '</a></li>');
+    //             }
+    //         },
+    //         error: function (error) {
+    //             alert("Error:" + error.code + " " + error.message);
+    //         }
+    //     });
+    // });
+</script>
+</div>
+    </div>
+    <div class="backtop">
+        <div class="arrow" id="arrow">
+  <a href="#" class="icon">↑</a>
+  <script>
+    window.addEventListener("scroll", showBackTop, false);
+
+    const gototop = _getbyId("arrow");
+    // if (gototop) {
+    //   gototop.className = "doc-gototop" + (mainTop <= 0 ? " doc-gototop-show" : "");
+    // }
+    function showBackTop() {
+      const scrollheight = getheight()
+      if (scrollheight > 100) {
+        const arrow = _getbyId("arrow")
+        arrow.classList.add("arrow-show");
+      } else {
+        arrow.classList.remove("arrow-show");
+      }
+
+    }
+
+    function _getbyId(id) {
+      return document.getElementById(id);
+    }
+
+    function getheight() {
+      let scrollheight = document.body.scrollTop == 0 ? document.documentElement.scrollTop
+        : document.body.scrollTop;
+      return scrollheight;
+    }
+  </script>
+</div>
+    </div>
+</body>
+</html>
