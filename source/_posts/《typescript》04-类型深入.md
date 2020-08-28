@@ -12,11 +12,11 @@ tags:
 
 标注语法
 
-```typescript
+``` typescript
 变量: 类型一 | 类型二
 ```
 
-```typescript
+``` typescript
 function css(ele: Element, attr: string, value: string|number) {
     // ...
 }
@@ -37,13 +37,13 @@ if (box) {
 
 标注语法
 
-```typescript
+``` typescript
 变量: 类型一 & 类型二
 ```
 
 如，对一个对象进行扩展：
 
-```typescript
+``` typescript
 interface o1 {x: number, y: string};
 interface o2 {z: number};
 
@@ -54,7 +54,7 @@ let o: o1 & o2 = Object.assign({}, {x:1,y:'2'}, {z: 100});
 
 有的时候，我们希望标注的不是某个类型，而是一个固定值，就可以使用字面量类型，配合联合类型会更有用
 
-```typescript
+``` typescript
 function setPosition(ele: Element, direction: 'left' | 'top' | 'right' | 'bottom') {
   	// ...
 }
@@ -69,13 +69,13 @@ box && setDirection(box, 'hehe');  // 错误
 
 语法
 
-```typescript
+``` typescript
 type 新的类型名称 = 类型
 ```
 
 如前面说到的对象字面类型标注
 
-```typescript
+``` typescript
 type dir = 'left' | 'top' | 'right' | 'bottom';
 function setPosition(ele: Element, direction: dir) {
   	// ...
@@ -86,11 +86,11 @@ function setPosition(ele: Element, direction: dir) {
 
 每次都显式标注类型会比较麻烦，<u>TypeScript</u> 提供了一种更加方便的特性：类型推导。<u>TypeScript</u> 编译器会根据当前上下文自动的推导出对应的类型标注，这个过程发生在：
 
-- 初始化变量
-- 设置函数默认参数值
-- 返回函数值
+* 初始化变量
+* 设置函数默认参数值
+* 返回函数值
 
-```typescript
+``` typescript
 // 自动推断 x 为 number
 let x = 1;
 // 不能将类型“"a"”分配给类型“number”
@@ -101,19 +101,19 @@ x = 'a';
 
 有的时候，我们可能标注一个更加精确的类型（缩小类型标注范围），比如：
 
-```typescript
+``` typescript
 let img = document.querySelector('#img');
 ```
 
 我们可以看到 <u>img</u> 的类型为 <u>Element</u>，而 <u>Element</u> 类型其实只是元素类型的通用类型，如果我们去访问 <u>src</u> 这个属性是有问题的，我们需要把它的类型标注得更为精确：<u>HTMLImageElement</u> 类型，这个时候，我们就可以使用类型断言，它类似于一种 类型转换：
 
-```typescript
+``` typescript
 let img = <HTMLImageElement>document.querySelector('#img');
 ```
 
 或者
 
-```typescript
+``` typescript
 let img = document.querySelector('#img') as HTMLImageElement;
 ```
 
@@ -125,7 +125,7 @@ let img = document.querySelector('#img') as HTMLImageElement;
 
 获取值的类型，注：<u>typeof</u> 操作的是值
 
-```typescript
+``` typescript
 let colors = {
     color1: 'red',
     color2: 'blud'
@@ -146,7 +146,9 @@ let color2: tColors;
 
 获取类型的所对应的类型的 <u>key</u> 的集合，返回值是 <u>key</u> 的联合类型，注：<u>keyof</u> 操作的是类型
 
- ```typescript
+ 
+
+``` typescript
 interface Person {
     name: string;
     age: number;
@@ -177,14 +179,14 @@ getPersonVal('gender');	//错误
 
 针对值进行操作，用来判断值中是否包含指定的 <u>key</u>
 
-```typescript
+``` typescript
 console.log( 'name' in {name:'zmouse', age: 35} );
 console.log( 'gender' in {name:'zmouse', age: 35} );
 ```
 
 针对类型进行操作的话，内部使用的 <u>for…in</u> 对类型进行遍历
 
-```typescript
+``` typescript
 interface Person {
     name: string;
     age: number;
@@ -212,7 +214,7 @@ type newPerson = {
 
 类型继承操作符
 
-```typescript
+``` typescript
 interface type1 {
     x: number;
     y: number;
@@ -222,7 +224,7 @@ interface type2 extends type1 {}
 
 或者
 
-```typescript
+``` typescript
 type type1 = {
     x: number;
     y: number;
@@ -235,7 +237,7 @@ fn({x:1, y: 2});
 
 有的时候，值的类型并不唯一，比如一个联合类型的参数，这个时候，在该参数使用过程中只能调用联合类型都有的属性和方法
 
-```typescript
+``` typescript
 function toUpperCase(arg: string|string[]) {
   	arg.length;	// 正确
   	arg.toUpperCase(1);	// 错误
@@ -249,7 +251,7 @@ function toUpperCase(arg: string|string[]) {
 
 可以使用类型断言
 
-```typescript
+``` typescript
 if ((<string>arg).substring) {
 		(<string>arg).substring(1);
 }
@@ -259,7 +261,7 @@ if ((<string>arg).substring) {
 
 **typeof**
 
-```typescript
+``` typescript
 if (typeof arg === 'string') {
     arg.substring(1);
 } else {
@@ -273,7 +275,7 @@ if (typeof arg === 'string') {
 
 <u>typescript</u> 中的 <u>instanceof</u> 也是类型保护的，针对细化的对象类型判断可以使用它来处理
 
-```typescript
+``` typescript
 if (arg instanceof Array) {
 		arg.push('1');
 }
@@ -283,7 +285,7 @@ if (arg instanceof Array) {
 
 有的时候，判断并不是基于数据类型或者构造函数来完成的，那么就可以自定义类型保护
 
-```typescript
+``` typescript
 function canEach(data: Element[]|NodeList|Element): data is Element[]|NodeList {
     return (<NodeList>data).forEach !== undefined;
 }
@@ -298,15 +300,13 @@ function fn2(elements: Element[]|NodeList|Element) {
 
 <u>data is Element[]|NodeList</u> 是一种类型谓词，格式为：<u>xx is type</u> ，返回这种类型的函数就可以被 <u>TypeScript</u> 识别为类型保护
 
-
-
 ## 总结
 
-- 联合类型
-- 交叉类型
-- 字面量类型
-- 类型别名
-- 类型推导
-- 类型断言
-- 类型操作符
-- 类型保护
+* 联合类型
+* 交叉类型
+* 字面量类型
+* 类型别名
+* 类型推导
+* 类型断言
+* 类型操作符
+* 类型保护
