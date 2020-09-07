@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+  <title>《typescript》04-类型深入 [ Lemon Ray ]</title>
+  
+  <!-- stylesheets list from config.yml -->
+  
+  <link rel="stylesheet" href="/css/iLiKE.css">
+  
+  
+
+  
+  <!-- <script src="//cdn1.lncld.net/static/js/3.1.1/av-min.js"></script>
+  <script id="leancloud">
+    AV.init({
+      appId: "6E5zTbTljdUbVW2WkXPsXGJk-gzGzoHsz",
+      appKey: "0vsyDKfNpeSECAI70J794ugv"
+    });
+  </script> -->
+  
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="Lemon Ray" type="application/atom+xml">
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+    <div class="menu">
+      <div class="menu-left">
+        <a href="/">
+          <img src="/favicon.svg"></img>
+        </a>
+      </div>
+      <div class="menu-right">
+        
+          
+          
+          
+          
+          
+          
+          <a href="/">首页</a>
+        
+          
+          
+          
+          
+          
+          
+          <a href="/archives">归档</a>
+        
+      </div>
+    </div>
+</div>
+    </div>
+    <div class="container">
+        <h1 class="post-title">《typescript》04-类型深入</h1>
+<article class="post markdown-style">
+  <h1 id="TypeScript-类型深入"><a href="#TypeScript-类型深入" class="headerlink" title="TypeScript - 类型深入"></a>TypeScript - 类型深入</h1><h3 id="联合类型"><a href="#联合类型" class="headerlink" title="联合类型"></a>联合类型</h3><p>联合类型也可以称为多选类型，当我们希望标注一个变量为多个类型之一时可以选择联合类型标注，<u>或</u> 的关系</p>
+<p>标注语法</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">变量: 类型一 | 类型二</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">css</span>(<span class="params">ele: Element, attr: <span class="built_in">string</span>, value: <span class="built_in">string</span>|<span class="built_in">number</span></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> box = <span class="built_in">document</span>.querySelector(<span class="string">'.box'</span>);</span><br><span class="line"><span class="comment">// document.querySelector 方法返回值就是一个联合类型</span></span><br><span class="line"><span class="keyword">if</span> (box) &#123;</span><br><span class="line">    <span class="comment">// ts 会提示有 null 的可能性，加上判断更严谨</span></span><br><span class="line">    css(box, <span class="string">'width'</span>, <span class="string">'100px'</span>);</span><br><span class="line">    css(box, <span class="string">'opacity'</span>, <span class="number">1</span>);</span><br><span class="line">    css(box, <span class="string">'opacity'</span>, [<span class="number">1</span>,<span class="number">2</span>]);  <span class="comment">// 错误</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="交叉类型"><a href="#交叉类型" class="headerlink" title="交叉类型"></a>交叉类型</h3><p>交叉类型也可以称为合并类型，可以把多种类型合并到一起成为一种新的类型，<u>并且</u> 的关系</p>
+<p>标注语法</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">变量: 类型一 &amp; 类型二</span><br></pre></td></tr></table></figure>
+
+<p>如，对一个对象进行扩展：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> o1 &#123;x: <span class="built_in">number</span>, y: <span class="built_in">string</span>&#125;;</span><br><span class="line"><span class="keyword">interface</span> o2 &#123;z: <span class="built_in">number</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> o: o1 &amp; o2 = <span class="built_in">Object</span>.assign(&#123;&#125;, &#123;x:<span class="number">1</span>,y:<span class="string">'2'</span>&#125;, &#123;z: <span class="number">100</span>&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="字面量类型"><a href="#字面量类型" class="headerlink" title="字面量类型"></a>字面量类型</h3><p>有的时候，我们希望标注的不是某个类型，而是一个固定值，就可以使用字面量类型，配合联合类型会更有用</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setPosition</span>(<span class="params">ele: Element, direction: 'left' | 'top' | 'right' | 'bottom'</span>) </span>&#123;</span><br><span class="line">  	<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">box &amp;&amp; setDirection(box, <span class="string">'bottom'</span>);</span><br><span class="line">box &amp;&amp; setDirection(box, <span class="string">'hehe'</span>);  <span class="comment">// 错误</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="类型别名"><a href="#类型别名" class="headerlink" title="类型别名"></a>类型别名</h3><p>有的时候类型标注比较复杂，这个时候我们可以类型标注起一个相对简单的名字</p>
+<p>语法</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> 新的类型名称 = 类型</span><br></pre></td></tr></table></figure>
+
+<p>如前面说到的对象字面类型标注</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> dir = <span class="string">'left'</span> | <span class="string">'top'</span> | <span class="string">'right'</span> | <span class="string">'bottom'</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setPosition</span>(<span class="params">ele: Element, direction: dir</span>) </span>&#123;</span><br><span class="line">  	<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="类型推导"><a href="#类型推导" class="headerlink" title="类型推导"></a>类型推导</h3><p>每次都显式标注类型会比较麻烦，<u>TypeScript</u> 提供了一种更加方便的特性：类型推导。<u>TypeScript</u> 编译器会根据当前上下文自动的推导出对应的类型标注，这个过程发生在：</p>
+<ul>
+<li>初始化变量</li>
+<li>设置函数默认参数值</li>
+<li>返回函数值</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自动推断 x 为 number</span></span><br><span class="line"><span class="keyword">let</span> x = <span class="number">1</span>;</span><br><span class="line"><span class="comment">// 不能将类型“"a"”分配给类型“number”</span></span><br><span class="line">x = <span class="string">'a'</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="类型断言"><a href="#类型断言" class="headerlink" title="类型断言"></a>类型断言</h3><p>有的时候，我们可能标注一个更加精确的类型（缩小类型标注范围），比如：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> img = <span class="built_in">document</span>.querySelector(<span class="string">'#img'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>我们可以看到 <u>img</u> 的类型为 <u>Element</u>，而 <u>Element</u> 类型其实只是元素类型的通用类型，如果我们去访问 <u>src</u> 这个属性是有问题的，我们需要把它的类型标注得更为精确：<u>HTMLImageElement</u> 类型，这个时候，我们就可以使用类型断言，它类似于一种 类型转换：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> img = &lt;HTMLImageElement&gt;<span class="built_in">document</span>.querySelector(<span class="string">'#img'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> img = <span class="built_in">document</span>.querySelector(<span class="string">'#img'</span>) <span class="keyword">as</span> HTMLImageElement;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><span style="color:red">注意：断言只是一种预判，并不会数据本身产生实际的作用，即：类似转换，但并非真的转换了</span></p>
+</blockquote>
+<h3 id="类型操作符"><a href="#类型操作符" class="headerlink" title="类型操作符"></a>类型操作符</h3><p><strong>typeof</strong></p>
+<p>获取值的类型，注：<u>typeof</u> 操作的是值</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> colors = &#123;</span><br><span class="line">    color1: <span class="string">'red'</span>,</span><br><span class="line">    color2: <span class="string">'blud'</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> tColors = <span class="keyword">typeof</span> colors;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">tColors 类型</span></span><br><span class="line"><span class="comment">type tColors = &#123;</span></span><br><span class="line"><span class="comment">    color1: string;</span></span><br><span class="line"><span class="comment">    color2: string;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">let</span> color2: tColors;</span><br></pre></td></tr></table></figure>
+
+<p><strong>keyof</strong></p>
+<p>获取类型的所对应的类型的 <u>key</u> 的集合，返回值是 <u>key</u> 的联合类型，注：<u>keyof</u> 操作的是类型</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> Person &#123;</span><br><span class="line">    name: <span class="built_in">string</span>;</span><br><span class="line">    age: <span class="built_in">number</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">type</span> personKeys = keyof Person;</span><br><span class="line"><span class="comment">// 等同：type personKeys = "name" | "age"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> p1 = &#123;</span><br><span class="line">    name: <span class="string">'zMouse'</span>,</span><br><span class="line">    age: <span class="number">35</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getPersonVal</span>(<span class="params">k: personKeys</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> p1[k];</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">等同：</span></span><br><span class="line"><span class="comment">function getPersonVal(k: 'name'|'age') &#123;</span></span><br><span class="line"><span class="comment">    return p1[k];</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">getPersonVal(<span class="string">'name'</span>);	<span class="comment">//正确</span></span><br><span class="line">getPersonVal(<span class="string">'gender'</span>);	<span class="comment">//错误</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>in</strong></p>
+<p><u>in</u> 操作符对值和类型都可以使用</p>
+<p>针对值进行操作，用来判断值中是否包含指定的 <u>key</u></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log( <span class="string">'name'</span> <span class="keyword">in</span> &#123;name:<span class="string">'zmouse'</span>, age: <span class="number">35</span>&#125; );</span><br><span class="line"><span class="built_in">console</span>.log( <span class="string">'gender'</span> <span class="keyword">in</span> &#123;name:<span class="string">'zmouse'</span>, age: <span class="number">35</span>&#125; );</span><br></pre></td></tr></table></figure>
+
+<p>针对类型进行操作的话，内部使用的 <u>for…in</u> 对类型进行遍历</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> Person &#123;</span><br><span class="line">    name: <span class="built_in">string</span>;</span><br><span class="line">    age: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">type</span> personKeys = keyof Person;</span><br><span class="line"><span class="keyword">type</span> newPerson = &#123;</span><br><span class="line">    [k <span class="keyword">in</span> personKeys]: <span class="built_in">number</span>;</span><br><span class="line">  	<span class="comment">/**</span></span><br><span class="line"><span class="comment">  	等同 [k in 'name'|'age']: number;</span></span><br><span class="line"><span class="comment">  	也可以写成</span></span><br><span class="line"><span class="comment">  	[k in keyof Person]: number;</span></span><br><span class="line"><span class="comment">  	*/</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">type newPerson = &#123;</span></span><br><span class="line"><span class="comment">    name: number;</span></span><br><span class="line"><span class="comment">    age: number;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：<u>in</u> 后面的类型值必须是 <u>string</u> 或者 <u>number</u> 或者 <u>symbol</u></p>
+<p><strong>extends</strong></p>
+<p>类型继承操作符</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> type1 &#123;</span><br><span class="line">    x: <span class="built_in">number</span>;</span><br><span class="line">    y: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">interface</span> type2 <span class="keyword">extends</span> type1 &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> type1 = &#123;</span><br><span class="line">    x: <span class="built_in">number</span>;</span><br><span class="line">    y: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>&lt;<span class="title">T</span> <span class="title">extends</span> <span class="title">type1</span>&gt;(<span class="params">args: T</span>) </span>&#123;&#125;</span><br><span class="line">fn(&#123;x:<span class="number">1</span>, y: <span class="number">2</span>&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="类型保护"><a href="#类型保护" class="headerlink" title="类型保护"></a>类型保护</h3><p>有的时候，值的类型并不唯一，比如一个联合类型的参数，这个时候，在该参数使用过程中只能调用联合类型都有的属性和方法</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toUpperCase</span>(<span class="params">arg: <span class="built_in">string</span>|<span class="built_in">string</span>[]</span>) </span>&#123;</span><br><span class="line">  	arg.length;	<span class="comment">// 正确</span></span><br><span class="line">  	arg.toUpperCase(<span class="number">1</span>);	<span class="comment">// 错误</span></span><br><span class="line">  </span><br><span class="line">  	<span class="comment">// 即使作为条件判断也不行</span></span><br><span class="line">  	<span class="keyword">if</span> (arg.substring) &#123;</span><br><span class="line">        arg.substring(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以使用类型断言</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ((&lt;<span class="built_in">string</span>&gt;arg).substring) &#123;</span><br><span class="line">		(&lt;<span class="built_in">string</span>&gt;arg).substring(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是这样做还是很麻烦的，其实在 <u>TypeScript</u> 中，提供了一个类型保护措施来帮助更加方便的处理这样的情况</p>
+<p><strong>typeof</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> arg === <span class="string">'string'</span>) &#123;</span><br><span class="line">    arg.substring(<span class="number">1</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  	arg.push(<span class="string">'1'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><u>typescript</u> 能够把 <u>typeof</u> 识别为类型保护，作为类型检查的依据，不仅仅是在 <u>if</u> 中有效，在 <u>else</u> 中也是有效的</p>
+<p><strong>instanceof</strong></p>
+<p><u>typescript</u> 中的 <u>instanceof</u> 也是类型保护的，针对细化的对象类型判断可以使用它来处理</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (arg <span class="keyword">instanceof</span> <span class="built_in">Array</span>) &#123;</span><br><span class="line">		arg.push(<span class="string">'1'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>自定义类型保护</strong></p>
+<p>有的时候，判断并不是基于数据类型或者构造函数来完成的，那么就可以自定义类型保护</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">canEach</span>(<span class="params">data: Element[]|NodeList|Element</span>): <span class="title">data</span> <span class="title">is</span> <span class="title">Element</span>[]|<span class="title">NodeList</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (&lt;NodeList&gt;data).forEach !== <span class="literal">undefined</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn2</span>(<span class="params">elements: Element[]|NodeList|Element</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ( canEach(elements) ) &#123;</span><br><span class="line">        elements.forEach(_=&gt;&#123;&#125;);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        elements.classList.add(<span class="string">'box'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><u>data is Element[]|NodeList</u> 是一种类型谓词，格式为：<u>xx is type</u> ，返回这种类型的函数就可以被 <u>TypeScript</u> 识别为类型保护</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>联合类型</li>
+<li>交叉类型</li>
+<li>字面量类型</li>
+<li>类型别名</li>
+<li>类型推导</li>
+<li>类型断言</li>
+<li>类型操作符</li>
+<li>类型保护</li>
+</ul>
+
+</article>
+
+    <div class="pagenator post-pagenator">
+    
+    
+        <a class="extend prev post-prev" href="/2020/08/22/symbol/">上一篇</a>
+    
+
+    
+    <p>上次更新 2020-08-28</p>
+    
+    
+        <a class="extend next post-next" href="/2020/08/11/%E3%80%8Atypescript%E3%80%8B03-%E6%8E%A5%E5%8F%A3/">下一篇</a>
+    
+    </div>
+
+    </div>
+    <div class="footer">
+        <div class="container">
+    <!-- <div class="social">
+	<ul class="social-list">
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+	</ul>
+</div> -->
+    <div class="copyright">
+        <span>
+            
+            
+            
+                © zxl 2017 - 2020
+            
+        </span>
+    </div>
+    <!-- <div class="power">
+        <span>
+            Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> & <a href="https://github.com/CaiChenghan/iLiKE" target="_blank" rel="noopener">iLiKE Theme</a>
+        </span>
+    </div> -->
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <!--page counter part-->
+<script>
+    function addCount(Counter) {
+        url = $('.article-date').attr('href').trim();
+        title = $('.article-title').text().trim();
+        var query = new AV.Query(Counter);
+        //use url as unique idnetfication
+        query.equalTo("url", url);
+        query.find({
+            success: function (results) {
+                if (results.length > 0) {
+                    var counter = results[0];
+                    counter.fetchWhenSave(true); //get recent result
+                    counter.increment("time");
+                    counter.save();
+                } else {
+                    var newcounter = new Counter();
+                    newcounter.set("title", title);
+                    newcounter.set("url", url);
+                    newcounter.set("time", 1);
+                    newcounter.save(null, {
+                        success: function (newcounter) {
+                            //alert('New object created');
+                        }, error: function (newcounter, error) {
+                            alert('Failed to create');
+                        }
+                    })
+                }
+            },
+            error: function (error) {
+                //find null is not a error
+                alert('Error:' + error.code + " " + error.message);
+            }
+        });
+    }
+    // $(function () {
+    //     var Counter = AV.Object.extend("Counter");
+    //     //only increse visit counting when intering a page
+    //     if ($('.article-title').length == 1) {
+    //         addCount(Counter);
+    //     }
+    //     var query = new AV.Query(Counter);
+    //     query.descending("time");
+    //     // the sum of popular posts
+    //     query.limit(10);
+    //     query.find({
+    //         success: function (results) {
+    //             for (var i = 0; i < results.length; i++) {
+    //                 var counter = results[i];
+    //                 title = counter.get("title");
+    //                 url = counter.get("url");
+    //                 time = counter.get("time");
+    //                 // add to the popularlist widget
+    //                 showcontent = title + " (" + time + ")";
+    //                 //notice the "" in href
+    //                 $('.popularlist').append('<li><a href="' + url + '">' + showcontent + '</a></li>');
+    //             }
+    //         },
+    //         error: function (error) {
+    //             alert("Error:" + error.code + " " + error.message);
+    //         }
+    //     });
+    // });
+</script>
+</div>
+    </div>
+    <div class="backtop">
+        <div class="arrow" id="arrow">
+  <a href="#" class="icon">↑</a>
+  <script>
+    window.addEventListener("scroll", showBackTop, false);
+
+    const gototop = _getbyId("arrow");
+    // if (gototop) {
+    //   gototop.className = "doc-gototop" + (mainTop <= 0 ? " doc-gototop-show" : "");
+    // }
+    function showBackTop() {
+      const scrollheight = getheight()
+      if (scrollheight > 100) {
+        const arrow = _getbyId("arrow")
+        arrow.classList.add("arrow-show");
+      } else {
+        arrow.classList.remove("arrow-show");
+      }
+
+    }
+
+    function _getbyId(id) {
+      return document.getElementById(id);
+    }
+
+    function getheight() {
+      let scrollheight = document.body.scrollTop == 0 ? document.documentElement.scrollTop
+        : document.body.scrollTop;
+      return scrollheight;
+    }
+  </script>
+</div>
+    </div>
+</body>
+</html>

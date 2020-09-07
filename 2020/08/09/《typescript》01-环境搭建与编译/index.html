@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+  <title>《typescript》01-环境搭建与编译 [ Lemon Ray ]</title>
+  
+  <!-- stylesheets list from config.yml -->
+  
+  <link rel="stylesheet" href="/css/iLiKE.css">
+  
+  
+
+  
+  <!-- <script src="//cdn1.lncld.net/static/js/3.1.1/av-min.js"></script>
+  <script id="leancloud">
+    AV.init({
+      appId: "6E5zTbTljdUbVW2WkXPsXGJk-gzGzoHsz",
+      appKey: "0vsyDKfNpeSECAI70J794ugv"
+    });
+  </script> -->
+  
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="Lemon Ray" type="application/atom+xml">
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+    <div class="menu">
+      <div class="menu-left">
+        <a href="/">
+          <img src="/favicon.svg"></img>
+        </a>
+      </div>
+      <div class="menu-right">
+        
+          
+          
+          
+          
+          
+          
+          <a href="/">首页</a>
+        
+          
+          
+          
+          
+          
+          
+          <a href="/archives">归档</a>
+        
+      </div>
+    </div>
+</div>
+    </div>
+    <div class="container">
+        <h1 class="post-title">《typescript》01-环境搭建与编译</h1>
+<article class="post markdown-style">
+  <h1 id="TypeScript-环境搭建与编译"><a href="#TypeScript-环境搭建与编译" class="headerlink" title="TypeScript - 环境搭建与编译"></a>TypeScript - 环境搭建与编译</h1><h2 id="TypeScript-环境搭建"><a href="#TypeScript-环境搭建" class="headerlink" title="TypeScript 环境搭建"></a>TypeScript 环境搭建</h2><p><u>TypeScript</u> 编写的程序并不能直接通过浏览器运行，我们需要先通过 <u>TypeScript</u> 编译器把 <u>TypeScript</u> 代码编译成 <u>JavaScript</u> 代码</p>
+<p><u>TypeScript</u> 的编译器是基于 <u>Node.js</u> 的，所以我们需要先安装 <u>Node.js</u></p>
+<p><strong>Node.js 安装</strong></p>
+<p><a href="https://nodejs.org/" target="_blank" rel="noopener">https://nodejs.org</a></p>
+<p>安装完成以后，通过 终端或者 cmd 等命令行工具来调用 node</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
+
+<p><strong>通过 NPM 包管理工具安装 TypeScript 编译器</strong></p>
+<p><a href="https://www.npmjs.com/" target="_blank" rel="noopener">https://www.npmjs.com/</a></p>
+<p><a href="http://www.typescriptlang.org/" target="_blank" rel="noopener">http://www.typescriptlang.org/</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g typescript</span><br></pre></td></tr></table></figure>
+
+<p><u>TypeScript 编译器</u> 安装成功以后，会提供一个 <u>tsc</u> 的命令，用于编译我们的 <u>TypeScript</u> 代码文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tsc -v</span><br></pre></td></tr></table></figure>
+
+<h2 id="TypeScript-编译"><a href="#TypeScript-编译" class="headerlink" title="TypeScript 编译"></a>TypeScript 编译</h2><p><strong>TypeScript 代码</strong></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str: <span class="built_in">string</span> = <span class="string">'zxl'</span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>编译 TypeScript 代码</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tsc &lt;要编译的ts文件&gt;</span><br></pre></td></tr></table></figure>
+
+<p>默认情况下会在当前文件所在目录下生成同名的 js 文件</p>
+<h3 id="编译选项"><a href="#编译选项" class="headerlink" title="编译选项"></a>编译选项</h3><p>编译命令 <u>tsc</u> 还支持许多编译选项。</p>
+<p><strong>–outDir</strong></p>
+<p>指定编译文件输出目录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tsc --outDir ./dist ./src/HelloTypeScript.ts</span><br></pre></td></tr></table></figure>
+
+<p><strong>–target</strong></p>
+<p>指定编译的代码版本目标，默认为 <u>ES3</u></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tsc --outDir ./dist --target ES6 ./src/HelloTypeScript.ts</span><br></pre></td></tr></table></figure>
+
+<p><strong>–watch</strong></p>
+<p>在监听模式下运行，当文件发生改变的时候自动编译</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tsc --outDir ./dist --target ES6 --watch ./src/HelloTypeScript.ts</span><br></pre></td></tr></table></figure>
+
+<p>通过上面几个例子，基本可以了解 <u>tsc</u> 的使用了，如果每次编译都输入这么一大堆的选项是真的很繁琐。</p>
+<p>其实，<u>TypeScript</u> 编译为我们提供了一个更加强大且方便的方式，编译配置文件：<u>tsconfig.json</u>，我们可以把上面的编译选项保存到这个配置文件中</p>
+<h3 id="编译配置文件"><a href="#编译配置文件" class="headerlink" title="编译配置文件"></a>编译配置文件</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">"compilerOptions"</span>: &#123;</span><br><span class="line">		<span class="attr">"outDir"</span>: <span class="string">"./dist"</span>,</span><br><span class="line">		<span class="attr">"target"</span>: <span class="string">"ES2015"</span>,</span><br><span class="line">    <span class="attr">"watch"</span>: <span class="literal">true</span>,</span><br><span class="line">	&#125;,</span><br><span class="line">  <span class="attr">"include"</span>: [<span class="string">"./src/**/*"</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>include</strong></p>
+<p>指定需要编译的 <u>ts</u> 文件目录，如果没有指定，则默认包含当前目录及子目录下的所有 <u>ts</u> 文件</p>
+<p><strong>默认配置</strong></p>
+<p><u>tsc</u> 默认会从当前目录开始去查找 <u>tsconfig.json</u> 文件，如果没有找到，会逐级向上搜索父目录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tsc</span><br></pre></td></tr></table></figure>
+
+<p><strong>指定配置文件</strong></p>
+<p>使用 <u>–project</u> 或 <u>-p</u> 也可以指定某个具体的配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tsc -p ./c.json</span><br></pre></td></tr></table></figure>
+
+<p><strong>指定配置文件目录</strong></p>
+<p>使用 <u>-p</u> 指定配置文件所在目录，<u>tsc</u> 会默认加载该目录下的 <u>tsconfig.json</u> 文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tsc -p ./src</span><br></pre></td></tr></table></figure>
+
+<p>除了以上配置，<u>ts</u> 的编译配置选项还有很多。</p>
+<p>更多编译选项：</p>
+<blockquote>
+<p><a href="http://www.typescriptlang.org/docs/handbook/tsconfig-json.html" target="_blank" rel="noopener">http://www.typescriptlang.org/docs/handbook/tsconfig-json.html</a></p>
+<p><a href="http://www.typescriptlang.org/docs/handbook/compiler-options.html" target="_blank" rel="noopener">http://www.typescriptlang.org/docs/handbook/compiler-options.html</a></p>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>环境搭建</li>
+<li>编译命令与配置</li>
+<li>配置文件：<u>tsconfig.json</u><ul>
+<li>outDir、target、watch、include、project</li>
+</ul>
+</li>
+</ul>
+
+</article>
+
+    <div class="pagenator post-pagenator">
+    
+    
+        <a class="extend prev post-prev" href="/2020/08/10/%E3%80%8Atypescript%E3%80%8B02-%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F/">上一篇</a>
+    
+
+    
+    <p>上次更新 2020-08-27</p>
+    
+    
+        <a class="extend next post-next" href="/2020/08/08/%E3%80%8AJust-JavaScript%E3%80%8B09-%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1/">下一篇</a>
+    
+    </div>
+
+    </div>
+    <div class="footer">
+        <div class="container">
+    <!-- <div class="social">
+	<ul class="social-list">
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+	</ul>
+</div> -->
+    <div class="copyright">
+        <span>
+            
+            
+            
+                © zxl 2017 - 2020
+            
+        </span>
+    </div>
+    <!-- <div class="power">
+        <span>
+            Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> & <a href="https://github.com/CaiChenghan/iLiKE" target="_blank" rel="noopener">iLiKE Theme</a>
+        </span>
+    </div> -->
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <!--page counter part-->
+<script>
+    function addCount(Counter) {
+        url = $('.article-date').attr('href').trim();
+        title = $('.article-title').text().trim();
+        var query = new AV.Query(Counter);
+        //use url as unique idnetfication
+        query.equalTo("url", url);
+        query.find({
+            success: function (results) {
+                if (results.length > 0) {
+                    var counter = results[0];
+                    counter.fetchWhenSave(true); //get recent result
+                    counter.increment("time");
+                    counter.save();
+                } else {
+                    var newcounter = new Counter();
+                    newcounter.set("title", title);
+                    newcounter.set("url", url);
+                    newcounter.set("time", 1);
+                    newcounter.save(null, {
+                        success: function (newcounter) {
+                            //alert('New object created');
+                        }, error: function (newcounter, error) {
+                            alert('Failed to create');
+                        }
+                    })
+                }
+            },
+            error: function (error) {
+                //find null is not a error
+                alert('Error:' + error.code + " " + error.message);
+            }
+        });
+    }
+    // $(function () {
+    //     var Counter = AV.Object.extend("Counter");
+    //     //only increse visit counting when intering a page
+    //     if ($('.article-title').length == 1) {
+    //         addCount(Counter);
+    //     }
+    //     var query = new AV.Query(Counter);
+    //     query.descending("time");
+    //     // the sum of popular posts
+    //     query.limit(10);
+    //     query.find({
+    //         success: function (results) {
+    //             for (var i = 0; i < results.length; i++) {
+    //                 var counter = results[i];
+    //                 title = counter.get("title");
+    //                 url = counter.get("url");
+    //                 time = counter.get("time");
+    //                 // add to the popularlist widget
+    //                 showcontent = title + " (" + time + ")";
+    //                 //notice the "" in href
+    //                 $('.popularlist').append('<li><a href="' + url + '">' + showcontent + '</a></li>');
+    //             }
+    //         },
+    //         error: function (error) {
+    //             alert("Error:" + error.code + " " + error.message);
+    //         }
+    //     });
+    // });
+</script>
+</div>
+    </div>
+    <div class="backtop">
+        <div class="arrow" id="arrow">
+  <a href="#" class="icon">↑</a>
+  <script>
+    window.addEventListener("scroll", showBackTop, false);
+
+    const gototop = _getbyId("arrow");
+    // if (gototop) {
+    //   gototop.className = "doc-gototop" + (mainTop <= 0 ? " doc-gototop-show" : "");
+    // }
+    function showBackTop() {
+      const scrollheight = getheight()
+      if (scrollheight > 100) {
+        const arrow = _getbyId("arrow")
+        arrow.classList.add("arrow-show");
+      } else {
+        arrow.classList.remove("arrow-show");
+      }
+
+    }
+
+    function _getbyId(id) {
+      return document.getElementById(id);
+    }
+
+    function getheight() {
+      let scrollheight = document.body.scrollTop == 0 ? document.documentElement.scrollTop
+        : document.body.scrollTop;
+      return scrollheight;
+    }
+  </script>
+</div>
+    </div>
+</body>
+</html>
