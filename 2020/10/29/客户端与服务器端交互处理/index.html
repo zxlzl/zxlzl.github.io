@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+  <title>客户端与服务器端交互处理 [ Lemon Ray ]</title>
+  
+  <!-- stylesheets list from config.yml -->
+  
+  <link rel="stylesheet" href="/css/iLiKE.css">
+  
+  
+
+  
+  <!-- <script src="//cdn1.lncld.net/static/js/3.1.1/av-min.js"></script>
+  <script id="leancloud">
+    AV.init({
+      appId: "6E5zTbTljdUbVW2WkXPsXGJk-gzGzoHsz",
+      appKey: "0vsyDKfNpeSECAI70J794ugv"
+    });
+  </script> -->
+  
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="Lemon Ray" type="application/atom+xml">
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+    <div class="menu">
+      <div class="menu-left">
+        <a href="/">
+          <img src="/favicon.svg"></img>
+        </a>
+      </div>
+      <div class="menu-right">
+        
+          
+          
+          
+          
+          
+          
+          <a href="/">首页</a>
+        
+          
+          
+          
+          
+          
+          
+          <a href="/archives">归档</a>
+        
+      </div>
+    </div>
+</div>
+    </div>
+    <div class="container">
+        <h1 class="post-title">客户端与服务器端交互处理</h1>
+<article class="post markdown-style">
+  <h1 id="客户端与服务器端交互处理"><a href="#客户端与服务器端交互处理" class="headerlink" title="客户端与服务器端交互处理"></a>客户端与服务器端交互处理</h1><blockquote>
+<p>面试题：当用户在地址栏输入网址，到最后看到页面，都经历了什么？</p>
+</blockquote>
+<h2 id="1-URL地址解析"><a href="#1-URL地址解析" class="headerlink" title="1. URL地址解析"></a>1. URL地址解析</h2><p><img src="/blog_imgs/client_server/%E8%BE%93%E5%85%A5url.png" alt=""></p>
+<h3 id="A：URI-URL-URN"><a href="#A：URI-URL-URN" class="headerlink" title="A：URI/URL/URN"></a>A：URI/URL/URN</h3><blockquote>
+<p>URI 统一资源标识符<br>URL 统一资源定位符<br>URN 统一资源名称</p>
+</blockquote>
+<h3 id="B：一个完整URI的组成部分和实际意义"><a href="#B：一个完整URI的组成部分和实际意义" class="headerlink" title="B：一个完整URI的组成部分和实际意义"></a>B：一个完整URI的组成部分和实际意义</h3><ul>
+<li>协议：http、https、ftp</li>
+<li>域名：顶级域名、一级域名、二级域名、常用域名的行政</li>
+<li>端口号：80、443、27017、端口号范围</li>
+<li>请求资源路径名称：伪URL</li>
+<li>问号参数</li>
+<li>hash值</li>
+</ul>
+<h3 id="C：特殊字符加密和解密"><a href="#C：特殊字符加密和解密" class="headerlink" title="C：特殊字符加密和解密"></a>C：特殊字符加密和解密</h3><ul>
+<li>encodeURI/decodeURI</li>
+<li>encodeURIComponent/decodeURIComponent</li>
+<li>escape/unescape</li>
+</ul>
+<h2 id="2-DNS域名解析"><a href="#2-DNS域名解析" class="headerlink" title="2. DNS域名解析"></a>2. DNS域名解析</h2><h3 id="A：DNS域名是什么"><a href="#A：DNS域名是什么" class="headerlink" title="A：DNS域名是什么"></a>A：DNS域名是什么</h3><ul>
+<li>发布站点时配置域名解析</li>
+<li>网址访问进行DNS域名反解析</li>
+</ul>
+<h3 id="B：DNS-prefetch-DNS预获取"><a href="#B：DNS-prefetch-DNS预获取" class="headerlink" title="B：DNS prefetch DNS预获取"></a>B：DNS prefetch DNS预获取</h3><ul>
+<li>减少dns的请求次数</li>
+<li>进行dns预获取<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"x-dns-prefetch-control"</span> <span class="attr">content</span>=<span class="string">"on"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"dns-prefetch"</span> <span class="attr">href</span>=<span class="string">"//static.360buy.com"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"dns-prefetch"</span> <span class="attr">href</span>=<span class="string">"//misx.360buy.com"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"dns-prefetch"</span> <span class="attr">href</span>=<span class="string">"//test.360buy.com"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"dns-prefetch"</span> <span class="attr">href</span>=<span class="string">"//assets.resource.com"</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>缓存的时间在一分钟左右</li>
+</ul>
+<h2 id="3-建立TCP连接（三次握手）"><a href="#3-建立TCP连接（三次握手）" class="headerlink" title="3. 建立TCP连接（三次握手）"></a>3. 建立TCP连接（三次握手）</h2><p><img src="/blog_imgs/client_server/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png" alt=""></p>
+<ul>
+<li>第一次握手：由浏览器发起，告诉服务器我要发送请求了</li>
+<li>第二次握手：由服务器发起，告诉浏览器我准备接受了，你赶紧发送吧</li>
+<li>第三次握手：由浏览器发送，告诉服务器，我马上就要发了，准备接受吧</li>
+</ul>
+<h2 id="4-发送HTTP请求"><a href="#4-发送HTTP请求" class="headerlink" title="4. 发送HTTP请求"></a>4. 发送HTTP请求</h2><h3 id="A：HTTP请求报文"><a href="#A：HTTP请求报文" class="headerlink" title="A：HTTP请求报文"></a>A：HTTP请求报文</h3><ul>
+<li>请求行</li>
+<li>请求头（首部）</li>
+<li>请求主体</li>
+</ul>
+<h3 id="B：强缓存和协商缓存"><a href="#B：强缓存和协商缓存" class="headerlink" title="B：强缓存和协商缓存"></a>B：强缓存和协商缓存</h3><ul>
+<li>强缓存（Cache-Control、Expires）</li>
+<li>协商缓存（Last-Modified、Etag）</li>
+</ul>
+<h2 id="5-服务器得到并处理请求"><a href="#5-服务器得到并处理请求" class="headerlink" title="5. 服务器得到并处理请求"></a>5. 服务器得到并处理请求</h2><h3 id="A：WEB（图片）服务器和数据服务器"><a href="#A：WEB（图片）服务器和数据服务器" class="headerlink" title="A：WEB（图片）服务器和数据服务器"></a>A：WEB（图片）服务器和数据服务器</h3><ul>
+<li>Tomcat</li>
+<li>NGINX</li>
+<li>Apache</li>
+<li>IIS</li>
+<li>…</li>
+</ul>
+<h3 id="B：HTTP响应报文"><a href="#B：HTTP响应报文" class="headerlink" title="B：HTTP响应报文"></a>B：HTTP响应报文</h3><ul>
+<li>响应状态码<ul>
+<li>200 / 201 /204</li>
+<li>301 / 302 / 304 / 307</li>
+<li>400 / 401 / 404</li>
+<li>500 / 503</li>
+</ul>
+</li>
+<li>响应头（首部）</li>
+<li>响应主体</li>
+</ul>
+<h2 id="6-客户端渲染页面"><a href="#6-客户端渲染页面" class="headerlink" title="6. 客户端渲染页面"></a>6. 客户端渲染页面</h2><p><img src="/blog_imgs/client_server/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B.png" alt=""></p>
+<h3 id="A：浏览器渲染页面的步骤"><a href="#A：浏览器渲染页面的步骤" class="headerlink" title="A：浏览器渲染页面的步骤"></a>A：浏览器渲染页面的步骤</h3><ul>
+<li>解析HTML，生成DOM树；解析css，生成CSSDOM树</li>
+<li>将DOM树和CSSOM树结合，生成渲染树（Render Tree）</li>
+<li>Layout（回流）：根据生成的渲染树，计算它们在设备视口（viewport）内的确切位置和大小，这个阶段是回流</li>
+<li>Painting（重绘）：根据渲染树以及回流得到的几何信息，得到节点的绝对像素</li>
+<li>Display：将像素发送给GPU,展示在页面上</li>
+</ul>
+<h3 id="B：DOM的重绘和回流"><a href="#B：DOM的重绘和回流" class="headerlink" title="B：DOM的重绘和回流"></a>B：DOM的重绘和回流</h3><ul>
+<li>重绘repaint：元素样式的改变（但宽高、大小、位置等不变）；如outline、visibility、color、background-color等</li>
+<li>回流/重排reflow：元素的大小或位置发生了变化（当页面信息和几何布局发生变化的时候），触发了重新布局，导致渲染树重新计算布局和渲染；如添加或删除可见的DOM元素；元素的位置发生变化；元素的尺寸发生变化；内容发生变化（比如文本变化或图片被另一个不同尺寸的图片所代替）；页面一开始渲染的时候（这个无法避免）；因为回流是根据视口的大小来计算元素位置和大小的，所以浏览器窗口尺寸变化也会引发回流…</li>
+<li>注意：回流一定会触发重绘，而重绘不一定触发回流</li>
+</ul>
+<h3 id="C：前端性能优化之：避免DOM的回流"><a href="#C：前端性能优化之：避免DOM的回流" class="headerlink" title="C：前端性能优化之：避免DOM的回流"></a>C：前端性能优化之：避免DOM的回流</h3><ul>
+<li>放弃传递操作dom的时代，基于vue/react开始数据影响试图模式<ul>
+<li>mvvm / mvc / virtual dom / dom diff</li>
+</ul>
+</li>
+<li>分离读写操作（现代浏览器都有渲染队列的机制）<ul>
+<li>offsetTop、offsetLeft、offsetWidth、offsetHeight、clientTop、clientLeft、clientWidth、clientHeight、scrollTop、scrollLeft、scrollWidth、scrollHeight、getComputedStyle、currentStyle…会刷新渲染队列</li>
+</ul>
+</li>
+<li>样式集中改变<ul>
+<li><code>box.style.csstext = &#39;width:100px,height:100px;&#39;</code></li>
+<li><code>div.className = &#39;box&#39;</code></li>
+</ul>
+</li>
+<li>缓存布局信息<ul>
+<li><code>div.style.left = div.offsetLeft + 1 + &#39;px&#39;; div.style.top = div.offsetTop + 1 + &#39;px&#39;</code>改为<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> curLeft = div.offsetLeft</span><br><span class="line"><span class="keyword">var</span> curTop = div.offsetTop</span><br><span class="line">div.style.left = curLeft + <span class="number">1</span> + <span class="string">'px'</span></span><br><span class="line">div.style.top = curTop + <span class="number">1</span> + <span class="string">'px'</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>元素批量修改<ul>
+<li>文档碎片：createDocumentFragment</li>
+<li>模板字符串拼接</li>
+</ul>
+</li>
+<li>动画效果应用到position属性为absolute或fixed的元素上（脱离文档流）</li>
+<li>css3硬件加速（GPU加速）<ul>
+<li>比起考虑如何减少回流重绘，我们更期望的是，根本不需要回流重绘；transform / opacity / filters … 这些属性会触发硬件加速，不会引发回流和重绘</li>
+<li>可能会引发的坑：过多使用会占用大量内存，性能消耗严重，有时候会导致字体模糊</li>
+</ul>
+</li>
+<li>牺牲平滑度换取速度<ul>
+<li>每次1像素移动一个动画，但是如果这个动画使用了100%的CPU，动画看上去就会是跳动的，因为浏览器正在与更新回流作斗争。每次移动3px可能看起来平滑度低了，但它不会导致CPU在较慢的机器中产生抖动</li>
+</ul>
+</li>
+<li>避免table布局和使用css的JavaScript表达式</li>
+</ul>
+<h2 id="7-断开连接（四次挥手）"><a href="#7-断开连接（四次挥手）" class="headerlink" title="7. 断开连接（四次挥手）"></a>7. 断开连接（四次挥手）</h2><p><img src="/blog_imgs/client_server/%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.png" alt=""></p>
+<ul>
+<li>第一次挥手：由浏览器发起，发送给服务器，我请求报文发送完了，你准备关闭吧</li>
+<li>第二次挥手：由服务器发起，告诉浏览器，我接受完请求报文了，我准备关闭，你也准备吧</li>
+<li>第三次挥手：由服务器发起，告诉浏览器，我响应报文发送完毕， 你准备关闭吧</li>
+<li>第四次挥手：由浏览器发起，告诉服务器，我响应报文接收完毕，我准备关闭，你也准备吧</li>
+</ul>
+<h3 id="A：Connection：Keep-Alive-保持TCP不中断"><a href="#A：Connection：Keep-Alive-保持TCP不中断" class="headerlink" title="A：Connection：Keep-Alive 保持TCP不中断"></a>A：Connection：Keep-Alive 保持TCP不中断</h3><h1 id="前端性能优化汇总"><a href="#前端性能优化汇总" class="headerlink" title="前端性能优化汇总"></a>前端性能优化汇总</h1><h2 id="1-减少HTTP请求次数和请求的大小"><a href="#1-减少HTTP请求次数和请求的大小" class="headerlink" title="1.减少HTTP请求次数和请求的大小"></a>1.减少HTTP请求次数和请求的大小</h2><ul>
+<li>文件合并压缩</li>
+<li>雪碧图 css sprite</li>
+<li>图片base64</li>
+<li>尽量使用字体图标</li>
+<li>图片懒加载</li>
+<li>音视频取消预加载</li>
+<li>在客户端和服务端进行信息交互的时候，对于多项数据我们尽可能基于json格式来进行传送（json格式的数据处理方便，资源偏小）</li>
+<li>开起服务器端的gzip压缩</li>
+</ul>
+<h2 id="2-建立缓存机制"><a href="#2-建立缓存机制" class="headerlink" title="2.建立缓存机制"></a>2.建立缓存机制</h2><ul>
+<li>DNS解析</li>
+<li>数据缓存（例如：本地缓存）</li>
+<li>强缓存和协商缓存（304）</li>
+<li>离线缓存</li>
+<li>做CDN加速</li>
+</ul>
+<h2 id="3-代码上的优化"><a href="#3-代码上的优化" class="headerlink" title="3.代码上的优化"></a>3.代码上的优化</h2><ul>
+<li>减少DOM的重绘和回流</li>
+<li>在js中尽量减少闭包的使用 </li>
+</ul>
+
+</article>
+
+    <div class="pagenator post-pagenator">
+    
+    
+
+    
+    <p>上次更新 2020-10-29</p>
+    
+    
+        <a class="extend next post-next" href="/2020/08/22/symbol/">下一篇</a>
+    
+    </div>
+
+    </div>
+    <div class="footer">
+        <div class="container">
+    <!-- <div class="social">
+	<ul class="social-list">
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+	</ul>
+</div> -->
+    <div class="copyright">
+        <span>
+            
+            
+            
+                © zxl 2017 - 2020
+            
+        </span>
+    </div>
+    <!-- <div class="power">
+        <span>
+            Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> & <a href="https://github.com/CaiChenghan/iLiKE" target="_blank" rel="noopener">iLiKE Theme</a>
+        </span>
+    </div> -->
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <!--page counter part-->
+<script>
+    function addCount(Counter) {
+        url = $('.article-date').attr('href').trim();
+        title = $('.article-title').text().trim();
+        var query = new AV.Query(Counter);
+        //use url as unique idnetfication
+        query.equalTo("url", url);
+        query.find({
+            success: function (results) {
+                if (results.length > 0) {
+                    var counter = results[0];
+                    counter.fetchWhenSave(true); //get recent result
+                    counter.increment("time");
+                    counter.save();
+                } else {
+                    var newcounter = new Counter();
+                    newcounter.set("title", title);
+                    newcounter.set("url", url);
+                    newcounter.set("time", 1);
+                    newcounter.save(null, {
+                        success: function (newcounter) {
+                            //alert('New object created');
+                        }, error: function (newcounter, error) {
+                            alert('Failed to create');
+                        }
+                    })
+                }
+            },
+            error: function (error) {
+                //find null is not a error
+                alert('Error:' + error.code + " " + error.message);
+            }
+        });
+    }
+    // $(function () {
+    //     var Counter = AV.Object.extend("Counter");
+    //     //only increse visit counting when intering a page
+    //     if ($('.article-title').length == 1) {
+    //         addCount(Counter);
+    //     }
+    //     var query = new AV.Query(Counter);
+    //     query.descending("time");
+    //     // the sum of popular posts
+    //     query.limit(10);
+    //     query.find({
+    //         success: function (results) {
+    //             for (var i = 0; i < results.length; i++) {
+    //                 var counter = results[i];
+    //                 title = counter.get("title");
+    //                 url = counter.get("url");
+    //                 time = counter.get("time");
+    //                 // add to the popularlist widget
+    //                 showcontent = title + " (" + time + ")";
+    //                 //notice the "" in href
+    //                 $('.popularlist').append('<li><a href="' + url + '">' + showcontent + '</a></li>');
+    //             }
+    //         },
+    //         error: function (error) {
+    //             alert("Error:" + error.code + " " + error.message);
+    //         }
+    //     });
+    // });
+</script>
+</div>
+    </div>
+    <div class="backtop">
+        <div class="arrow" id="arrow">
+  <a href="#" class="icon">↑</a>
+  <script>
+    window.addEventListener("scroll", showBackTop, false);
+
+    const gototop = _getbyId("arrow");
+    // if (gototop) {
+    //   gototop.className = "doc-gototop" + (mainTop <= 0 ? " doc-gototop-show" : "");
+    // }
+    function showBackTop() {
+      const scrollheight = getheight()
+      if (scrollheight > 100) {
+        const arrow = _getbyId("arrow")
+        arrow.classList.add("arrow-show");
+      } else {
+        arrow.classList.remove("arrow-show");
+      }
+
+    }
+
+    function _getbyId(id) {
+      return document.getElementById(id);
+    }
+
+    function getheight() {
+      let scrollheight = document.body.scrollTop == 0 ? document.documentElement.scrollTop
+        : document.body.scrollTop;
+      return scrollheight;
+    }
+  </script>
+</div>
+    </div>
+</body>
+</html>
